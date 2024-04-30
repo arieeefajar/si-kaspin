@@ -96,12 +96,12 @@
                                         </div>
 
                                         <div class="mt-4">
-                                            <form action="index.html">
-
+                                            <form action="{{ route('prosesLogin') }}" method="POST">
+                                                @csrf
                                                 <div class="mb-3">
                                                     <label for="username" class="form-label">Username</label>
                                                     <input type="text" class="form-control" id="username"
-                                                        placeholder="Masukan username">
+                                                        placeholder="Masukan username" name="username" required>
                                                 </div>
 
                                                 <div class="mb-3">
@@ -112,7 +112,8 @@
                                                     <label class="form-label" for="password-input">Password</label>
                                                     <div class="position-relative auth-pass-inputgroup mb-3">
                                                         <input type="password" class="form-control pe-5"
-                                                            placeholder="Masukan password" id="password-input">
+                                                            placeholder="Masukan password" name="password"
+                                                            id="password-input" required>
                                                         <button
                                                             class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted"
                                                             type="button" id="password-addon"><i
