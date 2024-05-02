@@ -3670,14 +3670,14 @@ fieldset:disabled .btn {
 
 .btn-success {
     color: #fff;
-    background-color: #0ab39c;
-    border-color: #0ab39c
+    background-color: #389D42;
+    border-color: #389D42
 }
 
 .btn-success:hover {
     color: #fff;
-    background-color: #099885;
-    border-color: #088f7d
+    background-color: #38893f;
+    border-color: #38893f
 }
 
 .btn-check:focus+.btn-success,
