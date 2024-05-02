@@ -607,3 +607,15 @@
         </div><!-- end col -->
     </div><!-- end row -->
 @endsection
+
+@section('otherJs')
+    <!-- apexcharts -->
+    <script src="{{ asset('admin_assets/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+
+    <!-- Vector map-->
+    <script src="{{ asset('admin_assets/assets/libs/jsvectormap/js/jsvectormap.min.js') }}"></script>
+    <script src="{{ asset('admin_assets/assets/libs/jsvectormap/maps/world-merc.js') }}"></script>
+
+    <!-- Dashboard init -->
+    <script src="{{ asset('admin_assets/assets/js/pages/dashboard-analytics.init.js') }}"></script>
+@endsection

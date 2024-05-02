@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\EtalaseController;
+use App\Http\Controllers\PenjualanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,4 +25,12 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout',[LoginController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+
+    Route::prefix('etalase')->group(function () {
+        Route::get('/',[EtalaseController::class, 'index'])->name('etalase');
+    });
+
+    Route::prefix('penjualan')->group(function () {
+        Route::get('/', [PenjualanController::class, 'index'])->name('penjualan');
+    });
 });
