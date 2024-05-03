@@ -144,7 +144,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link menu-link" href="widgets.html">
+                <a class="nav-link menu-link" href="{{ route('operator') }}">
                     <i class="las la-users-cog"></i> <span data-key="t-widgets">Operator</span>
                 </a>
             </li>
