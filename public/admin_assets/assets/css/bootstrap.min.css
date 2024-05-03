@@ -3811,20 +3811,20 @@ fieldset:disabled .btn {
 
 .btn-danger {
     color: #fff;
-    background-color: #389D42;
-    border-color: #389D42;
+    background-color: #f06548;
+    border-color: #f06548;
 }
 
 .btn-danger:hover {
     color: #fff;
-    background-color: #389D42;
-    border-color: #389D42
+    background-color: #cc563d;
+    border-color: #c0513a
 }
 
 .btn-check:focus+.btn-danger,
 .btn-danger:focus {
     color: #fff;
-    background-color: #389D42;
+    background-color: #cc563d;
     border-color: #c0513a;
     -webkit-box-shadow: 0 0 0 0 rgba(242, 124, 99, .5);
     box-shadow: 0 0 0 0 rgba(242, 124, 99, .5)

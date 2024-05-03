@@ -4,6 +4,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EtalaseController;
 use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\PiutangController;
+use App\Http\Controllers\ReturPenjualanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,5 +34,13 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('penjualan')->group(function () {
         Route::get('/', [PenjualanController::class, 'index'])->name('penjualan');
+    });
+
+    Route::prefix('retur')->group(function () {
+        Route::get('/', [ReturPenjualanController::class, 'index'])->name('retur');
+    });
+
+    Route::prefix('piutang')->group(function() {
+        Route::get('/', [PiutangController::class, 'index'])->name('piutang');
     });
 });

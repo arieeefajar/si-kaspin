@@ -94,7 +94,7 @@
                 <div class="card-body d-flex flex-column">
                     <div class="d-flex gap-2 position-relative">
                         <i class="ri-shopping-cart-line"></i>
-                        <h3 class="card-title mb-0">Keranjang</h3>
+                        <h3 class="card-title mb-0">Daftar Retur</h3>
                     </div>
                     <div class="d-flex-column flex-grow-1 mt-4">
                         <div class="card">
@@ -135,7 +135,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalgridLabel">Tambah Keranjang</h5>
+                    <h5 class="modal-title" id="exampleModalgridLabel">Tambah Retur</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -157,18 +157,8 @@
                                 </div>
                             </div><!--end col-->
                             <div class="col-lg-12">
-                                <label class="form-label">Harga</label>
-                                <select class="form-select mb-2" aria-label="Default select example">
-                                    <option selected>Pilih Harga</option>
-                                    <option value="1">Standard</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
+                                <label class="form-label">Total Harga<span style="color: red;">*</span></label>
                                 <input type="text" class="form-control" id="disableInput" value="Rp. 3000" disabled>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <label for="subtotal" class="form-label">Subtotal</label>
-                                <input type="text" class="form-control" id="subtotal" value="Rp. 3000" disabled>
                             </div><!--end col-->
                             <div class="col-lg-12">
                                 <div class="hstack gap-2 justify-content-end">
