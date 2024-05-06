@@ -16,7 +16,7 @@ checkAll &&
     });
 var perPage = 8,
     options = {
-        valueNames: ["id", "kode_operator", "nama", "username"],
+        valueNames: ["no", "nama", "username", "role"],
         page: perPage,
         pagination: !0,
         plugins: [ListPagination({ left: 2, right: 2 })],
@@ -75,10 +75,11 @@ isCount = new DOMParser().parseFromString(
 );
 var isValue = isCount.body.firstElementChild.innerHTML,
     idField = document.getElementById("id-field"),
-    namaField = document.getElementById("nama-field"),
-    usernameField = document.getElementById("username-field"),
-    passwordField = document.getElementById("password-field"),
-    roleField = document.getElementById("role-field"),
+    customerNameField = document.getElementById("customername-field"),
+    emailField = document.getElementById("email-field"),
+    dateField = document.getElementById("date-field"),
+    phoneField = document.getElementById("phone-field"),
+    statusField = document.getElementById("status-field"),
     addBtn = document.getElementById("add-btn"),
     editBtn = document.getElementById("edit-btn"),
     removeBtns = document.getElementsByClassName("remove-item-btn"),
@@ -86,7 +87,10 @@ var isValue = isCount.body.firstElementChild.innerHTML,
 function filterContact(e) {
     var t = e;
     customerList.filter(function (e) {
-        matchData = new DOMParser().parseFromString(e.values().id, "text/html");
+        matchData = new DOMParser().parseFromString(
+            e.values().status,
+            "text/html"
+        );
         e = matchData.body.firstElementChild.innerHTML;
         return "All" == e || "All" == t || e == t;
     }),
@@ -112,7 +116,7 @@ refreshCallbacks(),
         .addEventListener("show.bs.modal", function (e) {
             e.relatedTarget.classList.contains("edit-item-btn")
                 ? ((document.getElementById("exampleModalLabel").innerHTML =
-                      "Edit Operator"),
+                      "Edit Customer"),
                   (document
                       .getElementById("showModal")
                       .querySelector(".modal-footer").style.display = "block"),
@@ -120,14 +124,14 @@ refreshCallbacks(),
                   (document.getElementById("edit-btn").style.display = "block"))
                 : e.relatedTarget.classList.contains("add-btn")
                 ? ((document.getElementById("exampleModalLabel").innerHTML =
-                      "Tambah Operator"),
+                      "Add Customer"),
                   (document
                       .getElementById("showModal")
                       .querySelector(".modal-footer").style.display = "block"),
                   (document.getElementById("edit-btn").style.display = "none"),
                   (document.getElementById("add-btn").style.display = "block"))
                 : ((document.getElementById("exampleModalLabel").innerHTML =
-                      "List Operator"),
+                      "List Customer"),
                   (document
                       .getElementById("showModal")
                       .querySelector(".modal-footer").style.display = "none"));
@@ -148,18 +152,20 @@ var table = document.getElementById("customerTable"),
     trlist = table.querySelectorAll(".list tr"),
     count = Number(isValue.replace(/[^0-9]/g, "")) + 1;
 addBtn.addEventListener("click", function (e) {
-    "" !== namaField.value &&
-        "" !== usernameField.value &&
-        "" !== passwordField.value &&
+    "" !== customerNameField.value &&
+        "" !== emailField.value &&
+        "" !== dateField.value &&
+        "" !== phoneField.value &&
         (customerList.add({
             id:
                 '<a href="javascript:void(0);" class="fw-medium link-primary">#VZ' +
                 count +
                 "</a>",
-            nama: namaField.value,
-            username: usernameField.value,
-            password: passwordField.value,
-            role: roleField.value["0"],
+            customer_name: customerNameField.value,
+            email: emailField.value,
+            date: dateField.value,
+            phone: phoneField.value,
+            status: isStatus(statusField.value),
         }),
         document.getElementById("close-modal").click(),
         clearFields(),
@@ -181,15 +187,17 @@ addBtn.addEventListener("click", function (e) {
                                 '<a href="javascript:void(0);" class="fw-medium link-primary">' +
                                 idField.value +
                                 "</a>",
-                            nama: namaField.value,
-                            username: usernameField.value,
-                            password: passwordField.value,
-                            role: roleField.value,
+                            customer_name: customerNameField.value,
+                            email: emailField.value,
+                            date: dateField.value,
+                            phone: phoneField.value,
+                            status: isStatus(statusField.value),
                         });
             }),
             document.getElementById("close-modal").click(),
             clearFields();
     });
+var statusVal = new Choices(statusField);
 function isStatus(e) {
     switch (e) {
         case "Active":
@@ -250,18 +258,31 @@ function refreshCallbacks() {
                         var t = isid.body.firstElementChild.innerHTML;
                         t == itemId &&
                             ((idField.value = t),
-                            (namaField.value = e._values.customer_name),
-                            (usernameField.value = e._values.email),
-                            (passwordField.value = e._values.date),
-                            (roleField.value = e._values.phone));
+                            (customerNameField.value = e._values.customer_name),
+                            (emailField.value = e._values.email),
+                            (dateField.value = e._values.date),
+                            (phoneField.value = e._values.phone),
+                            statusVal && statusVal.destroy(),
+                            (statusVal = new Choices(statusField)),
+                            (val = new DOMParser().parseFromString(
+                                e._values.status,
+                                "text/html"
+                            )),
+                            (t = val.body.firstElementChild.innerHTML),
+                            statusVal.setChoiceByValue(t),
+                            flatpickr("#date-field", {
+                                dateFormat: "d M, Y",
+                                defaultDate: e._values.date,
+                            }));
                     });
             });
         });
 }
 function clearFields() {
-    (namaField.value = ""),
-        (usernameField.value = ""),
-        (passwordField.value = "");
+    (customerNameField.value = ""),
+        (emailField.value = ""),
+        (dateField.value = ""),
+        (phoneField.value = "");
 }
 document
     .querySelector(".pagination-next")

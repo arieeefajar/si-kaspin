@@ -21,17 +21,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('guest')->group(function () {
-    Route::get('/', [LoginController::class , 'index'])->name('login');
+    Route::get('/', [LoginController::class, 'index'])->name('login');
     Route::post('/prosesLogin', [LoginController::class, 'prosesLogin'])->name('prosesLogin');
 });
 
 Route::middleware('auth')->group(function () {
-    Route::post('/logout',[LoginController::class, 'logout'])->name('logout');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
     // etalase route
     Route::prefix('etalase')->group(function () {
-        Route::get('/',[EtalaseController::class, 'index'])->name('etalase');
+        Route::get('/', [EtalaseController::class, 'index'])->name('etalase');
     });
 
     // penjualan route
@@ -45,12 +45,15 @@ Route::middleware('auth')->group(function () {
     });
 
     // piutang route
-    Route::prefix('piutang')->group(function() {
+    Route::prefix('piutang')->group(function () {
         Route::get('/', [PiutangController::class, 'index'])->name('piutang');
     });
 
     // operator route
     Route::prefix('operator')->group(function () {
         Route::get('/', [OperatorController::class, 'index'])->name('operator');
+        Route::post('/', [OperatorController::class, 'store'])->name('operator.store');
+        Route::put('/{id}', [OperatorController::class, 'update'])->name('operator.update');
+        Route::delete('{id}', [OperatorController::class, 'destroy'])->name('operator.destroy');
     });
 });
