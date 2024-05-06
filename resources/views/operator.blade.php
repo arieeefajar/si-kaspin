@@ -12,7 +12,7 @@
                             <div class="col-sm-auto">
                                 <div>
                                     <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal"
-                                        id="create-btn" data-bs-target="#showModal"><i
+                                        id="create-btn" data-bs-target="#addModal"><i
                                             class="ri-add-line align-bottom me-1"></i> Tambah</button>
                                 </div>
                             </div>
@@ -31,34 +31,37 @@
                                 <thead class="table-light">
                                     <tr class="text-center">
                                         <th class="sort" data-sort="no">No</th>
-                                        <th class="sort" data-sort="kode_operator">Kode Operator</th>
                                         <th class="sort" data-sort="nama">Nama</th>
                                         <th class="sort" data-sort="username">Username</th>
+                                        <th class="sort" data-sort="role">Role</th>
                                         <th class="sort" data-sort="aksi">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="list form-check-all">
-                                    <tr class="text-center">
-                                        <td>1</td>
-                                        <td class="id" style="display:none;"><a href="javascript:void(0);"
-                                                class="fw-medium link-primary">#VZ2101</a></td>
-                                        <td class="kode_operator">EHLI97834HL2</td>
-                                        <td class="nama">Arie Fajar</td>
-                                        <td class="username">ariefajar</td>
-                                        <td>
-                                            <div class="d-flex gap-2 justify-content-center">
-                                                <div class="edit">
-                                                    <button class="btn btn-sm btn-success edit-item-btn"
-                                                        data-bs-toggle="modal" data-bs-target="#showModal">Edit</button>
+                                    @foreach ($operator as $key => $item)
+                                        <tr class="text-center">
+                                            <td class="no">{{ $key + 1 }}</td>
+                                            <td class="id" style="display:none;"><a href="javascript:void(0);"
+                                                    class="fw-medium link-primary">#VZ2101</a></td>
+                                            <td class="nama">{{ $item->nama }}</td>
+                                            <td class="username">{{ $item->username }}</td>
+                                            <td class="role">{{ $item->role }}</td>
+                                            <td>
+                                                <div class="d-flex gap-2 justify-content-center">
+                                                    <div class="edit">
+                                                        <button class="btn btn-sm btn-warning edit-item-btn"
+                                                            data-bs-toggle="modal" data-bs-target="#editModal"
+                                                            onclick="editOperator({{ $item }})">Edit</button>
+                                                    </div>
+                                                    <div class="remove">
+                                                        <button class="btn btn-sm btn-danger remove-item-btn"
+                                                            data-bs-toggle="modal" data-bs-target="#deleteRecordModal"
+                                                            onclick="deleteOperator({{ $item->id }})">Hapus</button>
+                                                    </div>
                                                 </div>
-                                                <div class="remove">
-                                                    <button class="btn btn-sm btn-danger remove-item-btn"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#deleteRecordModal">Remove</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
 
@@ -93,7 +96,7 @@
     </div>
 
     {{-- add modal --}}
-    <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-light p-3">
@@ -101,35 +104,31 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         id="close-modal"></button>
                 </div>
-                <form>
+                <form action="{{ route('operator.store') }}" method="POST">
+                    @csrf
                     <div class="modal-body">
 
-                        <div class="mb-3" id="modal-id" style="display: none;">
-                            <label for="id-field" class="form-label">ID</label>
-                            <input type="text" id="id-field" class="form-control" placeholder="ID" readonly />
-                        </div>
-
                         <div class="mb-3">
-                            <label for="nama-field" class="form-label">Nama</label>
-                            <input type="text" id="nama-field" class="form-control" name="nama"
+                            <label for="nama" class="form-label">Nama</label>
+                            <input type="text" id="nama" class="form-control" name="nama"
                                 placeholder="Masukan nama" required />
                         </div>
 
                         <div class="mb-3">
-                            <label for="username-field" class="form-label">Username</label>
-                            <input type="text" id="username-field" class="form-control" name="username"
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" id="username" class="form-control" name="username"
                                 placeholder="Masukan username" required />
                         </div>
 
                         <div class="mb-3">
-                            <label for="password-field" class="form-label">Password</label>
-                            <input type="text" id="password-field" class="form-control" name="password"
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" id="password" class="form-control" name="password"
                                 placeholder="Masukan password" required />
                         </div>
 
                         <div>
-                            <label for="role-field" class="form-label">Role</label>
-                            <select class="form-control" data-trigger name="role-field" id="role-field">
+                            <label for="role" class="form-label">Role</label>
+                            <select class="form-control" data-trigger id="role" name="role">
                                 <option selected disabled>Pilih Role</option>
                                 <option value="admin">Admin</option>
                                 <option value="owner">Owner</option>
@@ -139,8 +138,53 @@
                     <div class="modal-footer">
                         <div class="hstack gap-2 justify-content-end">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
-                            <button type="button" class="btn btn-success" id="edit-btn">Update</button>
                             <button type="submit" class="btn btn-success" id="add-btn">Tambah</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- edit modal --}}
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Operator</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        id="close-modal"></button>
+                </div>
+                <form action="" id="editForm" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="nama-field" class="form-label">Nama</label>
+                            <input type="text" id="nama-edit" class="form-control" name="nama"
+                                placeholder="Masukan nama" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="username-field" class="form-label">Username</label>
+                            <input type="text" id="username-edit" class="form-control" name="username"
+                                placeholder="Masukan username" required />
+                        </div>
+
+                        <div>
+                            <label for="role-field" class="form-label">Role</label>
+                            <select class="form-control" data-trigger name="role" id="role-edit">
+                                <option selected disabled>Pilih Role</option>
+                                <option value="admin">Admin</option>
+                                <option value="owner">Owner</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="hstack gap-2 justify-content-end">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-success" id="edit-btn">Update</button>
                         </div>
                     </div>
                 </form>
@@ -161,13 +205,17 @@
                         <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop"
                             colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
                         <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-                            <h4>Are you Sure ?</h4>
-                            <p class="text-muted mx-4 mb-0">Are you Sure You want to Remove this Record ?</p>
+                            <h4>Apakah anda yakin ?</h4>
+                            <p class="text-muted mx-4 mb-0">Apakah anda yakin mau menghapus data ini ?</p>
                         </div>
                     </div>
                     <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-                        <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn w-sm btn-danger " id="delete-record">Yes, Delete It!</button>
+                        <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Tutup</button>
+                        <form action="" id="deleteForm" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn w-sm btn-danger ">Ya, Hapus!</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -183,4 +231,20 @@
 
     <!-- listjs init -->
     <script src="{{ asset('admin_assets/assets/js/customJs/operator.init.js') }}"></script>
+
+    <script>
+        function editOperator(data) {
+            const form = document.getElementById('editForm');
+            form.action = "{{ route('operator.update', ['id' => '/']) }}/" + data.id;
+            form.querySelector("#nama-edit").value = data.nama;
+            form.querySelector("#username-edit").value = data.username;
+            form.querySelector("#role-edit").value = data.role;
+        }
+
+        function deleteOperator(data) {
+            console.log(data);
+            const form = document.getElementById('deleteForm');
+            form.action = "{{ route('operator.destroy', ['id' => '/']) }}/" + data;
+        }
+    </script>
 @endsection
