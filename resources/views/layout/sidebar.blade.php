@@ -77,7 +77,8 @@
                         <div class="col-lg-4">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a href="ui-alerts.html" class="nav-link" data-key="t-alerts">Kategori Produk</a>
+                                    <a href="{{ route('kategoriproduk') }}" class="nav-link"
+                                        data-key="t-alerts">Kategori Produk</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="ui-badges.html" class="nav-link" data-key="t-badges">Data Produk</a>

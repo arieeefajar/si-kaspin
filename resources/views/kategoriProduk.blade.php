@@ -4,7 +4,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title mb-0">Operator</h4>
+                    <h4 class="card-title mb-0">Kategori Produk</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
                     <div id="customerList">
@@ -31,32 +31,30 @@
                                 <thead class="table-light">
                                     <tr class="text-center">
                                         <th class="sort" data-sort="no">No</th>
-                                        <th class="sort" data-sort="nama">Nama</th>
-                                        <th class="sort" data-sort="username">Username</th>
-                                        <th class="sort" data-sort="role">Role</th>
+                                        <th class="sort" data-sort="kode_kategori">Kode Kategori</th>
+                                        <th class="sort" data-sort="nama_kategori">Nama</th>
                                         <th class="sort" data-sort="aksi">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="list form-check-all">
-                                    @foreach ($operator as $key => $item)
+                                    @foreach ($kategori as $key => $item)
                                         <tr class="text-center">
                                             <td class="no">{{ $key + 1 }}</td>
                                             <td class="id" style="display:none;"><a href="javascript:void(0);"
                                                     class="fw-medium link-primary">#VZ2101</a></td>
-                                            <td class="nama">{{ $item->nama }}</td>
-                                            <td class="username">{{ $item->username }}</td>
-                                            <td class="role">{{ $item->role }}</td>
+                                            <td class="kode_kategori">{{ $item->kode_kategori }}</td>
+                                            <td class="nama_kategori">{{ $item->nama_kategori }}</td>
                                             <td>
                                                 <div class="d-flex gap-2 justify-content-center">
                                                     <div class="edit">
                                                         <button class="btn btn-sm btn-warning edit-item-btn"
                                                             data-bs-toggle="modal" data-bs-target="#editModal"
-                                                            onclick="editOperator({{ $item }})">Edit</button>
+                                                            onclick="editKategori({{ $item }})">Edit</button>
                                                     </div>
                                                     <div class="remove">
                                                         <button class="btn btn-sm btn-danger remove-item-btn"
                                                             data-bs-toggle="modal" data-bs-target="#deleteRecordModal"
-                                                            onclick="deleteOperator({{ $item->id }})">Hapus</button>
+                                                            onclick="deleteKategori({{ $item }})">Hapus</button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -104,35 +102,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         id="close-modal"></button>
                 </div>
-                <form action="{{ route('operator.store') }}" method="POST">
+                <form action="{{ route('kategoriproduk.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
 
                         <div class="mb-3">
-                            <label for="nama" class="form-label">Nama</label>
-                            <input type="text" id="nama" class="form-control" name="nama"
-                                placeholder="Masukan nama" required />
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" id="username" class="form-control" name="username"
-                                placeholder="Masukan username" required />
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" id="password" class="form-control" name="password"
-                                placeholder="Masukan password" required />
-                        </div>
-
-                        <div>
-                            <label for="role" class="form-label">Role</label>
-                            <select class="form-control" data-trigger id="role" name="role">
-                                <option selected disabled>Pilih Role</option>
-                                <option value="admin">Admin</option>
-                                <option value="owner">Owner</option>
-                            </select>
+                            <label for="nama_kategori" class="form-label">Nama</label>
+                            <input type="text" id="nama_kategori" class="form-control" name="nama_kategori"
+                                placeholder="Masukan nama kategori" required />
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -161,24 +138,9 @@
                     <div class="modal-body">
 
                         <div class="mb-3">
-                            <label for="nama-field" class="form-label">Nama</label>
-                            <input type="text" id="nama-edit" class="form-control" name="nama"
-                                placeholder="Masukan nama" required />
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="username-field" class="form-label">Username</label>
-                            <input type="text" id="username-edit" class="form-control" name="username"
-                                placeholder="Masukan username" required />
-                        </div>
-
-                        <div>
-                            <label for="role-field" class="form-label">Role</label>
-                            <select class="form-control" data-trigger name="role" id="role-edit">
-                                <option selected disabled>Pilih Role</option>
-                                <option value="admin">Admin</option>
-                                <option value="owner">Owner</option>
-                            </select>
+                            <label for="nama_kategori" class="form-label">Nama</label>
+                            <input type="text" id="nama-edit" class="form-control" name="nama_kategori"
+                                placeholder="Masukan nama kategori" required />
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -230,21 +192,18 @@
     <script src="{{ asset('admin_assets/assets/libs/list.pagination.js/list.pagination.min.js') }}"></script>
 
     <!-- listjs init -->
-    <script src="{{ asset('admin_assets/assets/js/customJs/operator.init.js') }}"></script>
+    <script src="{{ asset('admin_assets/assets/js/customJs/kategoriProduk.init.js') }}"></script>
 
     <script>
-        function editOperator(data) {
+        function editKategori(data) {
             const form = document.getElementById('editForm');
-            form.action = "{{ route('operator.update', ['id' => '/']) }}/" + data.id;
-            form.querySelector("#nama-edit").value = data.nama;
-            form.querySelector("#username-edit").value = data.username;
-            form.querySelector("#role-edit").value = data.role;
+            form.action = "{{ route('kategoriproduk.update', ['id' => '/']) }}/" + data.kode_kategori;
+            form.querySelector("#nama-edit").value = data.nama_kategori;
         }
 
-        function deleteOperator(data) {
-            console.log(data);
+        function deleteKategori(data) {
             const form = document.getElementById('deleteForm');
-            form.action = "{{ route('operator.destroy', ['id' => '/']) }}/" + data;
+            form.action = "{{ route('kategoriproduk.destroy', ['id' => '/']) }}/" + data.kode_kategori;
         }
     </script>
 @endsection
