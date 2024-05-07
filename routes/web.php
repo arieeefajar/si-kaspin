@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EtalaseController;
+use App\Http\Controllers\KategoriProdukController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PiutangController;
@@ -47,6 +48,14 @@ Route::middleware('auth')->group(function () {
     // piutang route
     Route::prefix('piutang')->group(function () {
         Route::get('/', [PiutangController::class, 'index'])->name('piutang');
+    });
+
+    // kategori produk route
+    Route::prefix('kategoriproduk')->group(function () {
+        Route::get('/', [KategoriProdukController::class, 'index'])->name('kategoriproduk');
+        Route::post('/', [KategoriProdukController::class, 'store'])->name('kategoriproduk.store');
+        Route::put('/{id}', [KategoriProdukController::class, 'update'])->name('kategoriproduk.update');
+        Route::delete('{id}', [KategoriProdukController::class, 'destroy'])->name('kategoriproduk.destroy');
     });
 
     // operator route

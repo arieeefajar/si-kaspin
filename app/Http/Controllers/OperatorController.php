@@ -82,7 +82,7 @@ class OperatorController extends Controller
             'nama' => 'required|max:25|string',
             'username' => 'required|max:12|string',
             'role' => 'required',
-        ]);
+        ], $customMessage);
 
         if ($validator->fails()) {
             alert()->error('Gagal', $validator->messages()->all()[0]);
