@@ -7,6 +7,7 @@ use App\Http\Controllers\KategoriProdukController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PiutangController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ReturPenjualanController;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +57,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/', [KategoriProdukController::class, 'store'])->name('kategoriproduk.store');
         Route::put('/{id}', [KategoriProdukController::class, 'update'])->name('kategoriproduk.update');
         Route::delete('{id}', [KategoriProdukController::class, 'destroy'])->name('kategoriproduk.destroy');
+    });
+
+    //produk route
+    Route::prefix('produk')->group(function () {
+        Route::get('/', [ProdukController::class, 'index'])->name('produk');
+        Route::post('/', [ProdukController::class, 'store'])->name('produk.store');
+        Route::put('/{id}', [ProdukController::class, 'update'])->name('produk.update');
+        Route::delete('{id}', [ProdukController::class, 'destroy'])->name('produk.destroy');
     });
 
     // operator route
