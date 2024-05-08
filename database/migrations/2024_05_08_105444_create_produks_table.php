@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('kode_kategori');
             $table->string('nama_produk');
             $table->string('gambar');
+            $table->integer('stock');
             $table->timestamps();
 
             $table->foreign('kode_kategori')->references('kode_kategori')->on('kategori_produks');
