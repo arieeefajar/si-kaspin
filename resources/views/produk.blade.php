@@ -44,7 +44,7 @@
                                             <td class="id" style="display:none;"><a href="javascript:void(0);"
                                                     class="fw-medium link-primary">#VZ2101</a></td>
                                             <td class="kode_produk">{{ $item->kode_produk }}</td>
-                                            <td class="kode_kategori">{{ $item->kode_kategori }}</td>
+                                            <td class="nama_kategori">{{ $item->nama_kategori }}</td>
                                             <td class="nama_produk">{{ $item->nama_produk }}</td>
                                             <td>
                                                 <div class="d-flex gap-2 justify-content-center">
@@ -112,7 +112,7 @@
                             <label for="kode_kategori" class="form-label">Kategori</label>
                             <select name="kode_kategori" id="kode-kategori" class="form-select" required>
                                 <option value="" selected disabled>Pilih Kategori</option>
-                                @foreach ($kategori as $item)
+                                @foreach ($produk as $item)
                                     <option value="{{ $item->kode_kategori }}"
                                         {{ old('nama_kategori') == $item->kode_kategori ? 'selected' : '' }}>
                                         {{ $item->nama_kategori }}
@@ -162,7 +162,7 @@
                             <label for="nama_kategori" class="form-label">Pilih Kategori</label>
                             <select name="kode_kategori" id="kode-kategori" class="form-select">
                                 <option value="" selected disabled>Pilih Kategori</option>
-                                @foreach ($kategori as $item)
+                                @foreach ($produk as $item)
                                     <option value="{{ $item->kode_kategori }}"
                                         {{ old('kode_kategori') == $item->kode_kategori ? 'selected' : '' }}>
                                         {{ $item->nama_kategori }}</option>
