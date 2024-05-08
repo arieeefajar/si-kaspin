@@ -67,6 +67,12 @@ Route::middleware('auth')->group(function () {
         Route::delete('{id}', [ProdukController::class, 'destroy'])->name('produk.destroy');
     });
 
+    //stock produk route
+    Route::prefix('stock')->group(function () {
+        Route::get('/', [ProdukController::class, 'showStock'])->name('stock');
+        Route::put('/{id}', [ProdukController::class, 'updateStock'])->name('stock.update');
+    });
+
     // operator route
     Route::prefix('operator')->group(function () {
         Route::get('/', [OperatorController::class, 'index'])->name('operator');

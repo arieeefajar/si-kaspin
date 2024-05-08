@@ -91,7 +91,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link menu-link" href="widgets.html">
+                <a class="nav-link menu-link" href="{{ route('stock') }}">
                     <i class="ri-stock-line"></i> <span data-key="t-widgets">Stock Barang</span>
                 </a>
             </li>

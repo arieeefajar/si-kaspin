@@ -144,4 +144,41 @@ class ProdukController extends Controller
             return redirect()->back();
         }
     }
+
+    public function showStock()
+    {
+        $produk = KategoriProduk::join('produks', 'kategori_produks.kode_kategori', '=', 'produks.kode_kategori')->select('produks.*', 'kategori_produks.*')->get();
+        return view('stockBarang', compact('produk'));
+    }
+
+    public function updateStock(Request $request, $id)
+    {
+        //custom message
+        $customMessage = [
+            'stock.required' => 'Harap isi stock',
+            'stock.min' => 'Stock minimal :min',
+            'stock.integer' => 'Stock harus berupa angka'
+        ];
+
+        //validation
+        $validator = Validator::make($request->all(), [
+            'stock' => 'required|min:1|integer',
+        ]);
+
+        if ($validator->fails()) {
+            alert()->error('Gagal', $validator->errors()->first());
+            return redirect()->back()->withInput();
+        }
+
+        try {
+            Produk::where('kode_produk', $id)->update([
+                'stock' => $request->stock
+            ]);
+            alert()->success('Berhasil', 'Stock produk berhasil ditambahkan');
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            alert()->error('Gagal', $th->getMessage());
+            return redirect()->back()->withInput();
+        }
+    }
 }
