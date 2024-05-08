@@ -68,6 +68,7 @@ class ProdukController extends Controller
         $produk->kode_kategori = $request->kode_kategori;
         $produk->nama_produk = $request->nama_produk;
         $produk->gambar = $gambar->hashName();
+        $produk->stock = 0;
 
         // simpan
         try {
@@ -121,6 +122,7 @@ class ProdukController extends Controller
                 'kode_kategori' => $request->kode_kategori,
                 'nama_produk' => $request->nama_produk,
                 'gambar' => $gambar->hashName(),
+                'stock' => 0
             ]);
             alert()->success('Berhasil', 'Data produk berhasil diubah');
             return redirect()->back();
