@@ -81,7 +81,8 @@
                                         data-key="t-alerts">Kategori Produk</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="ui-badges.html" class="nav-link" data-key="t-badges">Data Produk</a>
+                                    <a href="{{ route('produk') }}" class="nav-link" data-key="t-badges">Data
+                                        Produk</a>
                                 </li>
                             </ul>
                         </div>

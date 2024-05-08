@@ -19,7 +19,7 @@ class KategoriProdukController extends Controller
     {
         $customMessage = [
             'nama_kategori.required' => 'Nama Kategori harus diisi',
-            'nama_kategori.max' => 'Nama Kategori :max karakter',
+            'nama_kategori.max' => 'Nama Kategori maksimal :max karakter',
             'nama_kategori.string' => 'Nama Kategori harus berupa string',
         ];
 
@@ -33,17 +33,15 @@ class KategoriProdukController extends Controller
         }
 
         $getKode = KategoriProduk::latest()->first();
-        $kode = "KP-";
+        $kode = "KTGR-";
 
         if ($getKode == null) {
             $nomorUrut = "0001";
         } else {
-            $nomorUrut = substr($getKode->kode_kategori, 3, 4) + 1;
+            $nomorUrut = substr($getKode->kode_kategori, 5, 4) + 1;
             $nomorUrut = "000" . $nomorUrut;
         }
         $kode_kategori = $kode . $nomorUrut;
-
-        // dd($kode_kategori);
 
         $kategori = new KategoriProduk();
         $kategori->kode_kategori = $kode_kategori;
