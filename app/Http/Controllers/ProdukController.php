@@ -5,15 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\KategoriProduk;
 use App\Models\Produk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ProdukController extends Controller
 {
     public function index()
     {
-        $produk = Produk::all();
-        $kategori = KategoriProduk::all();
-        return view('produk', compact('produk', 'kategori'));
+        $produk = KategoriProduk::join('produks', 'kategori_produks.kode_kategori', '=', 'produks.kode_kategori')->select('produks.*', 'kategori_produks.*')->get();
+        return view('produk', compact('produk'));
     }
 
     public function store(Request $request)
