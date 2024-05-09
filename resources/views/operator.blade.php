@@ -1,4 +1,8 @@
 @extends('layout.app')
+@section('title', 'Operator')
+@section('titleHeader', 'Operator')
+@section('menu', 'Operator')
+@section('subMenu', 'User')
 @section('content')
     <div class="row">
         <div class="col-lg-12">

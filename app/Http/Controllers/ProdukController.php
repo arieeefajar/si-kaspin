@@ -163,7 +163,7 @@ class ProdukController extends Controller
         //validation
         $validator = Validator::make($request->all(), [
             'stock' => 'required|min:1|integer',
-        ]);
+        ], $customMessage);
 
         if ($validator->fails()) {
             alert()->error('Gagal', $validator->errors()->first());
@@ -180,5 +180,11 @@ class ProdukController extends Controller
             alert()->error('Gagal', $th->getMessage());
             return redirect()->back()->withInput();
         }
+    }
+
+    public function stockLimit()
+    {
+        $produk = KategoriProduk::join('produks', 'kategori_produks.kode_kategori', '=', 'produks.kode_kategori')->select('produks.*', 'kategori_produks.*')->get();
+        return view('stockLimit', compact('produk'));
     }
 }

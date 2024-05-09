@@ -73,6 +73,9 @@ Route::middleware('auth')->group(function () {
         Route::put('/{id}', [ProdukController::class, 'updateStock'])->name('stock.update');
     });
 
+    // stock limit
+    Route::get('/stocklimit', [ProdukController::class, 'stockLimit'])->name('stocklimit');
+
     // operator route
     Route::prefix('operator')->group(function () {
         Route::get('/', [OperatorController::class, 'index'])->name('operator');

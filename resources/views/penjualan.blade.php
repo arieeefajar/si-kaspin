@@ -1,4 +1,8 @@
 @extends('layout.app')
+@section('title', 'Penjualan')
+@section('titleHeader', 'Penjualan')
+@section('menu', 'Transaksi')
+@section('subMenu', 'Penjualan')
 @section('content')
     <div class="row h-100">
         <div class="col-xl-8">
