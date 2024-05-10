@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Produk extends Model
+class LevelHarga extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'nama_produk',
-        'gambar',
-        'stock',
+    protected $filable = [
+        'kode_produk',
+        'nama_level',
+        'harga_satuan',
     ];
 }

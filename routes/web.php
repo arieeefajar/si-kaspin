@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EtalaseController;
 use App\Http\Controllers\KategoriProdukController;
+use App\Http\Controllers\LevelHargaController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PiutangController;
@@ -75,6 +76,14 @@ Route::middleware('auth')->group(function () {
 
     // stock limit
     Route::get('/stocklimit', [ProdukController::class, 'stockLimit'])->name('stocklimit');
+
+    // level harga
+    Route::prefix('levelharga')->group(function () {
+        Route::get('/', [LevelHargaController::class, 'index'])->name('levelharga');
+        Route::post('/', [LevelHargaController::class, 'store'])->name('levelharga.store');
+        Route::put('/{id}', [LevelHargaController::class, 'update'])->name('levelharga.update');
+        Route::delete('{id}', [LevelHargaController::class, 'destroy'])->name('levelharga.destroy');
+    });
 
     // operator route
     Route::prefix('operator')->group(function () {
