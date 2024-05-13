@@ -97,13 +97,13 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link menu-link" href="widgets.html">
+                <a class="nav-link menu-link" href="{{ route('stocklimit') }}">
                     <i class="ri-file-list-3-line"></i> <span data-key="t-widgets">Data Stok Limit</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link menu-link" href="widgets.html">
+                <a class="nav-link menu-link" href="{{ route('levelharga') }}">
                     <i class="ri-price-tag-3-line"></i> <span data-key="t-widgets">Level Harga</span>
                 </a>
             </li>

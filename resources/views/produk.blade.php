@@ -1,4 +1,8 @@
 @extends('layout.app')
+@section('title', 'Produk')
+@section('titleHeader', 'Produk')
+@section('menu', 'Produk')
+@section('subMenu', 'Data Produk')
 @section('content')
     <div class="row">
         <div class="col-lg-12">
@@ -112,7 +116,7 @@
                             <label for="kode_kategori" class="form-label">Kategori</label>
                             <select name="kode_kategori" id="kode-kategori" class="form-select" required>
                                 <option value="" selected disabled>Pilih Kategori</option>
-                                @foreach ($produk as $item)
+                                @foreach ($kategori as $item)
                                     <option value="{{ $item->kode_kategori }}"
                                         {{ old('nama_kategori') == $item->kode_kategori ? 'selected' : '' }}>
                                         {{ $item->nama_kategori }}
@@ -162,7 +166,7 @@
                             <label for="nama_kategori" class="form-label">Pilih Kategori</label>
                             <select name="kode_kategori" id="kode-kategori" class="form-select">
                                 <option value="" selected disabled>Pilih Kategori</option>
-                                @foreach ($produk as $item)
+                                @foreach ($kategori as $item)
                                     <option value="{{ $item->kode_kategori }}"
                                         {{ old('kode_kategori') == $item->kode_kategori ? 'selected' : '' }}>
                                         {{ $item->nama_kategori }}</option>

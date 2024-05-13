@@ -1,14 +1,14 @@
 @extends('layout.app')
-@section('title', 'Operator')
-@section('titleHeader', 'Operator')
-@section('menu', 'Operator')
-@section('subMenu', 'User')
+@section('title', 'Level Harga')
+@section('titleHeader', 'Level Harga')
+@section('menu', 'Produk')
+@section('subMenu', 'Level Harga')
 @section('content')
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title mb-0">Operator</h4>
+                    <h4 class="card-title mb-0">Level Harga</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
                     <div id="customerList">
@@ -35,32 +35,35 @@
                                 <thead class="table-light">
                                     <tr class="text-center">
                                         <th class="sort" data-sort="no">No</th>
-                                        <th class="sort" data-sort="nama">Nama</th>
-                                        <th class="sort" data-sort="username">Username</th>
-                                        <th class="sort" data-sort="role">Role</th>
+                                        <th class="sort" data-sort="kode_level">Kode Level</th>
+                                        <th class="sort" data-sort="nama_level">Nama Level</th>
+                                        <th class="sort" data-sort="nama_produk">Nama Produk</th>
+                                        <th class="sort" data-sort="harga_satuan">Harga Satuan</th>
                                         <th class="sort" data-sort="aksi">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="list form-check-all">
-                                    @foreach ($operator as $key => $item)
+                                    @foreach ($levelharga as $key => $item)
                                         <tr class="text-center">
                                             <td class="no">{{ $key + 1 }}</td>
                                             <td class="id" style="display:none;"><a href="javascript:void(0);"
                                                     class="fw-medium link-primary">#VZ2101</a></td>
-                                            <td class="nama">{{ $item->nama }}</td>
-                                            <td class="username">{{ $item->username }}</td>
-                                            <td class="role">{{ $item->role }}</td>
+                                            <td class="kode_level">{{ $item->kode_level }}</td>
+                                            <td class="nama_level">{{ $item->nama_level }}</td>
+                                            <td class="nama_produk">{{ $item->nama_produk }}</td>
+                                            <td class="harga_satuan">Rp.
+                                                {{ number_format($item->harga_satuan, 0, ',', '.') }}</td>
                                             <td>
                                                 <div class="d-flex gap-2 justify-content-center">
                                                     <div class="edit">
                                                         <button class="btn btn-sm btn-warning edit-item-btn"
                                                             data-bs-toggle="modal" data-bs-target="#editModal"
-                                                            onclick="editOperator({{ $item }})">Edit</button>
+                                                            onclick="editLevelHarga({{ $item }})">Edit</button>
                                                     </div>
                                                     <div class="remove">
                                                         <button class="btn btn-sm btn-danger remove-item-btn"
                                                             data-bs-toggle="modal" data-bs-target="#deleteRecordModal"
-                                                            onclick="deleteOperator({{ $item->id }})">Hapus</button>
+                                                            onclick="deleteLevelHarga({{ $item }})">Hapus</button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -104,40 +107,42 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-light p-3">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Operator</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Level Harga</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         id="close-modal"></button>
                 </div>
-                <form action="{{ route('operator.store') }}" method="POST">
+                <form action="{{ route('levelharga.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
 
                         <div class="mb-3">
-                            <label for="nama" class="form-label">Nama</label>
-                            <input type="text" id="nama" class="form-control" name="nama"
-                                placeholder="Masukan nama" required />
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" id="username" class="form-control" name="username"
-                                placeholder="Masukan username" required />
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" id="password" class="form-control" name="password"
-                                placeholder="Masukan password" required />
-                        </div>
-
-                        <div>
-                            <label for="role" class="form-label">Role</label>
-                            <select class="form-control" data-trigger id="role" name="role">
-                                <option selected disabled>Pilih Role</option>
-                                <option value="admin">Admin</option>
-                                <option value="owner">Owner</option>
+                            <label for="nama_produk" class="form-label">Produk</label>
+                            <select name="kode_produk" id="kode_produk" class="form-select" required>
+                                <option selected disabled>Pilih Produk</option>
+                                @foreach ($produk as $item)
+                                    <option value="{{ $item->kode_produk }}"
+                                        {{ old('kode_produk') == $item->kode_produk ? 'selected' : '' }}>
+                                        {{ $item->nama_produk }}</option>
+                                @endforeach
                             </select>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="nama" class="form-label">Nama Level</label>
+                            <input type="text" id="nama-level" class="form-control" name="nama_level"
+                                placeholder="Masukan nama level" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="hargaSatuan" class="form-label">Harga Satuan</label>
+                            <div class="input-group">
+                                <span class="input-group-text">Rp</span>
+                                <input type="text" id="harga-satuan" class="form-control" name="harga_satuan"
+                                    placeholder="Masukan harga satuan" required oninput="formatRP(this); inputHarga()" />
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="harga-satuan1" name="harga_satuan1">
                     </div>
                     <div class="modal-footer">
                         <div class="hstack gap-2 justify-content-end">
@@ -163,27 +168,35 @@
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
-
                         <div class="mb-3">
-                            <label for="nama-field" class="form-label">Nama</label>
-                            <input type="text" id="nama-edit" class="form-control" name="nama"
-                                placeholder="Masukan nama" required />
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="username-field" class="form-label">Username</label>
-                            <input type="text" id="username-edit" class="form-control" name="username"
-                                placeholder="Masukan username" required />
-                        </div>
-
-                        <div>
-                            <label for="role-field" class="form-label">Role</label>
-                            <select class="form-control" data-trigger name="role" id="role-edit">
-                                <option selected disabled>Pilih Role</option>
-                                <option value="admin">Admin</option>
-                                <option value="owner">Owner</option>
+                            <label for="nama_produk" class="form-label">Produk</label>
+                            <select name="kode_produk" id="kode_produk_edit" class="form-select" required>
+                                <option selected disabled>Pilih Produk</option>
+                                @foreach ($produk as $item)
+                                    <option value="{{ $item->kode_produk }}"
+                                        {{ old('kode_produk') == $item->kode_produk ? 'selected' : '' }}>
+                                        {{ $item->nama_produk }}</option>
+                                @endforeach
                             </select>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="nama" class="form-label">Nama Level</label>
+                            <input type="text" id="nama-level-edit" class="form-control" name="nama_level"
+                                placeholder="Masukan nama level" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="hargaSatuan" class="form-label">Harga Satuan</label>
+                            <div class="input-group">
+                                <span class="input-group-text">Rp</span>
+                                <input type="text" id="harga-satuan-edit" class="form-control" name="harga_satuan"
+                                    placeholder="Masukan harga satuan" required
+                                    oninput="formatRP(this); inputHargaEdit()" />
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="harga-satuan1-edit" name="harga_satuan1">
                     </div>
                     <div class="modal-footer">
                         <div class="hstack gap-2 justify-content-end">
@@ -234,21 +247,54 @@
     <script src="{{ asset('admin_assets/assets/libs/list.pagination.js/list.pagination.min.js') }}"></script>
 
     <!-- listjs init -->
-    <script src="{{ asset('admin_assets/assets/js/customJs/operator.init.js') }}"></script>
+    <script src="{{ asset('admin_assets/assets/js/customJs/levelHarga.init.js') }}"></script>
 
     <script>
-        function editOperator(data) {
-            const form = document.getElementById('editForm');
-            form.action = "{{ route('operator.update', ['id' => '/']) }}/" + data.id;
-            form.querySelector("#nama-edit").value = data.nama;
-            form.querySelector("#username-edit").value = data.username;
-            form.querySelector("#role-edit").value = data.role;
+        function formatRP(input) {
+            var value = input.value.replace(/[^0-9]/g, '');
+
+            if (value) {
+                value = parseInt(value, 10).toLocaleString('id-ID');
+            }
+
+            input.value = value;
         }
 
-        function deleteOperator(data) {
-            console.log(data);
+        function inputHarga() {
+            const hargaSatuan = document.getElementById('harga-satuan').value;
+            const hargaSatuan1 = document.getElementById('harga-satuan1');
+            const harga = parseInt(hargaSatuan.replace(/[^0-9]/g, ''));
+
+            hargaSatuan1.value = harga;
+        }
+
+        function inputHargaEdit() {
+            const hargaSatuan = document.getElementById('harga-satuan-edit').value;
+            const hargaSatuan1 = document.getElementById('harga-satuan1-edit');
+            const harga = parseInt(hargaSatuan.replace(/[^0-9]/g, ''));
+
+            hargaSatuan1.value = harga;
+        }
+
+        function editLevelHarga(data) {
+
+            var hargaSatuan = parseInt(data.harga_satuan);
+
+            if (hargaSatuan) {
+                hargaSatuan = parseInt(hargaSatuan, 10).toLocaleString('id-ID');
+            }
+
+            const form = document.getElementById('editForm');
+            form.action = "{{ route('levelharga.update', ['id' => '/']) }}/" + data.kode_level;
+            form.querySelector("#kode_produk_edit").value = data.kode_produk;
+            form.querySelector("#nama-level-edit").value = data.nama_level;
+            form.querySelector("#harga-satuan-edit").value = hargaSatuan;
+            form.querySelector("#harga-satuan1-edit").value;
+        }
+
+        function deleteLevelHarga(data) {
             const form = document.getElementById('deleteForm');
-            form.action = "{{ route('operator.destroy', ['id' => '/']) }}/" + data;
+            form.action = "{{ route('levelharga.destroy', ['id' => '/']) }}/" + data.kode_level;
         }
     </script>
 @endsection
