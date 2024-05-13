@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function () {
     // penjualan route
     Route::prefix('penjualan')->group(function () {
         Route::get('/', [PenjualanController::class, 'index'])->name('penjualan');
+        Route::get('levelharga/{id}', [PenjualanController::class, 'getLevelHarga'])->name('penjualan.getLevelHarga');
+        Route::get('harga/{id}', [PenjualanController::class, 'getHarga'])->name('penjualan.getHarga');
     });
 
     // retur route

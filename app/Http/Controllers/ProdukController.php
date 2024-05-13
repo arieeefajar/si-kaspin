@@ -61,7 +61,7 @@ class ProdukController extends Controller
 
         // upload gambar
         $gambar = $request->file('gambar');
-        $gambar->storeAs('public/gamabarProduk', $gambar->hashName());
+        $gambar->storeAs('public/gambarProduk', $gambar->hashName());
 
         // insert data
         $produk = new Produk();
@@ -116,14 +116,13 @@ class ProdukController extends Controller
 
         // upload gambar
         $gambar = $request->file('gambar');
-        $gambar->storeAs('public/gamabarProduk', $gambar->hashName());
+        $gambar->storeAs('public/gambarProduk', $gambar->hashName());
 
         try {
             Produk::where('kode_produk', $id)->update([
                 'kode_kategori' => $request->kode_kategori,
                 'nama_produk' => $request->nama_produk,
                 'gambar' => $gambar->hashName(),
-                'stock' => 0
             ]);
             alert()->success('Berhasil', 'Data produk berhasil diubah');
             return redirect()->back();

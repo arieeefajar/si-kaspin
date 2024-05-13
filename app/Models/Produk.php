@@ -14,4 +14,11 @@ class Produk extends Model
         'gambar',
         'stock',
     ];
+
+    public function levelHarga()
+    {
+        $levelHarga = LevelHarga::join('produks', 'level_hargas.kode_produks', '=', 'produks.kode_produk')->select('level_hargas.*', 'produks.*')->get();
+
+        return $levelHarga;
+    }
 }
