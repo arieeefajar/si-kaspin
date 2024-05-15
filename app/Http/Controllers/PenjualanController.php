@@ -26,4 +26,9 @@ class PenjualanController extends Controller
         $levelHarga = LevelHarga::where('kode_level', $id)->get();
         return response()->json($levelHarga);
     }
+
+    public function store(Request $request)
+    {
+        dd($request->all());
+    }
 }

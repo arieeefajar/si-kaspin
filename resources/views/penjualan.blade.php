@@ -59,7 +59,8 @@
                         <i class="ri-shopping-cart-line"></i>
                         <h3 class="card-title mb-0">Keranjang</h3>
                     </div>
-                    <form action="" id="formKeranjang">
+                    <form action="" id="formKeranjang" method="POST">
+                        @csrf
                         <div class="d-flex-column flex-grow-1 mt-4">
                             <template id="cardItemTemplate">
                                 <div class="card">
@@ -87,12 +88,8 @@
                             </template>
 
                             <div id="cartItemsContainer"></div>
-                            <input type="hidden" id="kode-produk" name="kode_produk[]">
-                            <input type="hidden" id="nama-produk" name="nama_produk[]">
-                            <input type="hidden" id="jumlahItem" name="jumlah[]">
-                            <input type="hidden" id="subtotal" name="subtotal[]">
-                            <input type="hidden" id="total">
-                            <h6 class="mb-3">Total: <span id="totalHarga">0</span></h6>
+                            <input type="hidden" name="total" id="total">
+                            <h6 class="mb-3" hidden>Total: <span id="totalHarga">0</span></h6>
                             <button class="btn btn-success w-100" id="btnCheckout" hidden>Checkout</button>
                         </div>
                     </form>
@@ -288,6 +285,7 @@
             if (items && items.length > 0) {
                 cartItemsContainer.innerHTML = '';
                 btnCheckout.removeAttribute('hidden');
+                totalHarga.removeAttribute('hidden');
 
                 items.forEach((item, index) => {
                     const clone = template.content.cloneNode(true);
@@ -304,26 +302,76 @@
 
         function setValueForm() {
             const items = JSON.parse(localStorage.getItem('cartItem'));
-            const template = document.getElementById('cardItemTemplate');
-            console.log(items);
+            const form = document.getElementById('formKeranjang');
+            const total = document.getElementById('total');
+            let totalSubtotal = 0;
+
+            if (items && items.length > 0) {
+                items.forEach((item, index) => {
+
+                    // input kodeProduk
+                    const kodeProduk = document.createElement('input');
+                    kodeProduk.type = 'hidden';
+                    kodeProduk.name = 'kode_produk[]';
+                    kodeProduk.value = item.kodeProduk;
+                    form.appendChild(kodeProduk);
+
+                    // input namaProduk
+                    const namaProduk = document.createElement('input');
+                    namaProduk.type = 'hidden';
+                    namaProduk.name = 'nama_produk[]';
+                    namaProduk.value = item.namaProduk;
+                    form.appendChild(namaProduk);
+
+                    // input qty
+                    const qty = document.createElement('input');
+                    qty.type = 'hidden';
+                    qty.name = 'qty[]';
+                    qty.value = item.jumlah;
+                    form.appendChild(qty);
+
+                    // input subtotal
+                    const subtotal = document.createElement('input');
+                    subtotal.type = 'hidden';
+                    subtotal.name = 'subtotal[]';
+                    subtotal.value = item.subtotal1;
+                    form.appendChild(subtotal);
+
+                    // input total
+                    totalSubtotal += parseInt(item.subtotal1);
+                    total.value = totalSubtotal;
+
+                    console.log(namaProduk.value, qty.value, subtotal.value);
+                })
+                console.log(total.value);
+            }
         }
 
         function removeItem() {
             const items = JSON.parse(localStorage.getItem('cartItem'));
-            const template = document.getElementById('cardItemTemplate');
+            const cartItemsContainer = document.getElementById('cartItemsContainer');
+            const btnCheckout = document.getElementById('btnCheckout');
 
             if (items && items.length > 0) {
-                const removeItem = template.querySelector('#btnRemoveItem');
                 items.forEach((item, index) => {
                     items.splice(index, 1);
                     localStorage.setItem('cartItem', JSON.stringify(items));
-                    getCartItem();
+
+                    if (items.length === 0) {
+                        cartItemsContainer.innerHTML = '';
+                        btnCheckout.setAttribute('hidden', true);
+                    } else {
+                        getCartItem();
+                    }
                 })
             }
         }
 
         function checkout() {
-            const items = JSON.parse(localStorage.getItem('cartItem'));
+            const form = document.getElementById('formKeranjang');
+            form.action = "{{ route('penjualan.store') }}";
+            form.method = "POST";
+            form.submit();
         }
     </script>
 @endsection
