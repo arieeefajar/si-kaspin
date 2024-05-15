@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [PenjualanController::class, 'index'])->name('penjualan');
         Route::get('levelharga/{id}', [PenjualanController::class, 'getLevelHarga'])->name('penjualan.getLevelHarga');
         Route::get('harga/{id}', [PenjualanController::class, 'getHarga'])->name('penjualan.getHarga');
+        Route::post('/', [PenjualanController::class, 'store'])->name('penjualan.store');
     });
 
     // retur route

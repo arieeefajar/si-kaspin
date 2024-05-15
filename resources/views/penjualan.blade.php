@@ -60,33 +60,33 @@
                         <h3 class="card-title mb-0">Keranjang</h3>
                     </div>
                     <div class="d-flex-column flex-grow-1 mt-4">
-                        <div class="card">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img class="rounded-start img-fluid h-100 object-cover"
-                                        src="{{ asset('admin_assets/assets/images/small/img-12.jpg') }}" alt="Card image">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-header">
-                                        <h6 class="mb-0">Batako Kotak Biasa</h6>
+                        <template id="cardItemTemplate">
+                            <div class="card">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img class="rounded-start img-fluid h-100 w-100 object-cover"
+                                            src="{{ asset('admin_assets/assets/images/small/img-12.jpg') }}"
+                                            alt="Card image" id="itemImg">
                                     </div>
-                                    <div class="card-body">
-                                        <p class="card-text mb-2">Rp. 10.000</p>
-                                        <p class="card-text">
-                                            <small class="text-muted">Edit
-                                            </small>
-                                            <i class="ri-edit-line"></i>
-                                            |
-                                            <small class="text-muted">Hapus</small>
-                                            <i class="ri-delete-bin-line"></i>
-                                        </p>
+                                    <div class="col-md-8">
+                                        <div class="card-header">
+                                            <h6 class="mb-0 itemName">2x | Batako Kotak Biasa</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text mb-2 itemPrice">Rp. 10.000</p>
+                                            <p class="card-text">
+                                                <span class="btn btn-sm btn-danger" id="btnRemoveItem" data-index=""
+                                                    onclick="removeItem()">Hapus <i class="ri-delete-bin-line"></i></span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div><!-- end card -->
-                    </div>
-                    <div class="">
-                        <button class="btn btn-success w-100">Lanjutkan</button>
+                        </template>
+
+                        <div id="cartItemsContainer"></div>
+                        <button class="btn btn-success w-100" id="btnCheckout" data-bs-toggle="modal"
+                            data-bs-target="#addPenjualan" hidden>Checkout</button>
                     </div>
                 </div>
             </div><!-- end card body -->
@@ -105,6 +105,8 @@
                     <form action="">
                         <div class="row g-3">
                             <div class="col-xxl-6">
+                                <input type="hidden" id="kode_produk">
+                                <input type="hidden" id="gambar">
                                 <div>
                                     <label for="produkName" class="form-label">Produk</label>
                                     <input type="text" class="form-control" id="nama_produk"
@@ -137,8 +139,64 @@
                                 <div class="hstack gap-2 justify-content-end">
                                     <button type="button" class="btn btn-light" onclick="clearForm()"
                                         data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-success" id="add-btn"
-                                        disabled>Tambah</button>
+                                    <button type="button" class="btn btn-success" id="add-btn"
+                                        data-bs-dismiss="modal" onclick="addItemToCart()" disabled>Tambah</button>
+                                </div>
+                            </div><!--end col-->
+                        </div><!--end row-->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addPenjualan" tabindex="-1" aria-labelledby="exampleModalgridLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalgridLabel">Transaksi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('penjualan.store') }}" id="addPenjualanForm" method="POST">
+                        @csrf
+                        <div class="row g-3">
+                            <div class="col-xxl-6">
+                                <label for="nama_pelanggan">Nama Pelanggan</label>
+                                <input type="text" id="nama-pelanggan" name="nama_pelanggan"
+                                    class="form-control"required>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label for="total">Total</label>
+                                <input type="text" id="total" class="form-control" readonly required>
+                                <input type="hidden" id="total1" name="total">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label for="bayar">Bayar</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="text" id="bayar" class="form-control"
+                                        placeholder="Masukan nominal tunai" required
+                                        oninput="formatRP(this); setKembalian()" />
+                                </div>
+                                <input type="hidden" id="bayar1" name="bayar">
+                            </div>
+
+                            <div class="col-xxl-6">
+                                <label for="kembalian">Kembalian</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="text" id="kembalian" class="form-control" name="kembalian" required
+                                        readonly oninput="formatRP(this)" />
+                                </div>
+                                <input type="hidden" name="kembalian" id="kembalian1">
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal"
+                                        id="btn-simpan" onclick="deleteCart()" disabled>simpan</button>
                                 </div>
                             </div><!--end col-->
                         </div><!--end row-->
@@ -151,9 +209,26 @@
 
 @section('otherJs')
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            getCartItem();
+        });
+
+        function formatRP(input) {
+            var value = input.value.replace(/[^0-9]/g, '');
+
+            if (value) {
+                value = parseInt(value, 10).toLocaleString('id-ID');
+            }
+
+            input.value = value;
+        }
+
         function addItem(data) {
+            const kodeProduk = document.getElementById('kode_produk').value = data.kode_produk;
             const namaProduk = document.getElementById('nama_produk').value = data.nama_produk;
+            const gambar = document.getElementById('gambar').value = data.gambar;
             const levelHarga = document.getElementById('level_harga');
+
             fetch("{{ route('penjualan.getLevelHarga', ['id' => '/']) }}/" + data.kode_produk, {
                 method: 'GET',
                 headers: {
@@ -218,6 +293,7 @@
             const jumlah = document.getElementById('jumlah');
             const subtotal = document.getElementById('subtotal');
             const subtotal1 = document.getElementById('subtotal1');
+            const gambar = document.getElementById('gambar');
 
             levelHarga.innerHTML = `<option selected disabled>Pilih Harga</option>`;
             hargaSatuan.value = '';
@@ -226,6 +302,163 @@
             jumlah.disabled = true;
             subtotal.value = '';
             subtotal1.value = '';
+            gambar.value = '';
+        }
+
+        function addItemToCart() {
+            const kodeProduk = document.getElementById('kode_produk').value;
+            const namaProduk = document.getElementById('nama_produk').value;
+            const jumlah = parseInt(document.getElementById('jumlah').value);
+            const subtotal1 = parseInt(document.getElementById('subtotal1').value);
+            const hargaSatuan1 = parseInt(document.getElementById('hargaSatuan1').value);
+            const gambar = document.getElementById('gambar').value;
+
+            let cartItem = JSON.parse(localStorage.getItem('cartItem')) || [];
+            const existingItemIndex = cartItem.findIndex(item => item.kodeProduk === kodeProduk);
+
+            if (existingItemIndex === -1) {
+                const newItem = {
+                    kodeProduk: kodeProduk,
+                    namaProduk: namaProduk,
+                    jumlah: jumlah,
+                    hargaSatuan: hargaSatuan1,
+                    subtotal1: subtotal1,
+                    gambar: gambar
+                };
+                cartItem.push(newItem);
+            } else {
+                cartItem[existingItemIndex].jumlah += jumlah;
+                cartItem[existingItemIndex].subtotal1 += subtotal1;
+            }
+
+            localStorage.setItem('cartItem', JSON.stringify(cartItem));
+            clearForm();
+            getCartItem();
+        }
+
+        function getCartItem() {
+            const items = JSON.parse(localStorage.getItem('cartItem'));
+            const cartItemsContainer = document.getElementById('cartItemsContainer');
+            const btnCheckout = document.getElementById('btnCheckout');
+            const template = document.getElementById('cardItemTemplate');
+
+            if (items && items.length > 0) {
+                cartItemsContainer.innerHTML = '';
+                btnCheckout.removeAttribute('hidden');
+
+                items.forEach((item, index) => {
+                    const clone = template.content.cloneNode(true);
+                    const btnRemove = clone.querySelector('#btnRemoveItem');
+                    clone.querySelector('#itemImg').src = `/storage/gambarProduk/${item.gambar}`;
+                    clone.querySelector('.itemName').textContent = `${item.jumlah}x | ${item.namaProduk}`;
+                    clone.querySelector('.itemPrice').textContent = `Rp. ${item.subtotal1.toLocaleString('id-ID')}`;
+                    btnRemove.setAttribute('data-index', index);
+                    cartItemsContainer.appendChild(clone);
+                });
+            }
+            setValueForm();
+        }
+
+        function setValueForm() {
+            const items = JSON.parse(localStorage.getItem('cartItem'));
+            const form = document.getElementById('addPenjualanForm');
+            const total = form.querySelector('#total');
+            const total1 = form.querySelector('#total1');
+            let totalSubtotal = 0;
+
+            if (items && items.length > 0) {
+                items.forEach((item, index) => {
+
+                    // input kodeProduk
+                    const kodeProduk = document.createElement('input');
+                    kodeProduk.type = 'hidden';
+                    kodeProduk.name = 'kode_produk[]';
+                    kodeProduk.value = item.kodeProduk;
+                    form.appendChild(kodeProduk);
+
+                    // input namaProduk
+                    const namaProduk = document.createElement('input');
+                    namaProduk.type = 'hidden';
+                    namaProduk.name = 'nama_produk[]';
+                    namaProduk.value = item.namaProduk;
+                    form.appendChild(namaProduk);
+
+                    // input qty
+                    const qty = document.createElement('input');
+                    qty.type = 'hidden';
+                    qty.name = 'qty[]';
+                    qty.value = item.jumlah;
+                    form.appendChild(qty);
+
+                    // input subtotal
+                    const subtotal = document.createElement('input');
+                    subtotal.type = 'hidden';
+                    subtotal.name = 'subtotal[]';
+                    subtotal.value = item.subtotal1;
+                    form.appendChild(subtotal);
+
+                    // input hargaSatuan
+                    const hargaSatuan = document.createElement('input');
+                    hargaSatuan.type = 'hidden';
+                    hargaSatuan.name = 'harga_satuan[]';
+                    hargaSatuan.value = item.hargaSatuan;
+                    form.appendChild(hargaSatuan);
+
+                    // input total
+                    totalSubtotal += parseInt(item.subtotal1);
+                });
+
+                // total value
+                total1.value = totalSubtotal;
+                totalSubtotal = totalSubtotal.toLocaleString('id-ID');
+                total.value = 'Rp. ' + totalSubtotal;
+            }
+        }
+
+        function removeItem() {
+            const items = JSON.parse(localStorage.getItem('cartItem'));
+            const cartItemsContainer = document.getElementById('cartItemsContainer');
+            const btnCheckout = document.getElementById('btnCheckout');
+
+            if (items && items.length > 0) {
+                items.forEach((item, index) => {
+                    items.splice(index, 1);
+                    localStorage.setItem('cartItem', JSON.stringify(items));
+
+                    if (items.length === 0) {
+                        cartItemsContainer.innerHTML = '';
+                        btnCheckout.setAttribute('hidden', true);
+                    } else {
+                        getCartItem();
+                    }
+                })
+            }
+        }
+
+        function setKembalian() {
+            const total = parseInt(document.getElementById('total1').value);
+            const bayar = document.getElementById('bayar').value;
+            const bayar1 = document.getElementById('bayar1');
+            const uang = parseInt(bayar.replace(/[^0-9]/g, ''));
+            const kembalian = document.getElementById('kembalian');
+            const kembalian1 = document.getElementById('kembalian1');
+            const btnCheckout = document.getElementById('btn-simpan');
+
+            const hasil = uang - total;
+            const format = parseInt(hasil, 10).toLocaleString('id-ID');
+
+            if (hasil < 0) {
+                kembalian.value = 0
+            } else {
+                bayar1.value = uang;
+                kembalian.value = format;
+                kembalian1.value = hasil
+                btnCheckout.removeAttribute('disabled')
+            }
+        }
+
+        function deleteCart() {
+            localStorage.removeItem('cartItem');
         }
     </script>
 @endsection
