@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\LevelHarga;
+use App\Models\Penjualan;
 use App\Models\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class PenjualanController extends Controller
 {
@@ -29,6 +31,43 @@ class PenjualanController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'total' => 'required',
+            'bayar' => 'required',
+            'kembalian' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            alert()->error('Gagal', $validator->errors()->first());
+            return redirect()->back();
+        }
+
+        // generate kode
+        $getKode = Penjualan::latest()->first();
+        $kode = "TRP-";
+
+        if ($getKode == null) {
+            $nomorUrut = "0001";
+        } else {
+            $nomorUrut = substr($getKode->kode_penjualan, 4, 4) + 1;
+            $nomorUrut = "000" . $nomorUrut;
+        }
+        $kode_penjualan = $kode . $nomorUrut;
+
+        $penjualan = new Penjualan();
+        $penjualan->kode_penjualan = $kode_penjualan;
+        $penjualan->kode_operator = auth()->user()->id;
+        $penjualan->total = $request->total;
+        $penjualan->bayar = $request->bayar;
+        $penjualan->kembalian = $request->kembalian;
+
+        try {
+            $penjualan->save();
+            alert()->success('Berhasil', 'Transaksi berhasil dilakukan');
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            alert()->error('Gagal', $th->getMessage());
+            return redirect()->back();
+        }
     }
 }

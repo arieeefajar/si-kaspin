@@ -59,40 +59,35 @@
                         <i class="ri-shopping-cart-line"></i>
                         <h3 class="card-title mb-0">Keranjang</h3>
                     </div>
-                    <form action="" id="formKeranjang" method="POST">
-                        @csrf
-                        <div class="d-flex-column flex-grow-1 mt-4">
-                            <template id="cardItemTemplate">
-                                <div class="card">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img class="rounded-start img-fluid h-100 w-100 object-cover"
-                                                src="{{ asset('admin_assets/assets/images/small/img-12.jpg') }}"
-                                                alt="Card image" id="itemImg">
+                    <div class="d-flex-column flex-grow-1 mt-4">
+                        <template id="cardItemTemplate">
+                            <div class="card">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img class="rounded-start img-fluid h-100 w-100 object-cover"
+                                            src="{{ asset('admin_assets/assets/images/small/img-12.jpg') }}"
+                                            alt="Card image" id="itemImg">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-header">
+                                            <h6 class="mb-0 itemName">2x | Batako Kotak Biasa</h6>
                                         </div>
-                                        <div class="col-md-8">
-                                            <div class="card-header">
-                                                <h6 class="mb-0 itemName">2x | Batako Kotak Biasa</h6>
-                                            </div>
-                                            <div class="card-body">
-                                                <p class="card-text mb-2 itemPrice">Rp. 10.000</p>
-                                                <p class="card-text">
-                                                    <span class="btn btn-sm btn-danger" id="btnRemoveItem" data-index=""
-                                                        onclick="removeItem()">Hapus <i
-                                                            class="ri-delete-bin-line"></i></span>
-                                                </p>
-                                            </div>
+                                        <div class="card-body">
+                                            <p class="card-text mb-2 itemPrice">Rp. 10.000</p>
+                                            <p class="card-text">
+                                                <span class="btn btn-sm btn-danger" id="btnRemoveItem" data-index=""
+                                                    onclick="removeItem()">Hapus <i class="ri-delete-bin-line"></i></span>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                            </template>
+                            </div>
+                        </template>
 
-                            <div id="cartItemsContainer"></div>
-                            <input type="hidden" name="total" id="total">
-                            <h6 class="mb-3" hidden>Total: <span id="totalHarga">0</span></h6>
-                            <button class="btn btn-success w-100" id="btnCheckout" hidden>Checkout</button>
-                        </div>
-                    </form>
+                        <div id="cartItemsContainer"></div>
+                        <button class="btn btn-success w-100" id="btnCheckout" data-bs-toggle="modal"
+                            data-bs-target="#addPenjualan" hidden>Checkout</button>
+                    </div>
                 </div>
             </div><!-- end card body -->
         </div><!-- end col-->
@@ -154,6 +149,62 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="addPenjualan" tabindex="-1" aria-labelledby="exampleModalgridLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalgridLabel">Transaksi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('penjualan.store') }}" id="addPenjualanForm" method="POST">
+                        @csrf
+                        <div class="row g-3">
+                            <div class="col-xxl-6">
+                                <label for="nama_pelanggan">Nama Pelanggan</label>
+                                <input type="text" id="nama-pelanggan" name="nama_pelanggan"
+                                    class="form-control"required>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label for="total">Total</label>
+                                <input type="text" id="total" class="form-control" readonly required>
+                                <input type="hidden" id="total1" name="total">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label for="bayar">Bayar</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="text" id="bayar" class="form-control"
+                                        placeholder="Masukan nominal tunai" required
+                                        oninput="formatRP(this); setKembalian()" />
+                                </div>
+                                <input type="hidden" id="bayar1" name="bayar">
+                            </div>
+
+                            <div class="col-xxl-6">
+                                <label for="kembalian">Kembalian</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="text" id="kembalian" class="form-control" name="kembalian" required
+                                        readonly oninput="formatRP(this)" />
+                                </div>
+                                <input type="hidden" name="kembalian" id="kembalian1">
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal"
+                                        id="btn-simpan" onclick="deleteCart()" disabled>simpan</button>
+                                </div>
+                            </div><!--end col-->
+                        </div><!--end row-->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('otherJs')
@@ -161,6 +212,16 @@
         document.addEventListener('DOMContentLoaded', function() {
             getCartItem();
         });
+
+        function formatRP(input) {
+            var value = input.value.replace(/[^0-9]/g, '');
+
+            if (value) {
+                value = parseInt(value, 10).toLocaleString('id-ID');
+            }
+
+            input.value = value;
+        }
 
         function addItem(data) {
             const kodeProduk = document.getElementById('kode_produk').value = data.kode_produk;
@@ -249,6 +310,7 @@
             const namaProduk = document.getElementById('nama_produk').value;
             const jumlah = parseInt(document.getElementById('jumlah').value);
             const subtotal1 = parseInt(document.getElementById('subtotal1').value);
+            const hargaSatuan1 = parseInt(document.getElementById('hargaSatuan1').value);
             const gambar = document.getElementById('gambar').value;
 
             let cartItem = JSON.parse(localStorage.getItem('cartItem')) || [];
@@ -259,6 +321,7 @@
                     kodeProduk: kodeProduk,
                     namaProduk: namaProduk,
                     jumlah: jumlah,
+                    hargaSatuan: hargaSatuan1,
                     subtotal1: subtotal1,
                     gambar: gambar
                 };
@@ -278,14 +341,10 @@
             const cartItemsContainer = document.getElementById('cartItemsContainer');
             const btnCheckout = document.getElementById('btnCheckout');
             const template = document.getElementById('cardItemTemplate');
-            const totalHarga = document.getElementById('totalHarga');
-            totalHarga.textContent = 'Rp. ' + items.reduce((total, item) => total + item.subtotal1, 0).toLocaleString(
-                'id-ID');
 
             if (items && items.length > 0) {
                 cartItemsContainer.innerHTML = '';
                 btnCheckout.removeAttribute('hidden');
-                totalHarga.removeAttribute('hidden');
 
                 items.forEach((item, index) => {
                     const clone = template.content.cloneNode(true);
@@ -302,8 +361,9 @@
 
         function setValueForm() {
             const items = JSON.parse(localStorage.getItem('cartItem'));
-            const form = document.getElementById('formKeranjang');
-            const total = document.getElementById('total');
+            const form = document.getElementById('addPenjualanForm');
+            const total = form.querySelector('#total');
+            const total1 = form.querySelector('#total1');
             let totalSubtotal = 0;
 
             if (items && items.length > 0) {
@@ -337,13 +397,21 @@
                     subtotal.value = item.subtotal1;
                     form.appendChild(subtotal);
 
+                    // input hargaSatuan
+                    const hargaSatuan = document.createElement('input');
+                    hargaSatuan.type = 'hidden';
+                    hargaSatuan.name = 'harga_satuan[]';
+                    hargaSatuan.value = item.hargaSatuan;
+                    form.appendChild(hargaSatuan);
+
                     // input total
                     totalSubtotal += parseInt(item.subtotal1);
-                    total.value = totalSubtotal;
+                });
 
-                    console.log(namaProduk.value, qty.value, subtotal.value);
-                })
-                console.log(total.value);
+                // total value
+                total1.value = totalSubtotal;
+                totalSubtotal = totalSubtotal.toLocaleString('id-ID');
+                total.value = 'Rp. ' + totalSubtotal;
             }
         }
 
@@ -367,11 +435,30 @@
             }
         }
 
-        function checkout() {
-            const form = document.getElementById('formKeranjang');
-            form.action = "{{ route('penjualan.store') }}";
-            form.method = "POST";
-            form.submit();
+        function setKembalian() {
+            const total = parseInt(document.getElementById('total1').value);
+            const bayar = document.getElementById('bayar').value;
+            const bayar1 = document.getElementById('bayar1');
+            const uang = parseInt(bayar.replace(/[^0-9]/g, ''));
+            const kembalian = document.getElementById('kembalian');
+            const kembalian1 = document.getElementById('kembalian1');
+            const btnCheckout = document.getElementById('btn-simpan');
+
+            const hasil = uang - total;
+            const format = parseInt(hasil, 10).toLocaleString('id-ID');
+
+            if (hasil < 0) {
+                kembalian.value = 0
+            } else {
+                bayar1.value = uang;
+                kembalian.value = format;
+                kembalian1.value = hasil
+                btnCheckout.removeAttribute('disabled')
+            }
+        }
+
+        function deleteCart() {
+            localStorage.removeItem('cartItem');
         }
     </script>
 @endsection
