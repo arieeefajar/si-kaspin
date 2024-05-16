@@ -15,4 +15,9 @@ class Penjualan extends Model
         'bayar',
         'kembalian',
     ];
+
+    public function details()
+    {
+        return $this->hasMany(DetailPenjualan::class, 'kode_penjualan', 'kode_penjualan');
+    }
 }

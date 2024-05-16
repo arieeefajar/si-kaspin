@@ -1,4 +1,11 @@
 @extends('layout.app')
+@section('otherStyle')
+    <style>
+        #cardItem {
+            cursor: pointer;
+        }
+    </style>
+@endsection
 @section('title', 'Penjualan')
 @section('titleHeader', 'Penjualan')
 @section('menu', 'Transaksi')
@@ -61,7 +68,7 @@
                     </div>
                     <div class="d-flex-column flex-grow-1 mt-4">
                         <template id="cardItemTemplate">
-                            <div class="card">
+                            <div class="card" id="cardItem">
                                 <div class="row g-0">
                                     <div class="col-md-4">
                                         <img class="rounded-start img-fluid h-100 w-100 object-cover"
@@ -76,7 +83,8 @@
                                             <p class="card-text mb-2 itemPrice">Rp. 10.000</p>
                                             <p class="card-text">
                                                 <span class="btn btn-sm btn-danger" id="btnRemoveItem" data-index=""
-                                                    onclick="removeItem()">Hapus <i class="ri-delete-bin-line"></i></span>
+                                                    onclick="removeItem(this)">Hapus <i
+                                                        class="ri-delete-bin-line"></i></span>
                                             </p>
                                         </div>
                                     </div>
@@ -86,7 +94,7 @@
 
                         <div id="cartItemsContainer"></div>
                         <button class="btn btn-success w-100" id="btnCheckout" data-bs-toggle="modal"
-                            data-bs-target="#addPenjualan" hidden>Checkout</button>
+                            data-bs-target="#addPenjualan" onclick="setValueForm()" hidden>Checkout</button>
                     </div>
                 </div>
             </div><!-- end card body -->
@@ -356,7 +364,6 @@
                     cartItemsContainer.appendChild(clone);
                 });
             }
-            setValueForm();
         }
 
         function setValueForm() {
@@ -369,8 +376,10 @@
             if (items && items.length > 0) {
                 items.forEach((item, index) => {
 
+                    // console.log(item);
                     // input kodeProduk
                     const kodeProduk = document.createElement('input');
+                    kodeProduk.id = 'kodeProduk';
                     kodeProduk.type = 'hidden';
                     kodeProduk.name = 'kode_produk[]';
                     kodeProduk.value = item.kodeProduk;
@@ -378,6 +387,7 @@
 
                     // input namaProduk
                     const namaProduk = document.createElement('input');
+                    namaProduk.id = 'namaProduk';
                     namaProduk.type = 'hidden';
                     namaProduk.name = 'nama_produk[]';
                     namaProduk.value = item.namaProduk;
@@ -385,13 +395,15 @@
 
                     // input qty
                     const qty = document.createElement('input');
+                    qty.id = 'qty';
                     qty.type = 'hidden';
-                    qty.name = 'qty[]';
+                    qty.name = 'jumlah[]';
                     qty.value = item.jumlah;
                     form.appendChild(qty);
 
                     // input subtotal
                     const subtotal = document.createElement('input');
+                    subtotal.id = 'subtotal';
                     subtotal.type = 'hidden';
                     subtotal.name = 'subtotal[]';
                     subtotal.value = item.subtotal1;
@@ -399,6 +411,7 @@
 
                     // input hargaSatuan
                     const hargaSatuan = document.createElement('input');
+                    hargaSatuan.id = 'hargaSatuan';
                     hargaSatuan.type = 'hidden';
                     hargaSatuan.name = 'harga_satuan[]';
                     hargaSatuan.value = item.hargaSatuan;
@@ -415,23 +428,24 @@
             }
         }
 
-        function removeItem() {
-            const items = JSON.parse(localStorage.getItem('cartItem'));
+        function removeItem(button) {
+            const index = button.getAttribute('data-index');
             const cartItemsContainer = document.getElementById('cartItemsContainer');
             const btnCheckout = document.getElementById('btnCheckout');
 
-            if (items && items.length > 0) {
-                items.forEach((item, index) => {
-                    items.splice(index, 1);
-                    localStorage.setItem('cartItem', JSON.stringify(items));
+            let items = JSON.parse(localStorage.getItem('cartItem')) || [];
 
-                    if (items.length === 0) {
-                        cartItemsContainer.innerHTML = '';
-                        btnCheckout.setAttribute('hidden', true);
-                    } else {
-                        getCartItem();
-                    }
-                })
+            if (index >= 0 && index < items.length) {
+                items.splice(index, 1);
+
+                localStorage.setItem('cartItem', JSON.stringify(items));
+
+                if (items.length === 0) {
+                    cartItemsContainer.innerHTML = '';
+                    btnCheckout.setAttribute('hidden', true);
+                } else {
+                    getCartItem();
+                }
             }
         }
 

@@ -9,16 +9,17 @@ class Produk extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'kode_produk';
+    public $incrementing = false;
+
     protected $fillable = [
         'nama_produk',
         'gambar',
         'stock',
     ];
 
-    public function levelHarga()
+    public function detailPenjualans()
     {
-        $levelHarga = LevelHarga::join('produks', 'level_hargas.kode_produks', '=', 'produks.kode_produk')->select('level_hargas.*', 'produks.*')->get();
-
-        return $levelHarga;
+        return $this->hasMany(DetailPenjualan::class, 'kode_produk', 'kode_produk');
     }
 }
