@@ -1,4 +1,11 @@
 @extends('layout.app')
+@section('otherStyle')
+    <style>
+        #cardItem {
+            cursor: pointer;
+        }
+    </style>
+@endsection
 @section('title', 'Penjualan')
 @section('titleHeader', 'Penjualan')
 @section('menu', 'Transaksi')
@@ -61,7 +68,7 @@
                     </div>
                     <div class="d-flex-column flex-grow-1 mt-4">
                         <template id="cardItemTemplate">
-                            <div class="card">
+                            <div class="card" id="cardItem">
                                 <div class="row g-0">
                                     <div class="col-md-4">
                                         <img class="rounded-start img-fluid h-100 w-100 object-cover"
@@ -386,7 +393,7 @@
                     // input qty
                     const qty = document.createElement('input');
                     qty.type = 'hidden';
-                    qty.name = 'qty[]';
+                    qty.name = 'jumlah[]';
                     qty.value = item.jumlah;
                     form.appendChild(qty);
 

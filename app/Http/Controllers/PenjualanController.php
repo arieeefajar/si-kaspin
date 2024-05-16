@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderPlaced;
+use App\Models\DetailPenjualan;
 use App\Models\LevelHarga;
 use App\Models\Penjualan;
 use App\Models\Produk;
@@ -61,13 +63,31 @@ class PenjualanController extends Controller
         $penjualan->bayar = $request->bayar;
         $penjualan->kembalian = $request->kembalian;
 
+        $details = [];
+        foreach ($request->kode_produk as $index => $kode_produk) {
+            $detail = new DetailPenjualan();
+            $detail->kode_penjualan = $kode_penjualan;
+            $detail->kode_produk = $kode_produk;
+            $detail->jumlah = $request->jumlah[$index];
+            $detail->subtotal = $request->subtotal[$index];
+            $details[] = $detail;
+        }
+
+
         try {
             $penjualan->save();
+            foreach ($details as $detail) {
+                $detail->save();
+            }
+            $penjualan->load('details');
+            event(new OrderPlaced($penjualan));
+
             alert()->success('Berhasil', 'Transaksi berhasil dilakukan');
             return redirect()->back();
         } catch (\Throwable $th) {
-            alert()->error('Gagal', $th->getMessage());
-            return redirect()->back();
+            dd($th->getMessage());
+            // alert()->error('Gagal', $th->getMessage());
+            // return redirect()->back();
         }
     }
 }
