@@ -10,6 +10,7 @@
             <div class="card card-height-100">
                 <!-- card body -->
                 <div class="card-body">
+                    <h1 class="card-title mb-0">Penjualan</h1>
                     <div class="align-items-center d-flex-column">
                         <form action="" class="app-search d-flex">
                             <div class="position-relative">
@@ -33,6 +34,7 @@
                                                 <div class="card-header">
                                                     <h5 class="card-title mb-0">{{ $item->nama_produk }}</h5>
                                                 </div>
+<<<<<<< Updated upstream
                                                 <div class="card-body">
                                                     <p class="card-text mb-2">Rp.
                                                         {{ number_format($item->harga_satuan, 0, ',', '.') }}</p>
@@ -45,6 +47,65 @@
                                     </div><!-- end card -->
                                 </div><!-- end col -->
                             @endforeach
+=======
+                                                <div class="col-md-8">
+                                                    <div class="card-header">
+                                                        <h5 class="card-title mb-0">Batako kotak biasa</h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <p class="card-text mb-2">Rp. 10.000</p>
+                                                        <p class="card-text"><small class="text-muted">Bata | Stok:
+                                                                40</small></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- end card -->
+                                    </div><!-- end col -->
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="row g-0">
+                                                <div class="col-md-4">
+                                                    <img class="rounded-start img-fluid h-100 object-cover"
+                                                        src="{{ asset('admin_assets/assets/images/small/img-12.jpg') }}"
+                                                        alt="Card image">
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="card-header">
+                                                        <h5 class="card-title mb-0">Batako Kotak Biasa</h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <p class="card-text mb-2">Rp. 10.000</p>
+                                                        <p class="card-text"><small class="text-muted">Bata | Stok:
+                                                                40</small></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- end card -->
+                                    </div><!-- end col -->
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="row g-0">
+                                                <div class="col-md-4">
+                                                    <img class="rounded-start img-fluid h-100 object-cover"
+                                                        src="{{ asset('admin_assets/assets/images/small/img-12.jpg') }}"
+                                                        alt="Card image">
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="card-header">
+                                                        <h5 class="card-title mb-0">Batako Kotak Biasa</h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <p class="card-text mb-2">Rp. 10.000</p>
+                                                        <p class="card-text"><small class="text-muted">Bata | Stok:
+                                                                40</small></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- end card -->
+                                    </div><!-- end col -->
+                                </div><!-- end row -->s
+                            </div><!-- end col -->
+>>>>>>> Stashed changes
                         </div><!-- end row -->
                     </div>
                 </div>

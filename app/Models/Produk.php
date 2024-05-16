@@ -21,4 +21,5 @@ class Produk extends Model
 
         return $levelHarga;
     }
+
 }
