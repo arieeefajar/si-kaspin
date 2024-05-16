@@ -33,6 +33,7 @@ class PenjualanController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'total' => 'required',
             'bayar' => 'required',
@@ -85,9 +86,8 @@ class PenjualanController extends Controller
             alert()->success('Berhasil', 'Transaksi berhasil dilakukan');
             return redirect()->back();
         } catch (\Throwable $th) {
-            dd($th->getMessage());
-            // alert()->error('Gagal', $th->getMessage());
-            // return redirect()->back();
+            alert()->error('Gagal', $th->getMessage());
+            return redirect()->back();
         }
     }
 }
