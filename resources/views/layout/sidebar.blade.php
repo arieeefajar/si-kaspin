@@ -137,8 +137,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link menu-link" href="widgets.html">
-                    <i class="ri-contacts-line"></i> <span data-key="t-widgets">Supplier</span>
+                <a class="nav-link menu-link" href="{{ route('supplier') }}">
+                    <i class="las la-users-cog"></i> <span data-key="t-widgets">Supplier</span>
                 </a>
             </li>
 
