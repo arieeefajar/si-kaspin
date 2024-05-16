@@ -20,4 +20,9 @@ class Penjualan extends Model
     {
         return $this->hasMany(DetailPenjualan::class, 'kode_penjualan', 'kode_penjualan');
     }
+
+    public function operator()
+    {
+        return $this->belongsTo(User::class, 'kode_operator', 'id');
+    }
 }

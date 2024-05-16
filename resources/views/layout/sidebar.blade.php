@@ -155,8 +155,14 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link menu-link" href="{{ route('penjualan.getDataPenjualan') }}">
+                    <i class="ri-book-2-line"></i> <span data-key="t-widgets">Penjualan</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link menu-link" href="widgets.html">
-                    <i class="ri-history-line"></i> <span data-key="t-widgets">Arus Uang</span>
+                    <i class="ri-book-2-line"></i> <span data-key="t-widgets">Pembelian</span>
                 </a>
             </li>
 

@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
         Route::get('levelharga/{id}', [PenjualanController::class, 'getLevelHarga'])->name('penjualan.getLevelHarga');
         Route::get('harga/{id}', [PenjualanController::class, 'getHarga'])->name('penjualan.getHarga');
         Route::post('/', [PenjualanController::class, 'store'])->name('penjualan.store');
+        Route::get('/data-penjualan', [PenjualanController::class, 'getDataPenjualan'])->name('penjualan.getDataPenjualan');
     });
 
     // retur route
@@ -98,7 +99,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // supplier route
-    Route::prefix('supplier')->group(function (){
+    Route::prefix('supplier')->group(function () {
         Route::get('/', [SupplierController::class, 'index'])->name('supplier');
         Route::post('/', [SupplierController::class, 'store'])->name('supplier.store');
         Route::put('/{id}', [SupplierController::class, 'update'])->name('supplier.update');

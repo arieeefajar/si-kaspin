@@ -16,7 +16,7 @@ class PenjualanController extends Controller
     public function index()
     {
         $produk = Produk::join('kategori_produks', 'produks.kode_kategori', '=', 'kategori_produks.kode_kategori')->join('level_hargas', 'produks.kode_produk', '=', 'level_hargas.kode_produk')->select('produks.*', 'kategori_produks.nama_kategori', 'level_hargas.harga_satuan')->where('level_hargas.nama_level', 'ecer')->get();
-        return view('penjualan', compact('produk'));
+        return view('transaksi/penjualan', compact('produk'));
     }
 
     public function getLevelHarga($id)
@@ -89,5 +89,11 @@ class PenjualanController extends Controller
             alert()->error('Gagal', $th->getMessage());
             return redirect()->back();
         }
+    }
+
+    public function getDataPenjualan()
+    {
+        $penjualan = Penjualan::with('details', 'operator')->get();
+        return view('penjualan', compact('penjualan'));
     }
 }
