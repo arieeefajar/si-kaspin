@@ -7,6 +7,7 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\ReturPenjualanController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,5 +56,13 @@ Route::middleware('auth')->group(function () {
         Route::post('/', [OperatorController::class, 'store'])->name('operator.store');
         Route::put('/{id}', [OperatorController::class, 'update'])->name('operator.update');
         Route::delete('{id}', [OperatorController::class, 'destroy'])->name('operator.destroy');
+    });
+
+    // supplier route
+    Route::prefix('supplier')->group(function (){
+        Route::get('/', [SupplierController::class, 'index'])->name('supplier');
+        Route::post('/', [SupplierController::class, 'store'])->name('supplier.store');
+        Route::put('/{id}', [SupplierController::class, 'update'])->name('supplier.update');
+        Route::delete('{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
     });
 });
