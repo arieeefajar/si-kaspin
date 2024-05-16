@@ -1,4 +1,8 @@
 @extends('layout.app')
+@section('title', 'Dashboard | Admin')
+@section('titleHeader', 'Dashboard')
+@section('menu', 'Menu')
+@section('subMenu', 'Dashboard')
 @section('content')
     <div class="row">
         <div class="col-xxl-5">

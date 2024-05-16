@@ -3,9 +3,12 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EtalaseController;
+use App\Http\Controllers\KategoriProdukController;
+use App\Http\Controllers\LevelHargaController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PiutangController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ReturPenjualanController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +41,9 @@ Route::middleware('auth')->group(function () {
     // penjualan route
     Route::prefix('penjualan')->group(function () {
         Route::get('/', [PenjualanController::class, 'index'])->name('penjualan');
+        Route::get('levelharga/{id}', [PenjualanController::class, 'getLevelHarga'])->name('penjualan.getLevelHarga');
+        Route::get('harga/{id}', [PenjualanController::class, 'getHarga'])->name('penjualan.getHarga');
+        Route::post('/', [PenjualanController::class, 'store'])->name('penjualan.store');
     });
 
     // retur route
@@ -48,6 +54,39 @@ Route::middleware('auth')->group(function () {
     // piutang route
     Route::prefix('piutang')->group(function () {
         Route::get('/', [PiutangController::class, 'index'])->name('piutang');
+    });
+
+    // kategori produk route
+    Route::prefix('kategoriproduk')->group(function () {
+        Route::get('/', [KategoriProdukController::class, 'index'])->name('kategoriproduk');
+        Route::post('/', [KategoriProdukController::class, 'store'])->name('kategoriproduk.store');
+        Route::put('/{id}', [KategoriProdukController::class, 'update'])->name('kategoriproduk.update');
+        Route::delete('{id}', [KategoriProdukController::class, 'destroy'])->name('kategoriproduk.destroy');
+    });
+
+    //produk route
+    Route::prefix('produk')->group(function () {
+        Route::get('/', [ProdukController::class, 'index'])->name('produk');
+        Route::post('/', [ProdukController::class, 'store'])->name('produk.store');
+        Route::put('/{id}', [ProdukController::class, 'update'])->name('produk.update');
+        Route::delete('{id}', [ProdukController::class, 'destroy'])->name('produk.destroy');
+    });
+
+    //stock produk route
+    Route::prefix('stock')->group(function () {
+        Route::get('/', [ProdukController::class, 'showStock'])->name('stock');
+        Route::put('/{id}', [ProdukController::class, 'updateStock'])->name('stock.update');
+    });
+
+    // stock limit
+    Route::get('/stocklimit', [ProdukController::class, 'stockLimit'])->name('stocklimit');
+
+    // level harga
+    Route::prefix('levelharga')->group(function () {
+        Route::get('/', [LevelHargaController::class, 'index'])->name('levelharga');
+        Route::post('/', [LevelHargaController::class, 'store'])->name('levelharga.store');
+        Route::put('/{id}', [LevelHargaController::class, 'update'])->name('levelharga.update');
+        Route::delete('{id}', [LevelHargaController::class, 'destroy'])->name('levelharga.destroy');
     });
 
     // operator route

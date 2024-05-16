@@ -77,10 +77,12 @@
                         <div class="col-lg-4">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a href="ui-alerts.html" class="nav-link" data-key="t-alerts">Kategori Produk</a>
+                                    <a href="{{ route('kategoriproduk') }}" class="nav-link"
+                                        data-key="t-alerts">Kategori Produk</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="ui-badges.html" class="nav-link" data-key="t-badges">Data Produk</a>
+                                    <a href="{{ route('produk') }}" class="nav-link" data-key="t-badges">Data
+                                        Produk</a>
                                 </li>
                             </ul>
                         </div>
@@ -89,19 +91,19 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link menu-link" href="widgets.html">
+                <a class="nav-link menu-link" href="{{ route('stock') }}">
                     <i class="ri-stock-line"></i> <span data-key="t-widgets">Stock Barang</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link menu-link" href="widgets.html">
+                <a class="nav-link menu-link" href="{{ route('stocklimit') }}">
                     <i class="ri-file-list-3-line"></i> <span data-key="t-widgets">Data Stok Limit</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link menu-link" href="widgets.html">
+                <a class="nav-link menu-link" href="{{ route('levelharga') }}">
                     <i class="ri-price-tag-3-line"></i> <span data-key="t-widgets">Level Harga</span>
                 </a>
             </li>
