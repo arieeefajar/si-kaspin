@@ -54,6 +54,12 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link menu-link" href="{{ route('pembelian') }}">
+                    <i class="las la-money-bill-wave"></i> <span data-key="t-widgets">Pembelian</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link menu-link" href="{{ route('retur') }}">
                     <i class="ri-exchange-dollar-line"></i> <span data-key="t-widgets">Retur Penjualan</span>
                 </a>
