@@ -14,4 +14,9 @@ class LevelHarga extends Model
         'nama_level',
         'harga_satuan',
     ];
+
+    public function produk()
+    {
+        return $this->belongsTo(Produk::class, 'kode_produk', 'kode_produk');
+    }
 }

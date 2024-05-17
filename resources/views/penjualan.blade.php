@@ -67,14 +67,15 @@
                                                     class="fw-medium link-primary">#VZ2101</a></td>
                                             <td class="kode_penjualan">{{ $item->kode_penjualan }}</td>
                                             <td class="nama">{{ $item->operator->nama }}</td>
-                                            <td class="total">Rp.
+                                            <td class="total1">Rp.
                                                 {{ number_format($item->total, 0, ',', '.') }}</td>
+                                            <td class="total" style="display:none;">{{ $item->total }}</td>
                                             <td>
                                                 <div class="d-flex gap-2 justify-content-center">
                                                     <div class="detail">
                                                         <button class="btn btn-sm btn-success remove-item-btn"
                                                             data-bs-toggle="modal" data-bs-target="#addModal"
-                                                            onclick="detailPenjualan({{ $item->id }})">Detail</button>
+                                                            onclick="detailPenjualan({{ $item }})">Detail</button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -123,7 +124,7 @@
                         id="close-modal"></button>
                 </div>
                 <div class="card">
-                    <div class="card-body table-responsive">
+                    <div class="card-body table-responsive" id="table-detail">
                         <table class="table table-borderless mb-0">
                             <thead class="table-light">
                                 <tr class="text-center">
@@ -144,28 +145,34 @@
                         </table>
                     </div>
                 </div>
-                <div class="d-flex container">
+                <div class="d-flex container" id="detail-penjualan">
                     <div class="row g-0 mb-3 flex-grow-1 align-items-center">
                         <div class="col-sm-6 d-flex-column">
                             <div class="info-row">
-                                <p><span class="label">Kode Penjualan</span> <span class="value"> : #okok</span></p>
+                                <p><span class="label">Kode Penjualan</span> <span class="value" id="kode-penjualan"> :
+                                        #okok</span></p>
                             </div>
                             <div class="info-row">
-                                <p><span class="label">Tanggal</span> <span class="value"> : 16</span></p>
+                                <p><span class="label">Tanggal</span> <span class="value" id="tanggal"> : 16</span>
+                                </p>
                             </div>
                             <div class="info-row">
-                                <p><span class="label">Operator</span> <span class="value"> : Bintang</span></p>
+                                <p><span class="label">Operator</span> <span class="value" id="nama-operator"> :
+                                        Bintang</span></p>
                             </div>
                         </div>
                         <div class="col-sm-6 d-flex-column">
                             <div class="info-row">
-                                <p><span class="label">Total</span> <span class="value"> : #okok</span></p>
+                                <p><span class="label">Total</span> <span class="value" id="total"> : #okok</span>
+                                </p>
                             </div>
                             <div class="info-row">
-                                <p><span class="label">Bayar</span> <span class="value"> : #okok</span></p>
+                                <p><span class="label">Bayar</span> <span class="value" id="bayar"> : #okok</span>
+                                </p>
                             </div>
                             <div class="info-row">
-                                <p><span class="label">Kembalian</span> <span class="value"> : #okok</span></p>
+                                <p><span class="label">Kembalian</span> <span class="value" id="kembalian"> :
+                                        #okok</span></p>
                             </div>
                         </div>
                     </div>
@@ -182,4 +189,68 @@
 
         <!-- listjs init -->
         <script src="{{ asset('admin_assets/assets/js/customJs/dataPenjualan.init.js') }}"></script>
+
+        <script>
+            function formatRp(value) {
+                value = parseInt(value, 10).toLocaleString('id-ID');
+                return value;
+            }
+
+            function produkBelanja(data) {
+                const cardDetail = document.getElementById('table-detail');
+                const tbody = cardDetail.querySelector('tbody');
+
+                tbody.innerHTML = '';
+                data.forEach(items => {
+                    const hargaSatuan = formatRp(items.produk.level_harga[0].harga_satuan);
+                    const subtotal = formatRp(items.subtotal);
+                    const tr = document.createElement('tr');
+                    tr.className = 'text-center';
+
+                    const tdProduk = document.createElement('td');
+                    tdProduk.textContent = items.produk.nama_produk;
+                    tr.appendChild(tdProduk);
+
+                    const tdHargaSatuan = document.createElement('td');
+                    tdHargaSatuan.textContent = "Rp. " + hargaSatuan;
+                    tr.appendChild(tdHargaSatuan);
+
+                    const tdJumlah = document.createElement('td');
+                    tdJumlah.textContent = items.jumlah;
+                    tr.appendChild(tdJumlah);
+
+                    const tdSubtotal = document.createElement('td');
+                    tdSubtotal.textContent = "Rp. " + subtotal;
+                    tr.appendChild(tdSubtotal);
+
+                    tbody.appendChild(tr);
+                });
+                console.log(data);
+            }
+
+            function detailPenjualan(data) {
+                produkBelanja(data.details);
+                const cardDetail = document.getElementById('detail-penjualan"');
+                const kodePenjualan = document.querySelector('#kode-penjualan');
+                const tanggal = document.querySelector('#tanggal');
+                const namaOperator = document.querySelector('#nama-operator');
+                const total = document.querySelector('#total');
+                const bayar = document.querySelector('#bayar');
+                const kembalian = document.querySelector('#kembalian');
+
+                const date = new Date(data.created_at);
+                const format = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+
+                const totalBelanja = formatRp(data.total);
+                const uangBayar = formatRp(data.bayar);
+                const uangKembalian = formatRp(data.kembalian);
+
+                kodePenjualan.textContent = ": " + data.kode_penjualan;
+                tanggal.textContent = ": " + format;
+                namaOperator.textContent = ": " + data.operator.nama;
+                total.textContent = ": Rp." + totalBelanja;
+                bayar.textContent = ": Rp." + uangBayar;
+                kembalian.textContent = ": Rp." + uangKembalian;
+            }
+        </script>
     @endsection

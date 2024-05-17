@@ -93,7 +93,7 @@ class PenjualanController extends Controller
 
     public function getDataPenjualan()
     {
-        $penjualan = Penjualan::with('details', 'operator')->get();
+        $penjualan = Penjualan::with('details.produk.levelHarga', 'operator')->get();
         return view('penjualan', compact('penjualan'));
     }
 }
