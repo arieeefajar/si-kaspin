@@ -6,13 +6,12 @@
         }
     </style>
 @endsection
-@section('title', 'Penjualan')
-@section('titleHeader', 'Penjualan')
+@section('title', 'Pembelian')
+@section('titleHeader', 'Pembelian')
 @section('menu', 'Transaksi')
-@section('subMenu', 'Penjualan')
+@section('subMenu', 'Pembelian')
 @section('content')
     <div class="row h-100">
-        {{-- @dd($produk) --}}
         <div class="col-xl-8">
             <div class="card card-height-100">
                 <!-- card body -->
@@ -42,7 +41,8 @@
                                                 </div>
                                                 <div class="card-body">
                                                     <p class="card-text mb-2">Rp.
-                                                        {{ number_format($item->harga_satuan, 0, ',', '.') }}</p>
+                                                        {{ number_format($item->harga_satuan, 0, ',', '.') }}
+                                                    </p>
                                                     <p class="card-text"><small
                                                             class="text-muted">{{ $item->nama_kategori }} | Stok:
                                                             {{ $item->stock }}</small></p>
@@ -110,7 +110,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="">
+                    <form action="" id="addItemForm">
                         <div class="row g-3">
                             <div class="col-xxl-6">
                                 <input type="hidden" id="kode_produk">
@@ -123,25 +123,23 @@
                             </div><!--end col-->
                             <div class="col-lg-12">
                                 <label class="form-label">Harga</label>
-                                <select class="form-select mb-2" aria-label="Default select example" id="level_harga"
-                                    onchange="getHarga()" required>
-                                    <input type="text" class="form-control" id="hargaSatuan" disabled required>
-                                    <input type="hidden" id="hargaSatuan1" required>
-                                </select>
+                                <input type="text" id="hargaSatuan" class="form-control" disabled required>
+                                <input type="hidden" id="hargaSatuan1" class="form-control" name="harga_satuan" disabled
+                                    required>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="jumlah" class="form-label">Jumlah<span
                                             style="color: red;">*</span></label>
-                                    <input type="text" class="form-control" id="jumlah" oninput="subtotalItem()"
-                                        placeholder="Masukan Jumlah" disabled required>
+                                    <input type="text" class="form-control" id="jumlah"
+                                        oninput="subtotalItem(); inputAngka(this)" placeholder="Masukan Jumlah" required>
                                 </div>
                             </div><!--end col-->
                             <div class="col-xxl-6">
                                 <label for="subtotal" class="form-label">Subtotal</label>
                                 <input type="text" class="form-control" id="subtotal" value="" required
                                     disabled>
-                                <input type="hidden" id="subtotal1" required>
+                                <input type="hidden" id="subtotal1" name="subtotal" required>
                             </div><!--end col-->
                             <div class="col-lg-12">
                                 <div class="hstack gap-2 justify-content-end">
@@ -166,14 +164,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('penjualan.store') }}" id="addPenjualanForm" method="POST">
+                    <form action="{{ route('pembelian.store') }}" id="addPenjualanForm" method="POST">
                         @csrf
                         <div class="row g-3">
-                            <div class="col-xxl-6">
-                                <label for="nama_pelanggan">Nama Pelanggan</label>
-                                <input type="text" id="nama-pelanggan" name="nama_pelanggan"
-                                    class="form-control"required>
-                            </div>
                             <div class="col-xxl-6">
                                 <label for="total">Total</label>
                                 <input type="text" id="total" class="form-control" readonly required>
@@ -221,6 +214,10 @@
             getCartItem();
         });
 
+        function inputAngka(input) {
+            input.value = input.value.replace(/\D/g, '');
+        }
+
         function formatRP(input) {
             var value = input.value.replace(/[^0-9]/g, '');
 
@@ -235,22 +232,10 @@
             const kodeProduk = document.getElementById('kode_produk').value = data.kode_produk;
             const namaProduk = document.getElementById('nama_produk').value = data.nama_produk;
             const gambar = document.getElementById('gambar').value = data.gambar;
-            const levelHarga = document.getElementById('level_harga');
-
-            fetch("{{ route('penjualan.getLevelHarga', ['id' => '/']) }}/" + data.kode_produk, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }).then(response => response.json()).then(data => {
-                const levelHarga = document.getElementById('level_harga');
-
-                levelHarga.innerHTML = `<option selected disabled>Pilih Harga</option>`;
-                for (let index = 0; index < data.length; index++) {
-                    levelHarga.innerHTML +=
-                        `<option value="${data[index].kode_level}">${data[index].nama_level}</option>`
-                }
-            }).catch(error => console.error('Error:', error));
+            const hargaSatuan = document.getElementById('hargaSatuan');
+            const hargaSatuan1 = document.getElementById('hargaSatuan1').value = data.harga_satuan;
+            const harga = parseInt(data.harga_satuan, 10).toLocaleString('id-ID');
+            hargaSatuan.value = "Rp. " + harga;
         }
 
         function getHarga() {
@@ -277,40 +262,40 @@
         }
 
         function subtotalItem() {
-            const qty = parseInt(document.getElementById('jumlah').value);
-            const harga = parseInt(document.getElementById('hargaSatuan1').value);
-            const subtotal = document.getElementById('subtotal');
-            const subtotal1 = document.getElementById('subtotal1');
-            const addBtn = document.getElementById("add-btn");
+            const form = document.getElementById('addItemForm');
+            const harga = parseInt(form.querySelector('#hargaSatuan1').value);
+            const jumlah = parseInt(form.querySelector('#jumlah').value);
+            const subtotal = form.querySelector('#subtotal');
+            const subtotal1 = form.querySelector('#subtotal1');
+            const btnAddItem = form.querySelector('#add-btn');
 
-            const hasil = qty * harga;
-            subtotal1.value = qty * harga;
+            const hasil = jumlah * harga;
+            subtotal1.value = hasil;
+            subtotal.value = 'Rp. ' + parseInt(hasil, 10).toLocaleString('id-ID');
 
-            if (hasil) {
-                hasil.toLocaleString('id-ID');
-                subtotal.value = 'Rp. ' + hasil;
-                addBtn.removeAttribute('disabled');
+            if (!isNaN(hasil)) {
+                btnAddItem.removeAttribute('disabled');
+            } else {
+                btnAddItem.setAttribute('disabled', true);
             }
-
         }
 
         function clearForm() {
-            const levelHarga = document.getElementById('level_harga');
             const hargaSatuan = document.getElementById('hargaSatuan');
             const hargaSatuan1 = document.getElementById('hargaSatuan1');
             const jumlah = document.getElementById('jumlah');
+            const btnAdd = document.getElementById('add-btn');
             const subtotal = document.getElementById('subtotal');
             const subtotal1 = document.getElementById('subtotal1');
             const gambar = document.getElementById('gambar');
 
-            levelHarga.innerHTML = `<option selected disabled>Pilih Harga</option>`;
             hargaSatuan.value = '';
             hargaSatuan1.value = '';
             jumlah.value = '';
-            jumlah.disabled = true;
             subtotal.value = '';
             subtotal1.value = '';
             gambar.value = '';
+            btnAdd.setAttribute('disabled', true);
         }
 
         function addItemToCart() {
@@ -321,7 +306,7 @@
             const hargaSatuan1 = parseInt(document.getElementById('hargaSatuan1').value);
             const gambar = document.getElementById('gambar').value;
 
-            let cartItem = JSON.parse(localStorage.getItem('cartItem')) || [];
+            let cartItem = JSON.parse(localStorage.getItem('cartPembelian')) || [];
             const existingItemIndex = cartItem.findIndex(item => item.kodeProduk === kodeProduk);
 
             if (existingItemIndex === -1) {
@@ -339,13 +324,13 @@
                 cartItem[existingItemIndex].subtotal1 += subtotal1;
             }
 
-            localStorage.setItem('cartItem', JSON.stringify(cartItem));
-            clearForm();
+            localStorage.setItem('cartPembelian', JSON.stringify(cartItem));
             getCartItem();
+            clearForm();
         }
 
         function getCartItem() {
-            const items = JSON.parse(localStorage.getItem('cartItem'));
+            const items = JSON.parse(localStorage.getItem('cartPembelian'));
             const cartItemsContainer = document.getElementById('cartItemsContainer');
             const btnCheckout = document.getElementById('btnCheckout');
             const btnAddItem = document.getElementById('add-btn');
@@ -371,7 +356,7 @@
         }
 
         function setValueForm() {
-            const items = JSON.parse(localStorage.getItem('cartItem'));
+            const items = JSON.parse(localStorage.getItem('cartPembelian'));
             const form = document.getElementById('addPenjualanForm');
             const total = form.querySelector('#total');
             const total1 = form.querySelector('#total1');
@@ -438,12 +423,12 @@
             const btnCheckout = document.getElementById('btnCheckout');
             const btnAddItem = document.getElementById('add-btn');
 
-            let items = JSON.parse(localStorage.getItem('cartItem')) || [];
+            let items = JSON.parse(localStorage.getItem('cartPembelian')) || [];
 
             if (index >= 0 && index < items.length) {
                 items.splice(index, 1);
 
-                localStorage.setItem('cartItem', JSON.stringify(items));
+                localStorage.setItem('cartPembelian', JSON.stringify(items));
 
                 if (items.length === 0) {
                     cartItemsContainer.innerHTML = '';
@@ -467,8 +452,9 @@
             const hasil = uang - total;
             const format = parseInt(hasil, 10).toLocaleString('id-ID');
 
-            if (hasil < 0) {
+            if (hasil < 0 || isNaN(hasil)) {
                 kembalian.value = 0
+                btnCheckout.setAttribute('disabled', true)
             } else {
                 bayar1.value = uang;
                 kembalian.value = format;
@@ -478,7 +464,7 @@
         }
 
         function deleteCart() {
-            localStorage.removeItem('cartItem');
+            localStorage.removeItem('cartPembelian');
         }
     </script>
 @endsection

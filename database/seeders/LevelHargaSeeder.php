@@ -13,11 +13,13 @@ class LevelHargaSeeder extends Seeder
      */
     public function run(): void
     {
-        LevelHarga::create([
-            'kode_level' => 'LVH-0001',
-            'kode_produk' => 'PRD-0001',
-            'nama_level' => 'Ecer',
-            'harga_satuan' => 2000
-        ]);
+        LevelHarga::create(
+            [
+                'kode_level' => 'LVH-0001',
+                'kode_produk' => 'PRD-0001',
+                'nama_level' => 'Ecer',
+                'harga_satuan' => 2000
+            ]
+        );
     }
 }

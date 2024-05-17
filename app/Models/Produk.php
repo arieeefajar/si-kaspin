@@ -22,4 +22,14 @@ class Produk extends Model
     {
         return $this->hasMany(DetailPenjualan::class, 'kode_produk', 'kode_produk');
     }
+
+    public function levelHarga()
+    {
+        return $this->hasMany(LevelHarga::class, 'kode_produk', 'kode_produk');
+    }
+
+    public function kategori()
+    {
+        return $this->belongsTo(KategoriProduk::class, 'kode_kategori', 'kode_kategori');
+    }
 }

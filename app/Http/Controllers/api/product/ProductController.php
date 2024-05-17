@@ -14,6 +14,6 @@ class ProductController extends Controller
     {
         $produk = KategoriProduk::join('produks', 'kategori_produks.kode_kategori', '=', 'produks.kode_kategori')->select('produks.*', 'kategori_produks.*')->get();
         $kategori = DB::table('kategori_produks')->get();
-        return response()->json(['data' => $produk]);
+        return response()->json($produk);
     }
 }
