@@ -33,7 +33,6 @@ class PenjualanController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'total' => 'required',
             'bayar' => 'required',
@@ -73,7 +72,6 @@ class PenjualanController extends Controller
             $detail->subtotal = $request->subtotal[$index];
             $details[] = $detail;
         }
-
 
         try {
             $penjualan->save();

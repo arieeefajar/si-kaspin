@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pembelians', function (Blueprint $table) {
-            $table->String('Kode_Pembelian')->primary();
+            $table->String('kode_pembelian')->primary();
             $table->unsignedBigInteger('kode_operator');
             $table->foreign('kode_operator')->references('id')->on('users');
             $table->integer('total');

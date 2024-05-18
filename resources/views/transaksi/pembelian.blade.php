@@ -325,8 +325,9 @@
             }
 
             localStorage.setItem('cartPembelian', JSON.stringify(cartItem));
-            getCartItem();
             clearForm();
+            getCartItem();
+            console.log(cartItem);
         }
 
         function getCartItem() {
@@ -365,7 +366,6 @@
             if (items && items.length > 0) {
                 items.forEach((item, index) => {
 
-                    // console.log(item);
                     // input kodeProduk
                     const kodeProduk = document.createElement('input');
                     kodeProduk.id = 'kodeProduk';

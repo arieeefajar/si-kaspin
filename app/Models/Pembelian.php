@@ -15,4 +15,14 @@ class Pembelian extends Model
         'bayar',
         'kembalian'
     ];
+
+    public function details()
+    {
+        return $this->hasMany(DetailPembelian::class, 'kode_pembelian', 'kode_pembelian');
+    }
+
+    public function operator()
+    {
+        return $this->belongsTo(User::class, 'kode_operator', 'id');
+    }
 }
