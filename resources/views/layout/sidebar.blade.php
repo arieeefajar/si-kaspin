@@ -38,7 +38,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link menu-link" href="{{ route('etalase') }}">
+                <a class="nav-link menu-link" href="{{ route('etalase.index') }}">
                     <i class="ri-store-2-line"></i> <span data-key="t-widgets">Etalase</span>
                 </a>
             </li>
