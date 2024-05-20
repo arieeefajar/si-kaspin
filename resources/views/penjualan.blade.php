@@ -1,525 +1,256 @@
 @extends('layout.app')
+@section('otherStyle')
+    <style>
+        .info-row {
+            display: flex;
+        }
+
+        .info-row p {
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+        }
+
+        .label {
+            min-width: 150px;
+            text-align: start;
+            padding-right: 10px;
+            font-weight: 600;
+        }
+
+        .value {
+            text-align: left;
+            flex-grow: 1;
+        }
+    </style>
+@endsection
 @section('title', 'Penjualan')
 @section('titleHeader', 'Penjualan')
-@section('menu', 'Transaksi')
+@section('menu', 'Keuangan')
 @section('subMenu', 'Penjualan')
 @section('content')
-    <div class="row h-100">
-        {{-- @dd($produk) --}}
-        <div class="col-xl-8">
-            <div class="card card-height-100">
-                <!-- card body -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Data Transaksi Penjualan</h4>
+                </div><!-- end card header -->
                 <div class="card-body">
-                    <h1 class="card-title mb-0">Penjualan</h1>
-                    <div class="align-items-center d-flex-column">
-                        <form action="" class="app-search d-flex">
-                            <div class="position-relative">
-                                <input type="text" name="" id="" class="form-control rounded-pill"
-                                    placeholder="Search...">
-                                <span class="mdi mdi-magnify search-widget-icon"></span>
-                            </div>
-                        </form>
-                        <div class="row d-flex">
-                            @foreach ($produk as $item)
-                                <div class="col-6">
-                                    <div class="card" id="cardItem" data-bs-toggle="modal" data-bs-target="#addItemModal"
-                                        onclick="addItem({{ $item }})">
-                                        <div class="row g-0">
-                                            <div class="col-md-4">
-                                                <img class="rounded-start img-fluid h-100 w-100 object-cover"
-                                                    src="{{ asset('/storage/gambarProduk/' . $item->gambar) }}"
-                                                    alt="Card image">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="card-header">
-                                                    <h5 class="card-title mb-0">{{ $item->nama_produk }}</h5>
-                                                </div>
-<<<<<<< Updated upstream
-                                                <div class="card-body">
-                                                    <p class="card-text mb-2">Rp.
-                                                        {{ number_format($item->harga_satuan, 0, ',', '.') }}</p>
-                                                    <p class="card-text"><small
-                                                            class="text-muted">{{ $item->nama_kategori }} | Stok:
-                                                            {{ $item->stock }}</small></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- end card -->
-                                </div><!-- end col -->
-                            @endforeach
-=======
-                                                <div class="col-md-8">
-                                                    <div class="card-header">
-                                                        <h5 class="card-title mb-0">Batako kotak biasa</h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <p class="card-text mb-2">Rp. 10.000</p>
-                                                        <p class="card-text"><small class="text-muted">Bata | Stok:
-                                                                40</small></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div><!-- end card -->
-                                    </div><!-- end col -->
-                                    <div class="col-md-6">
-                                        <div class="card">
-                                            <div class="row g-0">
-                                                <div class="col-md-4">
-                                                    <img class="rounded-start img-fluid h-100 object-cover"
-                                                        src="{{ asset('admin_assets/assets/images/small/img-12.jpg') }}"
-                                                        alt="Card image">
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <div class="card-header">
-                                                        <h5 class="card-title mb-0">Batako Kotak Biasa</h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <p class="card-text mb-2">Rp. 10.000</p>
-                                                        <p class="card-text"><small class="text-muted">Bata | Stok:
-                                                                40</small></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div><!-- end card -->
-                                    </div><!-- end col -->
-                                    <div class="col-md-6">
-                                        <div class="card">
-                                            <div class="row g-0">
-                                                <div class="col-md-4">
-                                                    <img class="rounded-start img-fluid h-100 object-cover"
-                                                        src="{{ asset('admin_assets/assets/images/small/img-12.jpg') }}"
-                                                        alt="Card image">
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <div class="card-header">
-                                                        <h5 class="card-title mb-0">Batako Kotak Biasa</h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <p class="card-text mb-2">Rp. 10.000</p>
-                                                        <p class="card-text"><small class="text-muted">Bata | Stok:
-                                                                40</small></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div><!-- end card -->
-                                    </div><!-- end col -->
-                                </div><!-- end row -->s
-                            </div><!-- end col -->
->>>>>>> Stashed changes
-                        </div><!-- end row -->
-                    </div>
-                </div>
-                <!-- end card body -->
-            </div><!-- end card -->
-        </div><!-- end col -->
-
-        <div class="col-xl-4">
-            <div class="card card-height-100">
-                <div class="card-body d-flex flex-column">
-                    <div class="d-flex gap-2 position-relative">
-                        <i class="ri-shopping-cart-line"></i>
-                        <h3 class="card-title mb-0">Keranjang</h3>
-                    </div>
-                    <div class="d-flex-column flex-grow-1 mt-4">
-                        <template id="cardItemTemplate">
-                            <div class="card">
-                                <div class="row g-0">
-                                    <div class="col-md-4">
-                                        <img class="rounded-start img-fluid h-100 w-100 object-cover"
-                                            src="{{ asset('admin_assets/assets/images/small/img-12.jpg') }}"
-                                            alt="Card image" id="itemImg">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-header">
-                                            <h6 class="mb-0 itemName">2x | Batako Kotak Biasa</h6>
-                                        </div>
-                                        <div class="card-body">
-                                            <p class="card-text mb-2 itemPrice">Rp. 10.000</p>
-                                            <p class="card-text">
-                                                <span class="btn btn-sm btn-danger" id="btnRemoveItem" data-index=""
-                                                    onclick="removeItem()">Hapus <i class="ri-delete-bin-line"></i></span>
-                                            </p>
-                                        </div>
+                    <div id="customerList">
+                        <div class="row g-4 mb-3">
+                            <div class="col-sm-auto">
+                                <div class="d-flex justify-content-sm-end">
+                                    <div class="search-box ms-2">
+                                        <input type="text" class="form-control search" placeholder="Search...">
+                                        <i class="ri-search-line search-icon"></i>
                                     </div>
                                 </div>
                             </div>
-                        </template>
+                        </div>
 
-                        <div id="cartItemsContainer"></div>
-                        <button class="btn btn-success w-100" id="btnCheckout" data-bs-toggle="modal"
-                            data-bs-target="#addPenjualan" hidden>Checkout</button>
+                        <div class="table-responsive mt-3 mb-1">
+                            <table class="table align-middle table-nowrap" id="customerTable">
+                                <thead class="table-light">
+                                    <tr class="text-center">
+                                        <th class="sort" data-sort="no">No</th>
+                                        <th class="sort" data-sort="kodePenjualan">Kode Penjualan</th>
+                                        <th class="sort" data-sort="namaOperator">Nama Operator</th>
+                                        <th class="sort" data-sort="total">Total</th>
+                                        <th class="sort" data-sort="aksi">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="list form-check-all">
+                                    @foreach ($penjualan as $key => $item)
+                                        <tr class="text-center">
+                                            <td class="no">{{ $key + 1 }}</td>
+                                            <td class="id" style="display:none;"><a href="javascript:void(0);"
+                                                    class="fw-medium link-primary">#VZ2101</a></td>
+                                            <td class="kode_penjualan">{{ $item->kode_penjualan }}</td>
+                                            <td class="nama">{{ $item->operator->nama }}</td>
+                                            <td class="total1">Rp.
+                                                {{ number_format($item->total, 0, ',', '.') }}</td>
+                                            <td class="total" style="display:none;">{{ $item->total }}</td>
+                                            <td>
+                                                <div class="d-flex gap-2 justify-content-center">
+                                                    <div class="detail">
+                                                        <button class="btn btn-sm btn-success remove-item-btn"
+                                                            data-bs-toggle="modal" data-bs-target="#addModal"
+                                                            onclick="detailPenjualan({{ $item }})">Detail</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                            {{-- no result --}}
+                            <div class="noresult" style="display: none">
+                                <div class="text-center">
+                                    <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
+                                        colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px">
+                                    </lord-icon>
+                                    <h5 class="mt-2">Maaf! Hasil Pencarian Tidak Ditemukan</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- pagination --}}
+                        <div class="d-flex justify-content-end">
+                            <div class="pagination-wrap hstack gap-2">
+                                <a class="page-item pagination-prev disabled" href="#">
+                                    < </a>
+                                        <ul class="pagination listjs-pagination mb-0"></ul>
+                                        <a class="page-item pagination-next" href="#">
+                                            >
+                                        </a>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end card -->
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end col -->
+    </div>
+
+    {{-- add modal --}}
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel">Detail Penjualan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        id="close-modal"></button>
+                </div>
+                <div class="card">
+                    <div class="card-body table-responsive" id="table-detail">
+                        <table class="table table-borderless mb-0">
+                            <thead class="table-light">
+                                <tr class="text-center">
+                                    <th class="sort" data-sort="produk">Produk</th>
+                                    <th class="sort" data-sort="hargaSatuan">Harga Satuan</th>
+                                    <th class="sort" data-sort="jumlah">Jumlah</th>
+                                    <th class="sort" data-sort="subtotal">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody class="list form-check-all">
+                                <tr class="text-center">
+                                    <td class="produk">T-Shirt</td>
+                                    <td class="hargaSatuan">Rp. 100.000</td>
+                                    <td class="jumlah">1</td>
+                                    <td class="subtotal">Rp. 100.000</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </div><!-- end card body -->
-        </div><!-- end col-->
-    </div> <!-- end row-->
-
-    <!-- Modal -->
-    <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="exampleModalgridLabel">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalgridLabel">Tambah Keranjang</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="">
-                        <div class="row g-3">
-                            <div class="col-xxl-6">
-                                <input type="hidden" id="kode_produk">
-                                <input type="hidden" id="gambar">
-                                <div>
-                                    <label for="produkName" class="form-label">Produk</label>
-                                    <input type="text" class="form-control" id="nama_produk"
-                                        placeholder="Masukan Nama Produk" readonly required>
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-lg-12">
-                                <label class="form-label">Harga</label>
-                                <select class="form-select mb-2" aria-label="Default select example" id="level_harga"
-                                    onchange="getHarga()" required>
-                                    <input type="text" class="form-control" id="hargaSatuan" disabled required>
-                                    <input type="hidden" id="hargaSatuan1" required>
-                                </select>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="jumlah" class="form-label">Jumlah<span
-                                            style="color: red;">*</span></label>
-                                    <input type="text" class="form-control" id="jumlah" oninput="subtotalItem()"
-                                        placeholder="Masukan Jumlah" disabled required>
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-xxl-6">
-                                <label for="subtotal" class="form-label">Subtotal</label>
-                                <input type="text" class="form-control" id="subtotal" value="" required
-                                    disabled>
-                                <input type="hidden" id="subtotal1" required>
-                            </div><!--end col-->
-                            <div class="col-lg-12">
-                                <div class="hstack gap-2 justify-content-end">
-                                    <button type="button" class="btn btn-light" onclick="clearForm()"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-success" id="add-btn"
-                                        data-bs-dismiss="modal" onclick="addItemToCart()" disabled>Tambah</button>
-                                </div>
-                            </div><!--end col-->
-                        </div><!--end row-->
-                    </form>
+                <div class="d-flex container" id="detail-penjualan">
+                    <div class="row g-0 mb-3 flex-grow-1 align-items-center">
+                        <div class="col-sm-6 d-flex-column">
+                            <div class="info-row">
+                                <p><span class="label">Kode Penjualan</span> <span class="value" id="kode-penjualan"> :
+                                        #okok</span></p>
+                            </div>
+                            <div class="info-row">
+                                <p><span class="label">Tanggal</span> <span class="value" id="tanggal"> : 16</span>
+                                </p>
+                            </div>
+                            <div class="info-row">
+                                <p><span class="label">Operator</span> <span class="value" id="nama-operator"> :
+                                        Bintang</span></p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 d-flex-column">
+                            <div class="info-row">
+                                <p><span class="label">Total</span> <span class="value" id="total"> : #okok</span>
+                                </p>
+                            </div>
+                            <div class="info-row">
+                                <p><span class="label">Bayar</span> <span class="value" id="bayar"> : #okok</span>
+                                </p>
+                            </div>
+                            <div class="info-row">
+                                <p><span class="label">Kembalian</span> <span class="value" id="kembalian"> :
+                                        #okok</span></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endsection
 
-    <div class="modal fade" id="addPenjualan" tabindex="-1" aria-labelledby="exampleModalgridLabel">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalgridLabel">Transaksi</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('penjualan.store') }}" id="addPenjualanForm" method="POST">
-                        @csrf
-                        <div class="row g-3">
-                            <div class="col-xxl-6">
-                                <label for="nama_pelanggan">Nama Pelanggan</label>
-                                <input type="text" id="nama-pelanggan" name="nama_pelanggan"
-                                    class="form-control"required>
-                            </div>
-                            <div class="col-xxl-6">
-                                <label for="total">Total</label>
-                                <input type="text" id="total" class="form-control" readonly required>
-                                <input type="hidden" id="total1" name="total">
-                            </div>
-                            <div class="col-xxl-6">
-                                <label for="bayar">Bayar</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">Rp</span>
-                                    <input type="text" id="bayar" class="form-control"
-                                        placeholder="Masukan nominal tunai" required
-                                        oninput="formatRP(this); setKembalian()" />
-                                </div>
-                                <input type="hidden" id="bayar1" name="bayar">
-                            </div>
+    @section('otherJs')
+        <!-- prismjs plugin -->
+        <script src="{{ asset('admin_assets/assets/libs/prismjs/prism.js') }}"></script>
+        <script src="{{ asset('admin_assets/assets/libs/list.js/list.min.js') }}"></script>
+        <script src="{{ asset('admin_assets/assets/libs/list.pagination.js/list.pagination.min.js') }}"></script>
 
-                            <div class="col-xxl-6">
-                                <label for="kembalian">Kembalian</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">Rp</span>
-                                    <input type="text" id="kembalian" class="form-control" name="kembalian" required
-                                        readonly oninput="formatRP(this)" />
-                                </div>
-                                <input type="hidden" name="kembalian" id="kembalian1">
-                            </div>
+        <!-- listjs init -->
+        <script src="{{ asset('admin_assets/assets/js/customJs/dataPenjualan.init.js') }}"></script>
 
-                            <div class="col-lg-12">
-                                <div class="hstack gap-2 justify-content-end">
-                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal"
-                                        id="btn-simpan" onclick="deleteCart()" disabled>simpan</button>
-                                </div>
-                            </div><!--end col-->
-                        </div><!--end row-->
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
-
-@section('otherJs')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            getCartItem();
-        });
-
-        function formatRP(input) {
-            var value = input.value.replace(/[^0-9]/g, '');
-
-            if (value) {
+        <script>
+            function formatRp(value) {
                 value = parseInt(value, 10).toLocaleString('id-ID');
+                return value;
             }
 
-            input.value = value;
-        }
+            function produkBelanja(data) {
+                const cardDetail = document.getElementById('table-detail');
+                const tbody = cardDetail.querySelector('tbody');
 
-        function addItem(data) {
-            const kodeProduk = document.getElementById('kode_produk').value = data.kode_produk;
-            const namaProduk = document.getElementById('nama_produk').value = data.nama_produk;
-            const gambar = document.getElementById('gambar').value = data.gambar;
-            const levelHarga = document.getElementById('level_harga');
+                tbody.innerHTML = '';
+                data.forEach(items => {
+                    const hargaSatuan = formatRp(items.produk.level_harga[0].harga_satuan);
+                    const subtotal = formatRp(items.subtotal);
+                    const tr = document.createElement('tr');
+                    tr.className = 'text-center';
 
-            fetch("{{ route('penjualan.getLevelHarga', ['id' => '/']) }}/" + data.kode_produk, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }).then(response => response.json()).then(data => {
-                const levelHarga = document.getElementById('level_harga');
+                    const tdProduk = document.createElement('td');
+                    tdProduk.textContent = items.produk.nama_produk;
+                    tr.appendChild(tdProduk);
 
-                levelHarga.innerHTML = `<option selected disabled>Pilih Harga</option>`;
-                for (let index = 0; index < data.length; index++) {
-                    levelHarga.innerHTML +=
-                        `<option value="${data[index].kode_level}">${data[index].nama_level}</option>`
-                }
-            }).catch(error => console.error('Error:', error));
-        }
+                    const tdHargaSatuan = document.createElement('td');
+                    tdHargaSatuan.textContent = "Rp. " + hargaSatuan;
+                    tr.appendChild(tdHargaSatuan);
 
-        function getHarga() {
-            const kode_level = document.getElementById('level_harga').value;
+                    const tdJumlah = document.createElement('td');
+                    tdJumlah.textContent = items.jumlah;
+                    tr.appendChild(tdJumlah);
 
-            fetch("{{ route('penjualan.getHarga', ['id' => '/']) }}/" + kode_level, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }).then(response => response
-                .json()).then(data => {
+                    const tdSubtotal = document.createElement('td');
+                    tdSubtotal.textContent = "Rp. " + subtotal;
+                    tr.appendChild(tdSubtotal);
 
-                hargaSatuan = parseInt(data[0].harga_satuan);
-
-                if (hargaSatuan) {
-                    hargaSatuan = parseInt(hargaSatuan, 10).toLocaleString('id-ID');
-                }
-
-                document.getElementById('hargaSatuan').value = 'Rp. ' + hargaSatuan;
-                document.getElementById('hargaSatuan1').value = data[0].harga_satuan;
-                document.getElementById('jumlah').removeAttribute('disabled');
-            }).catch(error => console.error('Error:', error));
-        }
-
-        function subtotalItem() {
-            const qty = parseInt(document.getElementById('jumlah').value);
-            const harga = parseInt(document.getElementById('hargaSatuan1').value);
-            const subtotal = document.getElementById('subtotal');
-            const subtotal1 = document.getElementById('subtotal1');
-            const addBtn = document.getElementById("add-btn");
-
-            const hasil = qty * harga;
-            subtotal1.value = qty * harga;
-
-            if (hasil) {
-                hasil.toLocaleString('id-ID');
-                subtotal.value = 'Rp. ' + hasil;
-                addBtn.removeAttribute('disabled');
-            }
-
-        }
-
-        function clearForm() {
-            const levelHarga = document.getElementById('level_harga');
-            const hargaSatuan = document.getElementById('hargaSatuan');
-            const hargaSatuan1 = document.getElementById('hargaSatuan1');
-            const jumlah = document.getElementById('jumlah');
-            const subtotal = document.getElementById('subtotal');
-            const subtotal1 = document.getElementById('subtotal1');
-            const gambar = document.getElementById('gambar');
-
-            levelHarga.innerHTML = `<option selected disabled>Pilih Harga</option>`;
-            hargaSatuan.value = '';
-            hargaSatuan1.value = '';
-            jumlah.value = '';
-            jumlah.disabled = true;
-            subtotal.value = '';
-            subtotal1.value = '';
-            gambar.value = '';
-        }
-
-        function addItemToCart() {
-            const kodeProduk = document.getElementById('kode_produk').value;
-            const namaProduk = document.getElementById('nama_produk').value;
-            const jumlah = parseInt(document.getElementById('jumlah').value);
-            const subtotal1 = parseInt(document.getElementById('subtotal1').value);
-            const hargaSatuan1 = parseInt(document.getElementById('hargaSatuan1').value);
-            const gambar = document.getElementById('gambar').value;
-
-            let cartItem = JSON.parse(localStorage.getItem('cartItem')) || [];
-            const existingItemIndex = cartItem.findIndex(item => item.kodeProduk === kodeProduk);
-
-            if (existingItemIndex === -1) {
-                const newItem = {
-                    kodeProduk: kodeProduk,
-                    namaProduk: namaProduk,
-                    jumlah: jumlah,
-                    hargaSatuan: hargaSatuan1,
-                    subtotal1: subtotal1,
-                    gambar: gambar
-                };
-                cartItem.push(newItem);
-            } else {
-                cartItem[existingItemIndex].jumlah += jumlah;
-                cartItem[existingItemIndex].subtotal1 += subtotal1;
-            }
-
-            localStorage.setItem('cartItem', JSON.stringify(cartItem));
-            clearForm();
-            getCartItem();
-        }
-
-        function getCartItem() {
-            const items = JSON.parse(localStorage.getItem('cartItem'));
-            const cartItemsContainer = document.getElementById('cartItemsContainer');
-            const btnCheckout = document.getElementById('btnCheckout');
-            const template = document.getElementById('cardItemTemplate');
-
-            if (items && items.length > 0) {
-                cartItemsContainer.innerHTML = '';
-                btnCheckout.removeAttribute('hidden');
-
-                items.forEach((item, index) => {
-                    const clone = template.content.cloneNode(true);
-                    const btnRemove = clone.querySelector('#btnRemoveItem');
-                    clone.querySelector('#itemImg').src = `/storage/gambarProduk/${item.gambar}`;
-                    clone.querySelector('.itemName').textContent = `${item.jumlah}x | ${item.namaProduk}`;
-                    clone.querySelector('.itemPrice').textContent = `Rp. ${item.subtotal1.toLocaleString('id-ID')}`;
-                    btnRemove.setAttribute('data-index', index);
-                    cartItemsContainer.appendChild(clone);
+                    tbody.appendChild(tr);
                 });
+                console.log(data);
             }
-            setValueForm();
-        }
 
-        function setValueForm() {
-            const items = JSON.parse(localStorage.getItem('cartItem'));
-            const form = document.getElementById('addPenjualanForm');
-            const total = form.querySelector('#total');
-            const total1 = form.querySelector('#total1');
-            let totalSubtotal = 0;
+            function detailPenjualan(data) {
+                produkBelanja(data.details);
+                const cardDetail = document.getElementById('detail-penjualan"');
+                const kodePenjualan = document.querySelector('#kode-penjualan');
+                const tanggal = document.querySelector('#tanggal');
+                const namaOperator = document.querySelector('#nama-operator');
+                const total = document.querySelector('#total');
+                const bayar = document.querySelector('#bayar');
+                const kembalian = document.querySelector('#kembalian');
 
-            if (items && items.length > 0) {
-                items.forEach((item, index) => {
+                const date = new Date(data.created_at);
+                const format = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
 
-                    // input kodeProduk
-                    const kodeProduk = document.createElement('input');
-                    kodeProduk.type = 'hidden';
-                    kodeProduk.name = 'kode_produk[]';
-                    kodeProduk.value = item.kodeProduk;
-                    form.appendChild(kodeProduk);
+                const totalBelanja = formatRp(data.total);
+                const uangBayar = formatRp(data.bayar);
+                const uangKembalian = formatRp(data.kembalian);
 
-                    // input namaProduk
-                    const namaProduk = document.createElement('input');
-                    namaProduk.type = 'hidden';
-                    namaProduk.name = 'nama_produk[]';
-                    namaProduk.value = item.namaProduk;
-                    form.appendChild(namaProduk);
-
-                    // input qty
-                    const qty = document.createElement('input');
-                    qty.type = 'hidden';
-                    qty.name = 'qty[]';
-                    qty.value = item.jumlah;
-                    form.appendChild(qty);
-
-                    // input subtotal
-                    const subtotal = document.createElement('input');
-                    subtotal.type = 'hidden';
-                    subtotal.name = 'subtotal[]';
-                    subtotal.value = item.subtotal1;
-                    form.appendChild(subtotal);
-
-                    // input hargaSatuan
-                    const hargaSatuan = document.createElement('input');
-                    hargaSatuan.type = 'hidden';
-                    hargaSatuan.name = 'harga_satuan[]';
-                    hargaSatuan.value = item.hargaSatuan;
-                    form.appendChild(hargaSatuan);
-
-                    // input total
-                    totalSubtotal += parseInt(item.subtotal1);
-                });
-
-                // total value
-                total1.value = totalSubtotal;
-                totalSubtotal = totalSubtotal.toLocaleString('id-ID');
-                total.value = 'Rp. ' + totalSubtotal;
+                kodePenjualan.textContent = ": " + data.kode_penjualan;
+                tanggal.textContent = ": " + format;
+                namaOperator.textContent = ": " + data.operator.nama;
+                total.textContent = ": Rp." + totalBelanja;
+                bayar.textContent = ": Rp." + uangBayar;
+                kembalian.textContent = ": Rp." + uangKembalian;
             }
-        }
-
-        function removeItem() {
-            const items = JSON.parse(localStorage.getItem('cartItem'));
-            const cartItemsContainer = document.getElementById('cartItemsContainer');
-            const btnCheckout = document.getElementById('btnCheckout');
-
-            if (items && items.length > 0) {
-                items.forEach((item, index) => {
-                    items.splice(index, 1);
-                    localStorage.setItem('cartItem', JSON.stringify(items));
-
-                    if (items.length === 0) {
-                        cartItemsContainer.innerHTML = '';
-                        btnCheckout.setAttribute('hidden', true);
-                    } else {
-                        getCartItem();
-                    }
-                })
-            }
-        }
-
-        function setKembalian() {
-            const total = parseInt(document.getElementById('total1').value);
-            const bayar = document.getElementById('bayar').value;
-            const bayar1 = document.getElementById('bayar1');
-            const uang = parseInt(bayar.replace(/[^0-9]/g, ''));
-            const kembalian = document.getElementById('kembalian');
-            const kembalian1 = document.getElementById('kembalian1');
-            const btnCheckout = document.getElementById('btn-simpan');
-
-            const hasil = uang - total;
-            const format = parseInt(hasil, 10).toLocaleString('id-ID');
-
-            if (hasil < 0) {
-                kembalian.value = 0
-            } else {
-                bayar1.value = uang;
-                kembalian.value = format;
-                kembalian1.value = hasil
-                btnCheckout.removeAttribute('disabled')
-            }
-        }
-
-        function deleteCart() {
-            localStorage.removeItem('cartItem');
-        }
-    </script>
-@endsection
+        </script>
+    @endsection

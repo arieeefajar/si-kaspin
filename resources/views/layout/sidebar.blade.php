@@ -54,6 +54,12 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link menu-link" href="{{ route('pembelian') }}">
+                    <i class="las la-money-bill-wave"></i> <span data-key="t-widgets">Pembelian</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link menu-link" href="{{ route('retur') }}">
                     <i class="ri-exchange-dollar-line"></i> <span data-key="t-widgets">Retur Penjualan</span>
                 </a>
@@ -137,8 +143,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link menu-link" href="widgets.html">
-                    <i class="ri-contacts-line"></i> <span data-key="t-widgets">Supplier</span>
+                <a class="nav-link menu-link" href="{{ route('supplier') }}">
+                    <i class="las la-users-cog"></i> <span data-key="t-widgets">Supplier</span>
                 </a>
             </li>
 
@@ -155,8 +161,14 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link menu-link" href="{{ route('penjualan.getDataPenjualan') }}">
+                    <i class="ri-book-2-line"></i> <span data-key="t-widgets">Penjualan</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link menu-link" href="widgets.html">
-                    <i class="ri-history-line"></i> <span data-key="t-widgets">Arus Uang</span>
+                    <i class="ri-book-2-line"></i> <span data-key="t-widgets">Pembelian</span>
                 </a>
             </li>
 
