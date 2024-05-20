@@ -32,4 +32,5 @@ class Produk extends Model
     {
         return $this->belongsTo(KategoriProduk::class, 'kode_kategori', 'kode_kategori');
     }
+
 }
