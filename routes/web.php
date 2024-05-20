@@ -6,11 +6,13 @@ use App\Http\Controllers\EtalaseController;
 use App\Http\Controllers\KategoriProdukController;
 use App\Http\Controllers\LevelHargaController;
 use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ReturPenjualanController;
 use App\Http\Controllers\SupplierController;
+use App\Models\Pembelian;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +46,12 @@ Route::middleware('auth')->group(function () {
         Route::get('levelharga/{id}', [PenjualanController::class, 'getLevelHarga'])->name('penjualan.getLevelHarga');
         Route::get('harga/{id}', [PenjualanController::class, 'getHarga'])->name('penjualan.getHarga');
         Route::post('/', [PenjualanController::class, 'store'])->name('penjualan.store');
+        Route::get('/data-penjualan', [PenjualanController::class, 'getDataPenjualan'])->name('penjualan.getDataPenjualan');
+    });
+
+    Route::prefix('pembelian')->group(function () {
+        Route::get('/', [PembelianController::class, 'index'])->name('pembelian');
+        Route::post('/', [PembelianController::class, 'store'])->name('pembelian.store');
     });
 
     // retur route
@@ -98,7 +106,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // supplier route
-    Route::prefix('supplier')->group(function (){
+    Route::prefix('supplier')->group(function () {
         Route::get('/', [SupplierController::class, 'index'])->name('supplier');
         Route::post('/', [SupplierController::class, 'store'])->name('supplier.store');
         Route::put('/{id}', [SupplierController::class, 'update'])->name('supplier.update');

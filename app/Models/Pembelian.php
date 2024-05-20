@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Penjualan extends Model
+class Pembelian extends Model
 {
     use HasFactory;
 
@@ -13,12 +13,12 @@ class Penjualan extends Model
         'kode_operator',
         'total',
         'bayar',
-        'kembalian',
+        'kembalian'
     ];
 
     public function details()
     {
-        return $this->hasMany(DetailPenjualan::class, 'kode_penjualan', 'kode_penjualan');
+        return $this->hasMany(DetailPembelian::class, 'kode_pembelian', 'kode_pembelian');
     }
 
     public function operator()

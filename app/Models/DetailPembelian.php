@@ -5,15 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LevelHarga extends Model
+class DetailPembelian extends Model
 {
     use HasFactory;
 
     protected $filable = [
         'kode_produk',
-        'nama_level',
-        'harga_satuan',
+        'jumlah',
+        'subtotal'
     ];
+
+    public function pembelian()
+    {
+        return $this->belongsTo(Pembelian::class, 'kode_pembelian', 'kode_pembelian');
+    }
 
     public function produk()
     {
