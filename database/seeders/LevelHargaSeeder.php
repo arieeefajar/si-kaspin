@@ -21,5 +21,14 @@ class LevelHargaSeeder extends Seeder
                 'harga_satuan' => 2000
             ]
         );
+
+        LevelHarga::create(
+            [
+                'kode_level' => 'LVH-0002',
+                'kode_produk' => 'PRD-0002',
+                'nama_level' => 'Ecer',
+                'harga_satuan' => 3000
+            ]
+        );
     }
 }

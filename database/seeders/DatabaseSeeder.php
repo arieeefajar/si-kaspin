@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             KategoriProdukSeeder::class,
             ProdukSeeder::class,
             LevelHargaSeeder::class,
-            SupplierSeeder::class
+            SupplierSeeder::class,
+            PelangganSeeder::class
         ]);
     }
 }
