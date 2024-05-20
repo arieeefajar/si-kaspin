@@ -9,16 +9,28 @@ class Produk extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'kode_produk';
+    public $incrementing = false;
+
     protected $fillable = [
         'nama_produk',
         'gambar',
         'stock',
     ];
 
+    public function detailPenjualans()
+    {
+        return $this->hasMany(DetailPenjualan::class, 'kode_produk', 'kode_produk');
+    }
+
     public function levelHarga()
     {
-        $levelHarga = LevelHarga::join('produks', 'level_hargas.kode_produks', '=', 'produks.kode_produk')->select('level_hargas.*', 'produks.*')->get();
-
-        return $levelHarga;
+        return $this->hasMany(LevelHarga::class, 'kode_produk', 'kode_produk');
     }
+
+    public function kategori()
+    {
+        return $this->belongsTo(KategoriProduk::class, 'kode_kategori', 'kode_kategori');
+    }
+
 }
