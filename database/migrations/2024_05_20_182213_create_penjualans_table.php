@@ -16,6 +16,8 @@ return new class extends Migration
             $table->String('kode_penjualan')->primary();
             $table->unsignedBigInteger('kode_operator');
             $table->foreign('kode_operator')->references('id')->on('users');
+            $table->String('kode_pelanggan');
+            $table->foreign('kode_pelanggan')->references('kode_pelanggan')->on('pelanggans');
             $table->integer('total');
             $table->integer('bayar');
             $table->integer('kembalian');

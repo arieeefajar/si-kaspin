@@ -55,6 +55,7 @@
                                         <th class="sort" data-sort="no">No</th>
                                         <th class="sort" data-sort="kodePenjualan">Kode Penjualan</th>
                                         <th class="sort" data-sort="namaOperator">Nama Operator</th>
+                                        <th class="sort" data-sort="namaOperator">Nama Pelanggan</th>
                                         <th class="sort" data-sort="total">Total</th>
                                         <th class="sort" data-sort="aksi">Aksi</th>
                                     </tr>
@@ -67,6 +68,7 @@
                                                     class="fw-medium link-primary">#VZ2101</a></td>
                                             <td class="kode_penjualan">{{ $item->kode_penjualan }}</td>
                                             <td class="nama">{{ $item->operator->nama }}</td>
+                                            <td class="pelanggan">{{ $item->pelanggan->nama_pelanggan }}</td>
                                             <td class="total1">Rp.
                                                 {{ number_format($item->total, 0, ',', '.') }}</td>
                                             <td class="total" style="display:none;">{{ $item->total }}</td>

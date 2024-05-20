@@ -20,6 +20,14 @@ class ProdukSeeder extends Seeder
             'nama_produk' => 'Batako',
             'gambar' => '',
             'stock' => 100
-        ]);
+        ],);
+
+        Produk::create([
+            'kode_produk' => 'PRD-0002',
+            'kode_kategori' => 'KTGR-0001',
+            'nama_produk' => 'Bata Merah',
+            'gambar' => '',
+            'stock' => 100
+        ],);
     }
 }

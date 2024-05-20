@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\OrderPlaced;
 use App\Models\DetailPenjualan;
 use App\Models\LevelHarga;
+use App\Models\Pelanggan;
 use App\Models\Penjualan;
 use App\Models\Produk;
 use Illuminate\Http\Request;
@@ -31,9 +32,17 @@ class PenjualanController extends Controller
         return response()->json($levelHarga);
     }
 
+    public function getPelanggan()
+    {
+        $pelanggan = Pelanggan::all();
+        return response()->json($pelanggan);
+    }
+
     public function store(Request $request)
     {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
+            'kode_pelanggan' => 'required',
             'total' => 'required',
             'bayar' => 'required',
             'kembalian' => 'required'
@@ -59,6 +68,7 @@ class PenjualanController extends Controller
         $penjualan = new Penjualan();
         $penjualan->kode_penjualan = $kode_penjualan;
         $penjualan->kode_operator = auth()->user()->id;
+        $penjualan->kode_pelanggan = $request->kode_pelanggan;
         $penjualan->total = $request->total;
         $penjualan->bayar = $request->bayar;
         $penjualan->kembalian = $request->kembalian;
