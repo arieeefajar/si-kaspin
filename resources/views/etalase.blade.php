@@ -35,7 +35,7 @@
                                                  <div class="card">
                                                      <div class="col-md-4">
                                                          <img class="rounded-start img-fluid h-100 object-cover"
-                                                             src="{{ asset('/storage/gambarProduk/' . $item->gambar) }}"
+                                                             src="{{ asset('/storage/gambarProduk/'. $item->gambar) }}"
                                                              alt="Card image">
                                                      </div>
                                                      <div class="col-md-8">
