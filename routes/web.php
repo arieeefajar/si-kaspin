@@ -104,7 +104,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/{id}', [OperatorController::class, 'update'])->name('operator.update');
         Route::delete('{id}', [OperatorController::class, 'destroy'])->name('operator.destroy');
     });
-
+  
     // supplier route
     Route::prefix('supplier')->group(function () {
         Route::get('/', [SupplierController::class, 'index'])->name('supplier');
