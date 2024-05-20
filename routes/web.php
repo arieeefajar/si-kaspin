@@ -108,12 +108,12 @@ Route::middleware('auth')->group(function () {
     });
 
     //rekap pelanggan route
-    Route::prefix('rekappelanggan')->group(function () {
-        Route::get('/', [RekapPelangganController::class, 'index'])->name('rekappelanggan');
-        Route::post('/', [RekapPelangganController::class, 'store'])->name('rekappelanggan.store');
-        Route::put('/{id}', [RekapPelangganController::class, 'update'])->name('rekappelanggan.update');
-        Route::delete('{id}', [RekapPelangganController::class, 'destroy'])->name('rekappelanggan.destroy');
-    });
+    // Route::prefix('rekappelanggan')->group(function () {
+    //     Route::get('/', [RekapPelangganController::class, 'index'])->name('rekappelanggan');
+    //     Route::post('/', [RekapPelangganController::class, 'store'])->name('rekappelanggan.store');
+    //     Route::put('/{id}', [RekapPelangganController::class, 'update'])->name('rekappelanggan.update');
+    //     Route::delete('{id}', [RekapPelangganController::class, 'destroy'])->name('rekappelanggan.destroy');
+    // });
 
     // operator route
     Route::prefix('operator')->group(function () {
@@ -122,7 +122,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/{id}', [OperatorController::class, 'update'])->name('operator.update');
         Route::delete('{id}', [OperatorController::class, 'destroy'])->name('operator.destroy');
     });
-  
+
     // supplier route
     Route::prefix('supplier')->group(function () {
         Route::get('/', [SupplierController::class, 'index'])->name('supplier');
