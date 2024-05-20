@@ -9,6 +9,8 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\RekapPelangganController;
 use App\Http\Controllers\ReturPenjualanController;
 use Illuminate\Support\Facades\Route;
 
@@ -86,6 +88,22 @@ Route::middleware('auth')->group(function () {
         Route::post('/', [LevelHargaController::class, 'store'])->name('levelharga.store');
         Route::put('/{id}', [LevelHargaController::class, 'update'])->name('levelharga.update');
         Route::delete('{id}', [LevelHargaController::class, 'destroy'])->name('levelharga.destroy');
+    });
+
+    //pelanggan route
+    Route::prefix('pelanggan')->group(function () {
+        Route::get('/', [PelangganController::class, 'index'])->name('pelanggan');
+        Route::post('/', [PelangganController::class, 'store'])->name('pelanggan.store');
+        Route::put('/{id}', [PelangganController::class, 'update'])->name('pelanggan.update');
+        Route::delete('{id}', [PelangganController::class, 'destroy'])->name('pelanggan.destroy');
+    });
+
+    //rekap pelanggan route
+    Route::prefix('rekappelanggan')->group(function () {
+        Route::get('/', [RekapPelangganController::class, 'index'])->name('rekappelanggan');
+        Route::post('/', [RekapPelangganController::class, 'store'])->name('rekappelanggan.store');
+        Route::put('/{id}', [RekapPelangganController::class, 'update'])->name('rekappelanggan.update');
+        Route::delete('{id}', [RekapPelangganController::class, 'destroy'])->name('rekappelanggan.destroy');
     });
 
     // operator route
