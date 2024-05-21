@@ -16,7 +16,13 @@ checkAll &&
     });
 var perPage = 8,
     options = {
-        valueNames: ["no", "kode_produk", "kode_kategori", "nama_produk"],
+        valueNames: [
+            "no",
+            "kode_produk",
+            "kode_kategori",
+            "nama_produk",
+            "nama_supplier",
+        ],
         page: perPage,
         pagination: !0,
         plugins: [ListPagination({ left: 2, right: 2 })],
