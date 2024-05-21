@@ -36,8 +36,9 @@
                                     <tr class="text-center">
                                         <th class="sort" data-sort="no">No</th>
                                         <th class="sort" data-sort="kode_produk">Kode Produk</th>
-                                        <th class="sort" data-sort="kode_kategori">Kode Kategori</th>
+                                        <th class="sort" data-sort="nama_kategori">Nama Kategori</th>
                                         <th class="sort" data-sort="nama_produk">Nama Produk</th>
+                                        <th class="sort" data-sort="nama_supplier">Supplier</th>
                                         <th class="sort" data-sort="aksi">Aksi</th>
                                     </tr>
                                 </thead>
@@ -48,8 +49,9 @@
                                             <td class="id" style="display:none;"><a href="javascript:void(0);"
                                                     class="fw-medium link-primary">#VZ2101</a></td>
                                             <td class="kode_produk">{{ $item->kode_produk }}</td>
-                                            <td class="nama_kategori">{{ $item->nama_kategori }}</td>
+                                            <td class="nama_kategori">{{ $item->kategori->nama_kategori }}</td>
                                             <td class="nama_produk">{{ $item->nama_produk }}</td>
+                                            <td class="nama_supplier">{{ $item->supplier->nama }}</td>
                                             <td>
                                                 <div class="d-flex gap-2 justify-content-center">
                                                     <div class="edit">
@@ -126,6 +128,18 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="kode_supplier" class="form-label">Supplier</label>
+                            <select name="kode_supplier" id="kode-supplier" class="form-select" required>
+                                <option value="" selected disabled>Pilih Supplier</option>
+                                @foreach ($supplier as $item)
+                                    <option value="{{ $item->id }}" {{ old('nama') == $item->id ? 'selected' : '' }}>
+                                        {{ $item->nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="nama_produk" class="form-label">Nama</label>
                             <input type="text" id="nama_produk" class="form-control" name="nama_produk"
                                 placeholder="Masukan nama produk" value="{{ old('nama_produk') }}" required />
@@ -170,6 +184,18 @@
                                     <option value="{{ $item->kode_kategori }}"
                                         {{ old('kode_kategori') == $item->kode_kategori ? 'selected' : '' }}>
                                         {{ $item->nama_kategori }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="kode_supplier" class="form-label">Supplier</label>
+                            <select name="kode_supplier" id="kode-supplier" class="form-select" required>
+                                <option value="" selected disabled>Pilih Supplier</option>
+                                @foreach ($supplier as $item)
+                                    <option value="{{ $item->id }}" {{ old('nama') == $item->id ? 'selected' : '' }}>
+                                        {{ $item->nama }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -243,6 +269,7 @@
             const form = document.getElementById('editForm');
             form.action = "{{ route('produk.update', ['id' => '/']) }}/" + data.kode_produk;
             form.querySelector("#kode-kategori").value = data.kode_kategori;
+            form.querySelector("#kode-supplier").value = data.kode_supplier;
             form.querySelector("#nama-edit").value = data.nama_produk;
             form.querySelector("#gambar-edit").value;
         }
