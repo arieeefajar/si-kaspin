@@ -171,7 +171,7 @@
                         <div class="row g-3">
                             <div class="col-xxl-6">
                                 <label for="nama_pelanggan">Nama Pelanggan</label>
-                                <select name="kode_pelanggan" class="form-select" id="nama-pelanggan"></select>
+                                <select name="kode_pelanggan" class="form-select" id="nama-pelanggan" required></select>
                                 {{-- <input type="text" id="nama-pelanggan" name="nama_pelanggan"
                                     class="form-control"required> --}}
                             </div>
