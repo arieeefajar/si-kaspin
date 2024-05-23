@@ -138,7 +138,8 @@
             </li>
 
             <li class="nav-item">
-                <a href="" class="nav-link" data-key="t-alerts">Rekap Pelanggan</a>
+                <a href="{{ route('rekappelanggan') }}" class="nav-link" data-key="t-alerts">Rekap Pelanggan</a>
+            </li>
         </ul>
     </div>
 </div>

@@ -5,25 +5,25 @@
 @section('subMenu', 'Rekap Pelanggan')
 @section('content')
 
-<div class="row">
+    <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title mb-0">Rekap Pelanggan</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
-                <div id="customerList">
-                    <div class="row g-4 mb-3">
-                        <div class="col-sm">
-                            <div class="d-flex justify-content-sm-start">
-                                <div class="search-box ms-2">
-                                    <input type="text" class="form-control search" placeholder="Search...">
-                                    <i class="ri-search-line search-icon"></i>
+                    <div id="customerList">
+                        <div class="row g-4 mb-3">
+                            <div class="col-sm">
+                                <div class="d-flex justify-content-sm-start">
+                                    <div class="search-box ms-2">
+                                        <input type="text" class="form-control search" placeholder="Search...">
+                                        <i class="ri-search-line search-icon"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                        
+
                         <div class="table-responsive mt-3 mb-1">
                             <table class="table align-middle table-nowrap" id="customerTable">
                                 <thead class="table-light">
@@ -36,8 +36,9 @@
                                         <th class="sort" data-sort="total">Total</th>
                                     </tr>
                                 </thead>
+                            </table>
 
-                                 {{-- no result --}}
+                            {{-- no result --}}
                             <div class="noresult" style="display: none">
                                 <div class="text-center">
                                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
@@ -59,14 +60,11 @@
                                         </a>
                             </div>
                         </div>
-                            </table>
-                        </div>
-                </div><!-- end customerList -->
-            </div><!-- end card-body -->
-        </div><!-- end card -->
-    </div><!-- end col-lg-12 -->
-</div><!-- end row -->
-
+                    </div>
+                </div><!-- end card -->
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end col -->
+    </div>
 @endsection
-
-                        

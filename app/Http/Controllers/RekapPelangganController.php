@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Penjualan;
+use App\Models\RekapPelanggan;
 use Illuminate\Http\Request;
 
 
