@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\OrderPlaced;
 use App\Models\DetailPenjualan;
 use App\Models\LevelHarga;
+use App\Models\Pelanggan;
 use App\Models\Penjualan;
 use App\Models\Produk;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class PenjualanController extends Controller
 {
     public function index()
     {
-        $produk = Produk::join('kategori_produks', 'produks.kode_kategori', '=', 'kategori_produks.kode_kategori')->join('level_hargas', 'produks.kode_produk', '=', 'level_hargas.kode_produk')->select('produks.*', 'kategori_produks.nama_kategori', 'level_hargas.harga_satuan')->where('level_hargas.nama_level', 'ecer')->get();
+        $produk = Produk::join('kategori_produks', 'produks.kode_kategori', '=', 'kategori_produks.kode_kategori')->join('level_hargas', 'produks.kode_produk', '=', 'level_hargas.kode_produk')->select('produks.*', 'kategori_produks.nama_kategori', 'level_hargas.harga_satuan')->where('level_hargas.nama_level', 'ecer')->where('produks.stock', '>', '0')->get();
         return view('transaksi/penjualan', compact('produk'));
     }
 
@@ -31,9 +32,16 @@ class PenjualanController extends Controller
         return response()->json($levelHarga);
     }
 
+    public function getPelanggan()
+    {
+        $pelanggan = Pelanggan::all();
+        return response()->json($pelanggan);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'kode_pelanggan' => 'required',
             'total' => 'required',
             'bayar' => 'required',
             'kembalian' => 'required'
@@ -59,6 +67,7 @@ class PenjualanController extends Controller
         $penjualan = new Penjualan();
         $penjualan->kode_penjualan = $kode_penjualan;
         $penjualan->kode_operator = auth()->user()->id;
+        $penjualan->kode_pelanggan = $request->kode_pelanggan;
         $penjualan->total = $request->total;
         $penjualan->bayar = $request->bayar;
         $penjualan->kembalian = $request->kembalian;

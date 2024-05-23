@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function () {
     // etalase route
     Route::prefix('etalase')->group(function () {
         Route::get('/', [EtalaseController::class, 'index'])->name('etalase');
+        Route::get('/produk/{id}', [EtalaseController::class, 'getProduk'])->name('etalase.getProduk');
+        Route::get('/etalase/search', [EtalaseController::class, 'search'])->name('etalase.search');
     });
 
     // penjualan route
@@ -47,6 +49,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [PenjualanController::class, 'index'])->name('penjualan');
         Route::get('levelharga/{id}', [PenjualanController::class, 'getLevelHarga'])->name('penjualan.getLevelHarga');
         Route::get('harga/{id}', [PenjualanController::class, 'getHarga'])->name('penjualan.getHarga');
+        Route::get('/pelanggan', [PenjualanController::class, 'getPelanggan'])->name('penjualan.getPelanggan');
         Route::post('/', [PenjualanController::class, 'store'])->name('penjualan.store');
         Route::get('/data-penjualan', [PenjualanController::class, 'getDataPenjualan'])->name('penjualan.getDataPenjualan');
     });
@@ -109,9 +112,8 @@ Route::middleware('auth')->group(function () {
 
     //rekap pelanggan route
     Route::prefix('rekappelanggan')->group(function () {
-         Route::get('/', [RekapPelangganController::class, 'index'])->name('rekappelanggan');
-
-       });
+        Route::get('/', [RekapPelangganController::class, 'index'])->name('rekappelanggan');
+        });
 
     // operator route
     Route::prefix('operator')->group(function () {
@@ -120,7 +122,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/{id}', [OperatorController::class, 'update'])->name('operator.update');
         Route::delete('{id}', [OperatorController::class, 'destroy'])->name('operator.destroy');
     });
-  
+
     // supplier route
     Route::prefix('supplier')->group(function () {
         Route::get('/', [SupplierController::class, 'index'])->name('supplier');

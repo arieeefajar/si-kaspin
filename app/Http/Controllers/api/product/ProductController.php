@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\api\product;
 
 use App\Http\Controllers\Controller;
-use App\Models\KategoriProduk;
+use App\Models\Produk;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -12,8 +12,22 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $produk = KategoriProduk::join('produks', 'kategori_produks.kode_kategori', '=', 'produks.kode_kategori')->select('produks.*', 'kategori_produks.*')->get();
-        $kategori = DB::table('kategori_produks')->get();
+        $produk = Produk::with('kategori', 'levelHarga')->get();
         return response()->json($produk);
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->all();
+        return $this->sendMassage($data, 200, 'success');
+    }
+
+    public function sendMassage($text, $kode, $status)
+    {
+        return response()->json([
+            'data' => $text,
+            'code' => $kode,
+            'status' => $status
+        ], $kode);
     }
 }
