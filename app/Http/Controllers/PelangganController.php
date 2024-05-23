@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RekapPelanggan;
 use App\Models\Pelanggan;
+use App\Models\Penjualan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -12,14 +13,13 @@ class PelangganController extends Controller
 {
     public function index()
     {
-        //$pelanggan = RekapPelanggan::join('pelanggans', 'rekap_pelanggan.kode_pelanggan', '=', 'pelanggans.kode_pelanggan')->select('pelanggans.*', 'rekap_pelanggans.*')->get();
         $pelanggan = Pelanggan::all();
         return view('pelanggan', compact('pelanggan'));
     }
 
     public function store(Request $request)
     {
-       // dd($request->all());
+        // dd($request->all());
         // custom message
         $customMessage = [
             'nama_pelanggan.required' => 'Harap isi nama pelanggan',
@@ -33,7 +33,7 @@ class PelangganController extends Controller
             'no_hp.required' => 'Harap isi No Hp',
             'no_hp.max' => 'No Hp maksimal :max digit',
             'no_hp.min' => 'No Hp minimal :min digit',
-           
+
         ];
 
         // validation
@@ -85,7 +85,7 @@ class PelangganController extends Controller
 
         // custom message
         $customMessage = [
-           'nama_pelanggan.required' => 'Harap isi nama pelanggan',
+            'nama_pelanggan.required' => 'Harap isi nama pelanggan',
             'nama_pelanggan.max' => 'Nama pelanggan maksimal :max karakter',
             'nama_pelanggan.string' => 'Harap isi nama pelanggan dengan benar',
 
@@ -96,7 +96,7 @@ class PelangganController extends Controller
             'no_hp.required' => 'Harap isi No Hp',
             'no_hp.max' => 'No Hp maksimal :max digit',
             'no_hp.min' => 'No Hp minimal :min digit',
-           
+
         ];
 
         // validation
@@ -119,16 +119,17 @@ class PelangganController extends Controller
                 'alamat' => $request->alamat,
                 'no_hp' => $request->no_hp
             ]);
-               alert()->success('Berhasil', 'Data Pelanggan Berhasl diubah');
+            alert()->success('Berhasil', 'Data Pelanggan Berhasl diubah');
             return redirect()->back();
-    } catch (\Throwable $th) {
-        alert()->error('Gagal', $th);
-        return redirect()->back();
-    }}
+        } catch (\Throwable $th) {
+            alert()->error('Gagal', $th);
+            return redirect()->back();
+        }
+    }
 
     public function destroy($id)
     {
-       try {
+        try {
             $query = Pelanggan::where('kode_pelanggan', $id);
             $query->delete();
             alert()->success('Berhasil', 'Pelanggan Berhasil dihapus');
