@@ -135,7 +135,7 @@
                             <select class="form-control" data-trigger id="role" name="role">
                                 <option selected disabled>Pilih Role</option>
                                 <option value="admin">Admin</option>
-                                <option value="owner">Owner</option>
+                                <option value="pegawai">Pegawai</option>
                             </select>
                         </div>
                     </div>
@@ -181,7 +181,7 @@
                             <select class="form-control" data-trigger name="role" id="role-edit">
                                 <option selected disabled>Pilih Role</option>
                                 <option value="admin">Admin</option>
-                                <option value="owner">Owner</option>
+                                <option value="pegawai">Pewagai</option>
                             </select>
                         </div>
                     </div>

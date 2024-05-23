@@ -21,6 +21,7 @@ class ProdukController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         // custom message
         $customMessage = [
             'kode_kategori.required' => 'Harap pilih kategori',
