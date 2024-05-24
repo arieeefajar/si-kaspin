@@ -65,11 +65,11 @@
                 </a>
             </li>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link menu-link" href="{{ route('piutang') }}">
                     <i class="las la-hand-holding-usd"></i> <span data-key="t-widgets">Piutang</span>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-components">Master Produk</span></li>
 
@@ -114,21 +114,21 @@
                 </a>
             </li>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link menu-link" href="widgets.html">
                     <i class="bx bxs-discount"></i> <span data-key="t-widgets">Diskon</span>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-components">Master Pelanggan</span>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link menu-link" href="#sidebarUI" data-bs-toggle="collapse" role="button"
-                    aria-expanded="false" aria-controls="sidebarUI">
+                <a class="nav-link menu-link" href="#pelangganUI" data-bs-toggle="collapse" role="button"
+                    aria-expanded="false" aria-controls="pelangganUI">
                     <i class="ri-dropbox-fill"></i> <span data-key="t-base-ui">Pelanggan</span>
                 </a>
-                <div class="collapse menu-dropdown mega-dropdown-menu" id="sidebarUI">
+                <div class="collapse menu-dropdown mega-dropdown-menu" id="pelangganUI">
                     <div class="row">
                         <div class="col-lg-4">
                             <ul class="nav nav-sm flex-column">
@@ -165,19 +165,7 @@
 </li>
 
 <li class="nav-item">
-    <a class="nav-link menu-link" href="{{ route('penjualan.getDataPenjualan') }}">
-        <i class="ri-book-2-line"></i> <span data-key="t-widgets">Penjualan</span>
-    </a>
-</li>
-
-<li class="nav-item">
-    <a class="nav-link menu-link" href="widgets.html">
-        <i class="ri-book-2-line"></i> <span data-key="t-widgets">Pembelian</span>
-    </a>
-</li>
-
-<li class="nav-item">
-    <a class="nav-link menu-link" href="widgets.html">
+    <a class="nav-link menu-link" href="{{ route('laporan') }}">
         <i class="ri-todo-line"></i> <span data-key="t-widgets">Laporan</span>
     </a>
 </li>
