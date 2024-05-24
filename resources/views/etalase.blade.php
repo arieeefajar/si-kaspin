@@ -11,16 +11,15 @@
                  <div class="card-body">
                      <h1 class="card-title mb-0">Etalase</h1>
                      <div class="align-items-center d-flex-column">
-
-                         <form action="{{ route('etalase.search') }}" method="GET" class="input-group">
-                             <div class="input-group">
-                                 <div class="position-relative d-flex">
-                                     <input type="text" name="cari" id="produk" class="form-control"
+                        
+                         <form action="{{ route('etalase.search') }}" method="GET" class=" app-search d-flex">
+                             <div class="position-relative">
+                                 <div class="d-flex justify-content-sm-end">
+                                     <input type="text" name="cari" id="produk" class="form-control rounded-pill"
                                          placeholder="Search...">
-                                     <button type="submit" class="btn btn-primary">
                                          <span class="mdi mdi-magnify search-widget-icon"></span>
-                                         <i class="fas fa-search"></i>
-                                     </button>
+ 
+                                
                                  </div>
                              </div>
                          </form>
@@ -35,7 +34,7 @@
                                                  <div class="card">
                                                      <div class="col-md-4">
                                                          <img class="rounded-start img-fluid h-100 object-cover"
-                                                             src="{{ asset('/storage/gambarProduk/'. $item->gambar) }}"
+                                                             src="{{ asset('/storage/gambarProduk/' . $item->gambar) }}"
                                                              alt="Card image">
                                                      </div>
                                                      <div class="col-md-8">
