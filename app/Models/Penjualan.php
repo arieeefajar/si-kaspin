@@ -25,4 +25,9 @@ class Penjualan extends Model
     {
         return $this->belongsTo(User::class, 'kode_operator', 'id');
     }
+
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class, 'kode_pelanggan', 'kode_pelanggan');
+    }
 }

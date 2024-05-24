@@ -13,6 +13,8 @@ class Produk extends Model
     public $incrementing = false;
 
     protected $fillable = [
+        'kode_kategori',
+        'kode_supplier',
         'nama_produk',
         'gambar',
         'stock',
@@ -33,4 +35,8 @@ class Produk extends Model
         return $this->belongsTo(KategoriProduk::class, 'kode_kategori', 'kode_kategori');
     }
 
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'kode_supplier', 'id');
+    }
 }

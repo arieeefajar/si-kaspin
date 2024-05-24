@@ -10,6 +10,8 @@ use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\RekapPelangganController;
 use App\Http\Controllers\ReturPenjualanController;
 use App\Http\Controllers\SupplierController;
 use App\Models\Pembelian;
@@ -37,7 +39,7 @@ Route::middleware('auth')->group(function () {
 
     // etalase route
     Route::prefix('etalase')->group(function () {
-        Route::get('/', [EtalaseController::class, 'index'])->name('etalase.index');
+        Route::get('/', [EtalaseController::class, 'index'])->name('etalase');
         Route::get('/produk/{id}', [EtalaseController::class, 'getProduk'])->name('etalase.getProduk');
         Route::get('/etalase/search', [EtalaseController::class, 'search'])->name('etalase.search');
     });
@@ -47,6 +49,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [PenjualanController::class, 'index'])->name('penjualan');
         Route::get('levelharga/{id}', [PenjualanController::class, 'getLevelHarga'])->name('penjualan.getLevelHarga');
         Route::get('harga/{id}', [PenjualanController::class, 'getHarga'])->name('penjualan.getHarga');
+        Route::get('/pelanggan', [PenjualanController::class, 'getPelanggan'])->name('penjualan.getPelanggan');
         Route::post('/', [PenjualanController::class, 'store'])->name('penjualan.store');
         Route::get('/data-penjualan', [PenjualanController::class, 'getDataPenjualan'])->name('penjualan.getDataPenjualan');
     });
@@ -98,6 +101,19 @@ Route::middleware('auth')->group(function () {
         Route::put('/{id}', [LevelHargaController::class, 'update'])->name('levelharga.update');
         Route::delete('{id}', [LevelHargaController::class, 'destroy'])->name('levelharga.destroy');
     });
+
+    //pelanggan route
+    Route::prefix('pelanggan')->group(function () {
+        Route::get('/', [PelangganController::class, 'index'])->name('pelanggan');
+        Route::post('/', [PelangganController::class, 'store'])->name('pelanggan.store');
+        Route::put('/{id}', [PelangganController::class, 'update'])->name('pelanggan.update');
+        Route::delete('{id}', [PelangganController::class, 'destroy'])->name('pelanggan.destroy');
+    });
+
+    //rekap pelanggan route
+    Route::prefix('rekappelanggan')->group(function () {
+        Route::get('/', [RekapPelangganController::class, 'index'])->name('rekappelanggan');
+        });
 
     // operator route
     Route::prefix('operator')->group(function () {

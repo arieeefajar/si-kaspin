@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\LoginController;
 use App\Http\Controllers\api\product\ProductController;
 use App\Http\Controllers\api\UserController;
 use Illuminate\Http\Request;
@@ -20,5 +21,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/product', [ProductController::class, 'index']);
+Route::post('/login', [LoginController::class, 'prosesLogin']);
+
+Route::prefix('product')->group(function () {
+    Route::get('/', [ProductController::class, 'index']);
+    Route::post('/', [ProductController::class, 'store']);
+});
 Route::get('/user', [UserController::class, 'index']);
+Route::get('/pelanggan', [UserController::class, 'getPelanggan']);

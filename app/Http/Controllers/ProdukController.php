@@ -12,16 +12,20 @@ class ProdukController extends Controller
 {
     public function index()
     {
-        $produk = KategoriProduk::join('produks', 'kategori_produks.kode_kategori', '=', 'produks.kode_kategori')->select('produks.*', 'kategori_produks.*')->get();
+        // $produk = KategoriProduk::join('produks', 'kategori_produks.kode_kategori', '=', 'produks.kode_kategori')->select('produks.*', 'kategori_produks.*')->get();
+        $produk = Produk::with('kategori', 'supplier')->get();
         $kategori = DB::table('kategori_produks')->get();
-        return view('produk', compact('produk', 'kategori'));
+        $supplier = DB::table('suppliers')->get();
+        return view('produk', compact('produk', 'kategori', 'supplier'));
     }
 
     public function store(Request $request)
     {
+        // dd($request->all());
         // custom message
         $customMessage = [
             'kode_kategori.required' => 'Harap pilih kategori',
+            'kode_supplier.required' => 'Harap pilih supplier',
 
             'nama_produk.required' => 'Harap isi nama produk',
             'nama_produk.max' => 'Nama produk maksimal :max karakter',
@@ -37,6 +41,7 @@ class ProdukController extends Controller
         // validation
         $validator = Validator::make($request->all(), [
             'kode_kategori' => 'required',
+            'kode_supplier' => 'required',
             'nama_produk' => 'required|max:25|string',
             'gambar' => 'required|image|mimes:png,jpg,jpeg|max:2048',
         ], $customMessage);
@@ -67,9 +72,10 @@ class ProdukController extends Controller
         $produk = new Produk();
         $produk->kode_produk = $kode_produk;
         $produk->kode_kategori = $request->kode_kategori;
+        $produk->kode_supplier = $request->kode_supplier;
         $produk->nama_produk = $request->nama_produk;
         $produk->gambar = $gambar->hashName();
-        $produk->stock = 0;
+        $produk->stock = 100;
 
         // simpan
         try {
@@ -84,11 +90,11 @@ class ProdukController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request->all());
 
         // custom message
         $customMessage = [
             'kode_kategori.required' => 'Harap pilih kategori',
+            'kode_supplier.required' => 'Harap pilih supplier',
 
             'nama_produk.required' => 'Harap isi nama produk',
             'nama_produk.max' => 'Nama produk maksimal :max karakter',
@@ -104,6 +110,7 @@ class ProdukController extends Controller
         // validation
         $validator = Validator::make($request->all(), [
             'kode_kategori' => 'required',
+            'kode_supplier' => 'required',
             'nama_produk' => 'required|max:25|string',
             'gambar' => 'required|image|mimes:png,jpg,jpeg|max:2048',
         ], $customMessage);
@@ -121,6 +128,7 @@ class ProdukController extends Controller
         try {
             Produk::where('kode_produk', $id)->update([
                 'kode_kategori' => $request->kode_kategori,
+                'kode_supplier' => $request->kode_supplier,
                 'nama_produk' => $request->nama_produk,
                 'gambar' => $gambar->hashName(),
             ]);

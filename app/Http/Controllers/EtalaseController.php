@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produk;
-use App\Models\LevelHarga;
 use Illuminate\Http\Request;
+
+use function Laravel\Prompts\select;
 
 class EtalaseController extends Controller
 {

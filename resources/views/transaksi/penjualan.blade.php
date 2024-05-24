@@ -171,8 +171,9 @@
                         <div class="row g-3">
                             <div class="col-xxl-6">
                                 <label for="nama_pelanggan">Nama Pelanggan</label>
-                                <input type="text" id="nama-pelanggan" name="nama_pelanggan"
-                                    class="form-control"required>
+                                <select name="kode_pelanggan" class="form-select" id="nama-pelanggan" required></select>
+                                {{-- <input type="text" id="nama-pelanggan" name="nama_pelanggan"
+                                    class="form-control"required> --}}
                             </div>
                             <div class="col-xxl-6">
                                 <label for="total">Total</label>
@@ -219,6 +220,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             getCartItem();
+            getPelanggan()
         });
 
         function formatRP(input) {
@@ -249,6 +251,23 @@
                 for (let index = 0; index < data.length; index++) {
                     levelHarga.innerHTML +=
                         `<option value="${data[index].kode_level}">${data[index].nama_level}</option>`
+                }
+            }).catch(error => console.error('Error:', error));
+        }
+
+        function getPelanggan() {
+            fetch("{{ route('penjualan.getPelanggan') }}", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then(response => response
+                .json()).then(data => {
+                const pelanggan = document.getElementById('nama-pelanggan');
+                pelanggan.innerHTML = `<option selected disabled>Pilih Pelanggan</option>`;
+                for (let index = 0; index < data.length; index++) {
+                    pelanggan.innerHTML +=
+                        `<option value="${data[index].kode_pelanggan}">${data[index].nama_pelanggan}</option>`
                 }
             }).catch(error => console.error('Error:', error));
         }
@@ -342,6 +361,7 @@
             localStorage.setItem('cartItem', JSON.stringify(cartItem));
             clearForm();
             getCartItem();
+            getPelanggan();
         }
 
         function getCartItem() {

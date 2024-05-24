@@ -36,75 +36,13 @@
                     <h4 class="card-title mb-0">Data Transaksi Penjualan</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
-                    <div class="align-items-center d-flex-column">
-                        <form action="" class="app-search d-flex">
-                            <div class="position-relative">
-                                <input type="text" name="" id="" class="form-control rounded-pill"
-                                    placeholder="Search...">
-                                <span class="mdi mdi-magnify search-widget-icon"></span>
-                            </div>
-                        </form>
-                        <div class="row d-flex">
-                            @foreach ($penjualan as $item)
-                                <div class="col-6">
-                                    <div class="card" id="cardItem" data-bs-toggle="modal" data-bs-target="#addItemModal"
-                                        onclick="addItem({{ $item }})">
-                                        <div class="row g-0">
-                                            <div class="col-md-4">
-                                                <img class="rounded-start img-fluid h-100 w-100 object-cover"
-                                                    src="{{ asset('/storage/gambarProduk/' . $item->gambar) }}"
-                                                    alt="Card image">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="card-header">
-                                                    <h5 class="card-title mb-0">{{ $item->nama_produk }}</h5>
-                                                </div>
-                                                <div class="card-body">
-                                                    <p class="card-text mb-2">Rp.
-                                                        {{ number_format($item->harga_satuan, 0, ',', '.') }}</p>
-                                                    <p class="card-text"><small
-                                                            class="text-muted">{{ $item->nama_kategori }} | Stok:
-                                                            {{ $item->stock }}</small></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- end card -->
-                                </div><!-- end col -->
-                            @endforeach
-                        </div><!-- end row -->
-                    </div>
-                </div>
-                <!-- end card body -->
-            </div><!-- end card -->
-        </div><!-- end col -->
-
-        <div class="col-xl-4">
-            <div class="card card-height-100">
-                <div class="card-body d-flex flex-column">
-                    <div class="d-flex gap-2 position-relative">
-                        <i class="ri-shopping-cart-line"></i>
-                        <h3 class="card-title mb-0">Keranjang</h3>
-                    </div>
-                    <div class="d-flex-column flex-grow-1 mt-4">
-                        <template id="cardItemTemplate">
-                            <div class="card">
-                                <div class="row g-0">
-                                    <div class="col-md-4">
-                                        <img class="rounded-start img-fluid h-100 w-100 object-cover"
-                                            src="{{ asset('admin_assets/assets/images/small/img-12.jpg') }}"
-                                            alt="Card image" id="itemImg">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-header">
-                                            <h6 class="mb-0 itemName">2x | Batako Kotak Biasa</h6>
-                                        </div>
-                                        <div class="card-body">
-                                            <p class="card-text mb-2 itemPrice">Rp. 10.000</p>
-                                            <p class="card-text">
-                                                <span class="btn btn-sm btn-danger" id="btnRemoveItem" data-index=""
-                                                    onclick="removeItem()">Hapus <i class="ri-delete-bin-line"></i></span>
-                                            </p>
-                                        </div>
+                    <div id="customerList">
+                        <div class="row g-4 mb-3">
+                            <div class="col-sm-auto">
+                                <div class="d-flex justify-content-sm-end">
+                                    <div class="search-box ms-2">
+                                        <input type="text" class="form-control search" placeholder="Search...">
+                                        <i class="ri-search-line search-icon"></i>
                                     </div>
                                 </div>
                             </div>
@@ -117,6 +55,7 @@
                                         <th class="sort" data-sort="no">No</th>
                                         <th class="sort" data-sort="kodePenjualan">Kode Penjualan</th>
                                         <th class="sort" data-sort="namaOperator">Nama Operator</th>
+                                        <th class="sort" data-sort="namaOperator">Nama Pelanggan</th>
                                         <th class="sort" data-sort="total">Total</th>
                                         <th class="sort" data-sort="aksi">Aksi</th>
                                     </tr>
@@ -129,6 +68,7 @@
                                                     class="fw-medium link-primary">#VZ2101</a></td>
                                             <td class="kode_penjualan">{{ $item->kode_penjualan }}</td>
                                             <td class="nama">{{ $item->operator->nama }}</td>
+                                            <td class="pelanggan">{{ $item->pelanggan->nama_pelanggan }}</td>
                                             <td class="total1">Rp.
                                                 {{ number_format($item->total, 0, ',', '.') }}</td>
                                             <td class="total" style="display:none;">{{ $item->total }}</td>
