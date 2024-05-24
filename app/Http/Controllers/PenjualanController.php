@@ -97,10 +97,4 @@ class PenjualanController extends Controller
             return redirect()->back();
         }
     }
-
-    public function getDataPenjualan()
-    {
-        $penjualan = Penjualan::with('details.produk.levelHarga', 'operator')->get();
-        return view('penjualan', compact('penjualan'));
-    }
 }

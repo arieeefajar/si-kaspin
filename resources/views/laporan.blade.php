@@ -24,67 +24,41 @@
         }
     </style>
 @endsection
-@section('title', 'Penjualan')
-@section('titleHeader', 'Penjualan')
+@section('title', 'Laporan')
+@section('titleHeader', 'Laporan')
 @section('menu', 'Keuangan')
-@section('subMenu', 'Penjualan')
+@section('subMenu', 'Laporan')
 @section('content')
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title mb-0">Data Transaksi Penjualan</h4>
+                    <h4 class="card-title mb-0">Laporan</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
                     <div id="customerList">
                         <div class="row g-4 mb-3">
                             <div class="col-sm-auto">
-                                <div class="d-flex justify-content-sm-end">
+                                <div class="d-flex justify-content-sm-end gap-2">
                                     <div class="search-box ms-2">
                                         <input type="text" class="form-control search" placeholder="Search...">
                                         <i class="ri-search-line search-icon"></i>
+                                    </div>
+                                    <div class="">
+                                        <select name="laporan" id="laporan" class="form-select" onchange="pilihLaporan()">
+                                            <option value="penjualan">Penjualan</option>
+                                            <option value="pembelian">Pembelian</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="table-responsive mt-3 mb-1">
-                            <table class="table align-middle table-nowrap" id="customerTable">
-                                <thead class="table-light">
-                                    <tr class="text-center">
-                                        <th class="sort" data-sort="no">No</th>
-                                        <th class="sort" data-sort="kodePenjualan">Kode Penjualan</th>
-                                        <th class="sort" data-sort="namaOperator">Nama Operator</th>
-                                        <th class="sort" data-sort="namaOperator">Nama Pelanggan</th>
-                                        <th class="sort" data-sort="total">Total</th>
-                                        <th class="sort" data-sort="aksi">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="list form-check-all">
-                                    @foreach ($penjualan as $key => $item)
-                                        <tr class="text-center">
-                                            <td class="no">{{ $key + 1 }}</td>
-                                            <td class="id" style="display:none;"><a href="javascript:void(0);"
-                                                    class="fw-medium link-primary">#VZ2101</a></td>
-                                            <td class="kode_penjualan">{{ $item->kode_penjualan }}</td>
-                                            <td class="nama">{{ $item->operator->nama }}</td>
-                                            <td class="pelanggan">{{ $item->pelanggan->nama_pelanggan }}</td>
-                                            <td class="total1">Rp.
-                                                {{ number_format($item->total, 0, ',', '.') }}</td>
-                                            <td class="total" style="display:none;">{{ $item->total }}</td>
-                                            <td>
-                                                <div class="d-flex gap-2 justify-content-center">
-                                                    <div class="detail">
-                                                        <button class="btn btn-sm btn-success remove-item-btn"
-                                                            data-bs-toggle="modal" data-bs-target="#addModal"
-                                                            onclick="detailPenjualan({{ $item }})">Detail</button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+
+                            <div id="table-container">
+                                @include('laporan.penjualan')
+                            </div>
 
                             {{-- no result --}}
                             <div class="noresult" style="display: none">
@@ -151,7 +125,8 @@
                     <div class="row g-0 mb-3 flex-grow-1 align-items-center">
                         <div class="col-sm-6 d-flex-column">
                             <div class="info-row">
-                                <p><span class="label">Kode Penjualan</span> <span class="value" id="kode-penjualan"> :
+                                <p><span class="label">Kode Penjualan</span> <span class="value" id="kode-penjualan">
+                                        :
                                         #okok</span></p>
                             </div>
                             <div class="info-row">
@@ -253,6 +228,43 @@
                 total.textContent = ": Rp." + totalBelanja;
                 bayar.textContent = ": Rp." + uangBayar;
                 kembalian.textContent = ": Rp." + uangKembalian;
+            }
+
+            function detailPembelian(data) {
+                produkBelanja(data.details);
+                const cardDetail = document.getElementById('detail-penjualan"');
+                const kodePenjualan = document.querySelector('#kode-penjualan');
+                const tanggal = document.querySelector('#tanggal');
+                const namaOperator = document.querySelector('#nama-operator');
+                const total = document.querySelector('#total');
+                const bayar = document.querySelector('#bayar');
+                const kembalian = document.querySelector('#kembalian');
+
+                const date = new Date(data.created_at);
+                const format = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+
+                const totalBelanja = formatRp(data.total);
+                const uangBayar = formatRp(data.bayar);
+                const uangKembalian = formatRp(data.kembalian);
+
+                kodePenjualan.textContent = ": " + data.kode_pembelian;
+                tanggal.textContent = ": " + format;
+                namaOperator.textContent = ": " + data.operator.nama;
+                total.textContent = ": Rp." + totalBelanja;
+                bayar.textContent = ": Rp." + uangBayar;
+                kembalian.textContent = ": Rp." + uangKembalian;
+            }
+
+            function pilihLaporan() {
+                const laporan = document.querySelector('#laporan').value;
+                const table = document.querySelector('#table-container');
+                if (laporan == 'penjualan') {
+                    table.innerHTML = '';
+                    table.innerHTML = `@include('laporan.penjualan')`;
+                } else {
+                    table.innerHTML = '';
+                    table.innerHTML = `@include('laporan.pembelian')`;
+                }
             }
         </script>
     @endsection
