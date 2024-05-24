@@ -12,7 +12,7 @@
                     <div class="align-items-center d-flex-column">
                         <form action="{{ route('etalase.search') }}" method="GET" class="app-search d-flex">
                             <div class="position-relative">
-                                <input type="text" name="" id="" class="form-control rounded-pill"
+                                <input type="text" name="cari" id="cari" class="form-control rounded-pill"
                                     placeholder="Search...">
                                 <span class="mdi mdi-magnify search-widget-icon"></span>
                             </div>
@@ -21,16 +21,16 @@
                             <div class="col">
                                 <div class="row">
                                     @foreach ($etalase as $item)
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="card" id="cardItem" data-bs-toggle="modal"
                                                 data-bs-target="#addItemModal">
                                                 <div class="row g-0">
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-12">
                                                         <img class="rounded-start img-fluid h-100 object-cover"
                                                             src="{{ asset('/storage/gambarProduk/' . $item->gambar) }}"
                                                             alt="Card image">
                                                     </div>
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-12">
                                                         <div class="card-header">
                                                             <h5 class="card-title mb-0">{{ $item->nama_produk }}</h5>
                                                         </div>
