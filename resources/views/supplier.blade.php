@@ -35,6 +35,7 @@
                                 <thead class="table-light">
                                     <tr class="text-center">
                                         <th class="sort" data-sort="no">No</th>
+                                        <th class="sort" data-sort="kode_supplier">Kode Supplier</th>
                                         <th class="sort" data-sort="nama">Nama</th>
                                         <th class="sort" data-sort="no_hp">No Hp</th>
                                         <th class="sort" data-sort="aksi">Aksi</th>
@@ -46,6 +47,7 @@
                                             <td class="no">{{ $key + 1 }}</td>
                                             <td class="id" style="display:none;"><a href="javascript:void(0);"
                                                     class="fw-medium link-primary">#VZ2101</a></td>
+                                            <td class="kode_supplier">{{ $item->kode_supplier }}</td>      
                                             <td class="nama">{{ $item->nama }}</td>
                                             <td class="no_hp">{{ $item->no_hp }}</td>
                                             <td>
@@ -58,7 +60,7 @@
                                                     <div class="remove">
                                                         <button class="btn btn-sm btn-danger remove-item-btn"
                                                             data-bs-toggle="modal" data-bs-target="#deleteRecordModal"
-                                                            onclick="deleteSupplier({{ $item->id }})">Hapus</button>
+                                                            onclick="deleteSupplier({{ $item }})">Hapus</button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -140,7 +142,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-light p-3">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Supplier</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Supplier</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         id="close-modal"></button>
                 </div>
@@ -161,6 +163,7 @@
                                 placeholder="Masukan No Hp" required />
                         </div>
 
+                        <input type="hidden" id="kode">
                         
                     </div>
                     <div class="modal-footer">
@@ -217,16 +220,15 @@
     <script>
         function editSupplier(data) {
             const form = document.getElementById('editForm');
-            form.action = "{{ route('supplier.update', ['id' => '/']) }}/" + data.id;
+            form.action = "{{ route('supplier.update', ['id' => '/']) }}/" + data.kode_supplier;
             form.querySelector("#nama-edit").value = data.nama;
             form.querySelector("#no_hp-edit").value = data.no_hp;
             
         }
 
         function deleteSupplier(data) {
-            console.log(data);
             const form = document.getElementById('deleteForm');
-            form.action = "{{ route('supplier.destroy', ['id' => '/']) }}/" + data;
+            form.action = "{{ route('supplier.destroy', ['id' => '/']) }}/" + data.kode_supplier;
         }
     </script>
 @endsection

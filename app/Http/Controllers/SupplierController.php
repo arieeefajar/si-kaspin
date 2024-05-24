@@ -43,20 +43,34 @@ class SupplierController extends Controller
             return redirect()->back()->withInput();
         }
 
+        // generate kode
+        $getKode = Supplier::latest()->first();
+        $kode = "SPL-";
+
+        if ($getKode == null) {
+            $nomorUrut = "0001";
+        } else {
+            $nomorUrut = substr($getKode->kode_supplier, 4, 4) + 1;
+            $nomorUrut = "000" . $nomorUrut;
+        }
+        $kode_supplier = $kode . $nomorUrut;
+
         $supplier = new Supplier();
+        $supplier->kode_supplier = $kode_supplier;
         $supplier->nama = $request->nama;
         $supplier->no_hp = $request->no_hp;
 
         try {
             $supplier->save();
-            return redirect('/supplier')->with('success', 'Data Berhasil ditambahkan');
+            alert()->success('Berhasil', 'Data Supplier berhasil ditambahkan');
+            return redirect()->back();
         } catch (\Throwable $th) {
-            alert()->error('Gagal', $th);
+            alert()->error('Gagal', $th->getMessage());
             return redirect()->back()->withInput();
-        };
+        }
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $kode_supplier)
     {
         $customMessage = [
             'nama.required' => 'Nama harus diisi',
@@ -75,37 +89,31 @@ class SupplierController extends Controller
 
         if ($validator->fails()) {
             alert()->error('Gagal', $validator->messages()->all()[0]);
-            return redirect()->back();
+            return redirect()->back()->withInput();
         }
-
-        $supplier = Supplier::find($id);
-        $supplier->nama = $request->nama;
-        $supplier->no_hp = $request->no_hp;
 
         try {
-            $supplier->save();
-            return redirect('/supplier')->with('success', 'Data Berhasil diberbarui');
-        } catch (\Throwable $th) {
-            alert()->error('Gagal', $th);
+            Supplier::where('kode_supplier', $kode_supplier)->update([
+                'nama' => $request->nama,
+                'no_hp' => $request->no_hp
+            ]);
+               alert()->success('Berhasil', 'Data Supplier Berhasil diubah');
             return redirect()->back();
-        }
+    } catch (\Throwable $th) {
+        alert()->error('Gagal', $th);
+        return redirect()->back()->withInput();
+    }
     }
 
     public function destroy($id)
     {
-        $supplier = Supplier::find($id);
-
-        if (!$supplier) {
-            alert()->error('Gagal', 'Supplier tidak di temukan');
-            return redirect()->route('supplier')->with('error', 'Supplier not found.');
-        }
-
         try {
-            $supplier->delete();
-            alert()->success('Berhasil', 'Data Berhasil dihapus');
+            $query = Supplier::where('kode_supplier', $id);
+            $query->delete();
+            alert()->success('Berhasil', 'Data Supplier Berhasil dihapus');
             return redirect()->back();
         } catch (\Throwable $th) {
-            alert()->error('Gagal', $th);
+            alert()->error('Gagal', $th->getMessage());
             return redirect()->back();
         }
     }
