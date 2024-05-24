@@ -220,7 +220,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             getCartItem();
-            getPelanggan()
+            getPelanggan();
         });
 
         function formatRP(input) {

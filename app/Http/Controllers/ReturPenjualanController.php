@@ -12,4 +12,9 @@ class ReturPenjualanController extends Controller
         $produk = Produk::join('kategori_produks', 'produks.kode_kategori', '=', 'kategori_produks.kode_kategori')->join('level_hargas', 'produks.kode_produk', '=', 'level_hargas.kode_produk')->select('produks.*', 'kategori_produks.nama_kategori', 'level_hargas.harga_satuan')->where('level_hargas.nama_level', 'grosir')->get();
         return view('returPenjualan', compact('produk'));
     }
+
+    public function store(Request $request)
+    {
+        dd($request->all());
+    }
 }

@@ -98,7 +98,8 @@
                         <div id="cartItemsContainer"></div>
                     </div>
                     <div class="">
-                        <button class="btn btn-success w-100" id="btnSimpan" hidden>Lanjutkan</button>
+                        <button class="btn btn-success w-100" id="btnSimpan" data-bs-toggle="modal"
+                            data-bs-target="#addModal" onclick="setValueForm()" hidden>Lanjutkan</button>
                     </div>
                 </div>
             </div><!-- end card body -->
@@ -155,16 +156,85 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalgridLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalgridLabel">Tambah Retur</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('retur.store') }}" method="POST" id="addReturnForm">
+                        @csrf
+                        @method('POST')
+                        <div class="row g-3">
+                            <div class="col-xxl-6">
+                                <label for="nama_pelanggan">Nama Pelanggan</label>
+                                <select name="kode_pelanggan" class="form-select" id="nama-pelanggan" required></select>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label for="total">Total</label>
+                                <input type="text" id="total" class="form-control" readonly required>
+                                <input type="hidden" id="total1" name="total">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label for="bayar">Bayar</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="text" id="bayar" class="form-control" maxlength="11"
+                                        placeholder="Masukan nominal tunai" required
+                                        oninput="formatRP(this); setKembalian()" />
+                                </div>
+                                <input type="hidden" id="bayar1" name="bayar">
+                            </div>
+
+                            <div class="col-xxl-6">
+                                <label for="kembalian">Kembalian</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="text" id="kembalian" class="form-control" name="kembalian" required
+                                        readonly oninput="formatRP(this)" />
+                                </div>
+                                <input type="hidden" name="kembalian" id="kembalian1">
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"
+                                        id="closeModal">Close</button>
+                                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal"
+                                        id="btn-simpan" onclick="deleteCart()" disabled>Simpan</button>
+                                </div>
+                            </div><!--end col-->
+                        </div><!--end row-->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('otherJs')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             getCartItem();
+            getPelanggan();
         })
 
         function inputAngka(input) {
             input.value = input.value.replace(/\D/g, '');
+        }
+
+        function formatRP(input) {
+            var value = input.value.replace(/[^0-9]/g, '');
+
+            if (value) {
+                value = parseInt(value, 10).toLocaleString('id-ID');
+            }
+
+            input.value = value;
         }
 
         function addItem(data) {
@@ -223,6 +293,7 @@
             localStorage.setItem('cartRetur', JSON.stringify(cartItem));
             clearForm();
             getCartItem();
+            getPelanggan()
         }
 
         function clearForm() {
@@ -276,6 +347,108 @@
                     getCartItem();
                 }
             }
+        }
+
+        function getPelanggan() {
+            fetch("{{ route('retur.getPelanggan') }}", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then(response => response
+                .json()).then(data => {
+                const pelanggan = document.getElementById('nama-pelanggan');
+                pelanggan.innerHTML = `<option selected disabled>Pilih Pelanggan</option>`;
+                for (let index = 0; index < data.length; index++) {
+                    pelanggan.innerHTML +=
+                        `<option value="${data[index].kode_pelanggan}">${data[index].nama_pelanggan}</option>`
+                }
+            }).catch(error => console.error('Error:', error));
+        }
+
+        function setValueForm() {
+            const items = JSON.parse(localStorage.getItem('cartRetur'));
+            const form = document.getElementById('addReturnForm');
+            const total = form.querySelector('#total');
+            const total1 = form.querySelector('#total1');
+            let totalSubtotal = 0;
+
+            console.log(items);
+
+            if (items && items.length > 0) {
+                items.forEach((item, index) => {
+                    // input kodeProduk
+                    const kodeProduk = document.createElement('input');
+                    kodeProduk.id = 'kodeProduk';
+                    kodeProduk.type = 'hidden';
+                    kodeProduk.name = 'kode_produk[]';
+                    kodeProduk.value = item.kodeProduk;
+                    form.appendChild(kodeProduk);
+                    console.log(kodeProduk);
+
+                    // input namaProduk
+                    const namaProduk = document.createElement('input');
+                    namaProduk.id = 'namaProduk';
+                    namaProduk.type = 'hidden';
+                    namaProduk.name = 'nama_produk[]';
+                    namaProduk.value = item.namaProduk;
+                    form.appendChild(namaProduk);
+                    console.log(namaProduk);
+
+                    // input qty
+                    const qty = document.createElement('input');
+                    qty.id = 'qty';
+                    qty.type = 'hidden';
+                    qty.name = 'jumlah[]';
+                    qty.value = item.jumlah;
+                    form.appendChild(qty);
+                    console.log(qty);
+
+                    // input subtotal
+                    const subtotal = document.createElement('input');
+                    subtotal.id = 'subtotal';
+                    subtotal.type = 'hidden';
+                    subtotal.name = 'subtotal[]';
+                    subtotal.value = item.subtotal;
+                    form.appendChild(subtotal);
+                    console.log(subtotal);
+
+                    // input total
+                    totalSubtotal += parseInt(item.subtotal);
+                });
+
+                // total value
+                total1.value = totalSubtotal;
+                totalSubtotal = totalSubtotal.toLocaleString('id-ID');
+                total.value = 'Rp. ' + totalSubtotal;
+            }
+        }
+
+        function setKembalian() {
+            const total = parseInt(document.getElementById('total1').value);
+            const bayar = document.getElementById('bayar').value;
+            const bayar1 = document.getElementById('bayar1');
+            const uang = parseInt(bayar.replace(/[^0-9]/g, ''));
+            const kembalian = document.getElementById('kembalian');
+            const kembalian1 = document.getElementById('kembalian1');
+            const btnCheckout = document.getElementById('btn-simpan');
+
+            const hasil = uang - total;
+            const format = parseInt(hasil, 10).toLocaleString('id-ID');
+
+            if (hasil < 0 || isNaN(hasil)) {
+                kembalian.value = 0
+                btnCheckout.setAttribute('disabled', true)
+            } else {
+                bayar1.value = uang;
+                kembalian.value = format;
+                kembalian1.value = hasil
+                btnCheckout.removeAttribute('disabled')
+            }
+        }
+
+        function deleteCart() {
+            localStorage.removeItem('cartRetur');
         }
     </script>
 @endsection
