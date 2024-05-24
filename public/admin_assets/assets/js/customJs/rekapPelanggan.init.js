@@ -1,6 +1,6 @@
 var perPage = 8,
     options = {
-        valueNames: ["no", "kode_penjualan", "nama", "total", "pelanggan"],
+        valueNames: ["no", "kode_pelanggan", "nama", "tahun", "bulan", "total"],
         page: perPage,
         pagination: !0,
         plugins: [ListPagination({ left: 2, right: 2 })],

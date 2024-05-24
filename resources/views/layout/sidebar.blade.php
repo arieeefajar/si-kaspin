@@ -124,61 +124,65 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link menu-link" href="#sidebarForms" data-bs-toggle="collapse" role="button"
-                    aria-expanded="false" aria-controls="sidebarForms">
-                    <i class="ri-team-line"></i> <span data-key="t-forms">Pelanggan</span>
+                <a class="nav-link menu-link" href="#sidebarUI" data-bs-toggle="collapse" role="button"
+                    aria-expanded="false" aria-controls="sidebarUI">
+                    <i class="ri-dropbox-fill"></i> <span data-key="t-base-ui">Pelanggan</span>
                 </a>
-                <div class="collapse menu-dropdown" id="sidebarForms">
-                    <ul class="nav nav-sm flex-column">
-                        <li class="nav-item">
-                            <a href="forms-elements.html" class="nav-link" data-key="t-basic-elements">Data
-                                Pelanggan</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="forms-select.html" class="nav-link" data-key="t-form-select">
-                                Rekap Pelanggan </a>
-                        </li>
-                    </ul>
-                </div>
+                <div class="collapse menu-dropdown mega-dropdown-menu" id="sidebarUI">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <ul class="nav nav-sm flex-column">
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('pelanggan') }}" class="nav-link" data-key="t-badges">Data Pelanggan</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link menu-link" href="{{ route('supplier') }}">
-                    <i class="las la-users-cog"></i> <span data-key="t-widgets">Supplier</span>
-                </a>
+                <a href="{{ route('rekappelanggan') }}" class="nav-link" data-key="t-alerts">Rekap Pelanggan</a>
             </li>
-
-            <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-components">Master Operator</span>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link menu-link" href="{{ route('operator') }}">
-                    <i class="las la-users-cog"></i> <span data-key="t-widgets">Operator</span>
-                </a>
-            </li>
-
-            <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-components">Keuangan</span>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link menu-link" href="{{ route('penjualan.getDataPenjualan') }}">
-                    <i class="ri-book-2-line"></i> <span data-key="t-widgets">Penjualan</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link menu-link" href="widgets.html">
-                    <i class="ri-book-2-line"></i> <span data-key="t-widgets">Pembelian</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link menu-link" href="widgets.html">
-                    <i class="ri-todo-line"></i> <span data-key="t-widgets">Laporan</span>
-                </a>
-            </li>
-
         </ul>
     </div>
-    <!-- Sidebar -->
+</div>
+</div>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link menu-link" href="{{ route('supplier') }}">
+        <i class="las la-users-cog"></i> <span data-key="t-widgets">Supplier</span>
+    </a>
+</li>
+
+<li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-components">Master Operator</span>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link menu-link" href="{{ route('operator') }}">
+        <i class="las la-users-cog"></i> <span data-key="t-widgets">Operator</span>
+    </a>
+</li>
+
+<li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-components">Keuangan</span>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link menu-link" href="{{ route('penjualan.getDataPenjualan') }}">
+        <i class="ri-book-2-line"></i> <span data-key="t-widgets">Penjualan</span>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link menu-link" href="widgets.html">
+        <i class="ri-book-2-line"></i> <span data-key="t-widgets">Pembelian</span>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link menu-link" href="widgets.html">
+        <i class="ri-todo-line"></i> <span data-key="t-widgets">Laporan</span>
+    </a>
+</li>
+
+</ul>
+</div>
+<!-- Sidebar -->
 </div>

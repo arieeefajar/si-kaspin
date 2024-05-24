@@ -1,14 +1,14 @@
 @extends('layout.app')
-@section('title', 'Operator')
-@section('titleHeader', 'Operator')
-@section('menu', 'Operator')
-@section('subMenu', 'User')
+@section('title', 'Pelanggan')
+@section('titleHeader', 'Pelanggan')
+@section('menu', 'Pelanggan')
+@section('subMenu', 'Data Pelanggan')
 @section('content')
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title mb-0">Operator</h4>
+                    <h4 class="card-title mb-0">Data Pelanggan</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
                     <div id="customerList">
@@ -35,32 +35,34 @@
                                 <thead class="table-light">
                                     <tr class="text-center">
                                         <th class="sort" data-sort="no">No</th>
-                                        <th class="sort" data-sort="nama">Nama</th>
-                                        <th class="sort" data-sort="username">Username</th>
-                                        <th class="sort" data-sort="role">Role</th>
+                                        <th class="sort" data-sort="kode_pelanggan">Kode Pelanggan</th>
+                                        <th class="sort" data-sort="nama_pelanggan">Nama Pelanggan</th>
+                                        <th class="sort" data-sort="alamat">Alamat</th>
+                                        <th class="sort" data-sort="no_hp">No Hp</th>
                                         <th class="sort" data-sort="aksi">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="list form-check-all">
-                                    @foreach ($operator as $key => $item)
+                                    @foreach ($pelanggan as $key => $item)
                                         <tr class="text-center">
                                             <td class="no">{{ $key + 1 }}</td>
                                             <td class="id" style="display:none;"><a href="javascript:void(0);"
                                                     class="fw-medium link-primary">#VZ2101</a></td>
-                                            <td class="nama">{{ $item->nama }}</td>
-                                            <td class="username">{{ $item->username }}</td>
-                                            <td class="role">{{ $item->role }}</td>
+                                            <td class="kode_pelanggan">{{ $item->kode_pelanggan }}</td>
+                                            <td class="nama_pelanggan">{{ $item->nama_pelanggan }}</td>
+                                            <td class="alamat">{{ $item->alamat }}</td>
+                                            <td class="no_hp">{{ $item->no_hp }}</td>
                                             <td>
                                                 <div class="d-flex gap-2 justify-content-center">
                                                     <div class="edit">
                                                         <button class="btn btn-sm btn-warning edit-item-btn"
                                                             data-bs-toggle="modal" data-bs-target="#editModal"
-                                                            onclick="editOperator({{ $item }})">Edit</button>
+                                                            onclick="editPelanggan({{ $item }})">Edit</button>
                                                     </div>
                                                     <div class="remove">
                                                         <button class="btn btn-sm btn-danger remove-item-btn"
                                                             data-bs-toggle="modal" data-bs-target="#deleteRecordModal"
-                                                            onclick="deleteOperator({{ $item->id }})">Hapus</button>
+                                                            onclick="deletePelanggan({{ $item }})">Hapus</button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -104,46 +106,40 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-light p-3">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Operator</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Pelanggan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         id="close-modal"></button>
                 </div>
-                <form action="{{ route('operator.store') }}" method="POST">
+                <form action="{{ route('pelanggan.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
 
                         <div class="mb-3">
-                            <label for="nama" class="form-label">Nama</label>
-                            <input type="text" id="nama" class="form-control" name="nama"
-                                placeholder="Masukan nama" required />
+                            <label for="nama_pelanggan" class="form-label">Nama</label>
+                            <input type="text" id="nama_pelanggan" class="form-control" name="nama_pelanggan"
+                                placeholder="Masukan nama pelanggan" value="{{ old('nama_pelanggan') }}" required />
                         </div>
 
                         <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" id="username" class="form-control" name="username"
-                                placeholder="Masukan username" required />
+                            <label for="alamat" class="form-label">Alamat</label>
+                            <input type="text" id="alamat" class="form-control" name="alamat"
+                                placeholder="cth jl. mastrip" required />
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" id="password" class="form-control" name="password"
-                                placeholder="Masukan password" required />
+                            <label for="no_hp" class="form-label">No Hp</label>
+                            <input type="text" id="no_hp" class="form-control" name="no_hp"
+                                placeholder="cth 0987654321" required />
                         </div>
 
-                        <div>
-                            <label for="role" class="form-label">Role</label>
-                            <select class="form-control" data-trigger id="role" name="role">
-                                <option selected disabled>Pilih Role</option>
-                                <option value="admin">Admin</option>
-                                <option value="pegawai">Pegawai</option>
-                            </select>
                         </div>
-                    </div>
                     <div class="modal-footer">
                         <div class="hstack gap-2 justify-content-end">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
                             <button type="submit" class="btn btn-success" id="add-btn">Tambah</button>
                         </div>
+                    </div>
+
                     </div>
                 </form>
             </div>
@@ -155,7 +151,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-light p-3">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Operator</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Pelanggan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         id="close-modal"></button>
                 </div>
@@ -165,25 +161,25 @@
                     <div class="modal-body">
 
                         <div class="mb-3">
-                            <label for="nama-field" class="form-label">Nama</label>
-                            <input type="text" id="nama-edit" class="form-control" name="nama"
-                                placeholder="Masukan nama" required />
+                            <label for="nama_pelanggan-field" class="form-label">Nama</label>
+                            <input type="text" id="nama_pelanggan-edit" class="form-control" name="nama_pelanggan"
+                                placeholder="Masukan nama pelanggan" required />
                         </div>
 
                         <div class="mb-3">
-                            <label for="username-field" class="form-label">Username</label>
-                            <input type="text" id="username-edit" class="form-control" name="username"
-                                placeholder="Masukan username" required />
+                            <label for="alamat-field" class="form-label">Alamat</label>
+                            <input type="text" id="alamat-edit" class="form-control" name="alamat"
+                                placeholder="Masukkan alamat" required />
                         </div>
 
-                        <div>
-                            <label for="role-field" class="form-label">Role</label>
-                            <select class="form-control" data-trigger name="role" id="role-edit">
-                                <option selected disabled>Pilih Role</option>
-                                <option value="admin">Admin</option>
-                                <option value="pegawai">Pewagai</option>
-                            </select>
+                        <div class="mb-3">
+                            <label for="no_hp-field" class="form-label">No Hp</label>
+                            <input type="text" id="no_hp-edit" class="form-control" name="no_hp"
+                                placeholder="Masukkan No Hp" required />
                         </div>
+
+                        <input type="hidden" id="kode">
+
                     </div>
                     <div class="modal-footer">
                         <div class="hstack gap-2 justify-content-end">
@@ -234,21 +230,22 @@
     <script src="{{ asset('admin_assets/assets/libs/list.pagination.js/list.pagination.min.js') }}"></script>
 
     <!-- listjs init -->
-    <script src="{{ asset('admin_assets/assets/js/customJs/operator.init.js') }}"></script>
+    <script src="{{ asset('admin_assets/assets/js/customJs/pelanggan.init.js') }}"></script>
 
-    <script>
-        function editOperator(data) {
+     <script>
+        function editPelanggan(data) {
+            console.log(data);
             const form = document.getElementById('editForm');
-            form.action = "{{ route('operator.update', ['id' => '/']) }}/" + data.id;
-            form.querySelector("#nama-edit").value = data.nama;
-            form.querySelector("#username-edit").value = data.username;
-            form.querySelector("#role-edit").value = data.role;
+            form.action = "{{ route('pelanggan.update', ['id' => '/']) }}/" + data.kode_pelanggan;
+            form.querySelector("#nama_pelanggan-edit").value = data.nama_pelanggan;
+            form.querySelector("#alamat-edit").value = data.alamat;
+            form.querySelector("#no_hp-edit").value = data.no_hp;
         }
 
-        function deleteOperator(data) {
+        function deletePelanggan(data) {
             console.log(data);
             const form = document.getElementById('deleteForm');
-            form.action = "{{ route('operator.destroy', ['id' => '/']) }}/" + data;
+            form.action = "{{ route('pelanggan.destroy', ['id' => '/']) }}/" + data.kode_pelanggan;
         }
     </script>
 @endsection
