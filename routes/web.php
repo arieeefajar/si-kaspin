@@ -40,9 +40,9 @@ Route::middleware('auth')->group(function () {
 
     // etalase route
     Route::prefix('etalase')->group(function () {
-        Route::get('/', [EtalaseController::class, 'index'])->name('etalase');
+        Route::get('/', [EtalaseController::class, 'index'])->name('etalase.index');
         Route::get('/produk/{id}', [EtalaseController::class, 'getProduk'])->name('etalase.getProduk');
-        Route::get('/etalase/search', [EtalaseController::class, 'search'])->name('etalase.search');
+        Route::get('/etalase/cari', [EtalaseController::class, 'search'])->name('etalase.search');
     });
 
     // penjualan route
