@@ -327,7 +327,6 @@
             localStorage.setItem('cartPembelian', JSON.stringify(cartItem));
             clearForm();
             getCartItem();
-            console.log(cartItem);
         }
 
         function getCartItem() {

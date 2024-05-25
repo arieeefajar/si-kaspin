@@ -62,6 +62,8 @@ Route::middleware('auth')->group(function () {
     // retur route
     Route::prefix('retur')->group(function () {
         Route::get('/', [ReturPenjualanController::class, 'index'])->name('retur');
+        Route::get('/pelanggan', [PenjualanController::class, 'getPelanggan'])->name('retur.getPelanggan');
+        Route::post('/', [ReturPenjualanController::class, 'store'])->name('retur.store');
     });
 
     // piutang route
