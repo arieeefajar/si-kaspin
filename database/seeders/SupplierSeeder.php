@@ -14,6 +14,7 @@ class SupplierSeeder extends Seeder
     public function run(): void
     {
         Supplier::create([
+            'kode_supplier' => 'SPL-0001',
             'nama' => 'Supplier 1',
             'no_hp' => '081234567890',
         ]);

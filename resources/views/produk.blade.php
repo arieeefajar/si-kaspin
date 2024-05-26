@@ -132,7 +132,8 @@
                             <select name="kode_supplier" id="kode-supplier" class="form-select" required>
                                 <option value="" selected disabled>Pilih Supplier</option>
                                 @foreach ($supplier as $item)
-                                    <option value="{{ $item->id }}" {{ old('nama') == $item->id ? 'selected' : '' }}>
+                                    <option value="{{ $item->kode_supplier }}"
+                                        {{ old('nama') == $item->kode_supplier ? 'selected' : '' }}>
                                         {{ $item->nama }}
                                     </option>
                                 @endforeach
@@ -193,7 +194,8 @@
                             <select name="kode_supplier" id="kode-supplier" class="form-select" required>
                                 <option value="" selected disabled>Pilih Supplier</option>
                                 @foreach ($supplier as $item)
-                                    <option value="{{ $item->id }}" {{ old('nama') == $item->id ? 'selected' : '' }}>
+                                    <option value="{{ $item->kode_supplier }}"
+                                        {{ old('nama') == $item->kode_supplier ? 'selected' : '' }}>
                                         {{ $item->nama }}
                                     </option>
                                 @endforeach

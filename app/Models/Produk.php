@@ -37,6 +37,6 @@ class Produk extends Model
 
     public function supplier()
     {
-        return $this->belongsTo(Supplier::class, 'kode_supplier', 'id');
+        return $this->belongsTo(Supplier::class, 'kode_supplier', 'kode_supplier');
     }
 }

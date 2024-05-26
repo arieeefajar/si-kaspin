@@ -11,9 +11,7 @@ class LevelHargaController extends Controller
 {
     public function index()
     {
-        $levelharga = LevelHarga::join('produks', 'produks.kode_produk', '=', 'level_hargas.kode_produk')
-            ->select('level_hargas.*', 'produks.*')
-            ->get();
+        $levelharga = LevelHarga::join('produks', 'produks.kode_produk', '=', 'level_hargas.kode_produk')->orderBy('level_hargas.kode_level', 'asc')->select('level_hargas.*', 'produks.*')->get();
         $produk = Produk::all();
         return view('levelHarga', compact('levelharga', 'produk'));
     }

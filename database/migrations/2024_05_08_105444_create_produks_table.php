@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('produks', function (Blueprint $table) {
             $table->string('kode_produk')->primary();
             $table->string('kode_kategori');
-            $table->unsignedBigInteger('kode_supplier');
+            $table->string('kode_supplier');
             $table->string('nama_produk');
             $table->string('gambar');
             $table->integer('stock');
             $table->timestamps();
 
             $table->foreign('kode_kategori')->references('kode_kategori')->on('kategori_produks');
-            $table->foreign('kode_supplier')->references('id')->on('suppliers')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('kode_supplier')->references('kode_supplier')->on('suppliers')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
