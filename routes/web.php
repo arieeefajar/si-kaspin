@@ -16,6 +16,7 @@ use App\Http\Controllers\RekapPelangganController;
 use App\Http\Controllers\ReturPenjualanController;
 use App\Http\Controllers\SupplierController;
 use App\Models\Pembelian;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -132,6 +133,15 @@ Route::middleware('auth')->group(function () {
         Route::put('/{id}', [SupplierController::class, 'update'])->name('supplier.update');
         Route::delete('{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
     });
+
+    //profile route
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+        Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
+        
+    });
+
 
     //larporan route
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
