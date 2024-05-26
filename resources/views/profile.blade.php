@@ -4,13 +4,13 @@
 @section('menu', 'Menu')
 @section('subMenu', 'Profile')
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card mt-5">
-                    <div class="card-header text-center">
-                        <h1 class="mb-0" style="font-family: 'Arial, sans-serif'; color: green;">Profile</h1>
-                    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Profile</h4>
+                </div><!-- end card header -->
+                <div class="card-body">
                     <div class="card-body text-center">
                         <div class="profile-img mb-3">
                             <img class="rounded-circle"
@@ -41,44 +41,45 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div><!-- end card -->
             </div>
+            <!-- end col -->
+        </div>
+        <!-- end col -->
+    </div>
 
-            {{-- edit modal --}}
-            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header bg-light p-3">
-                            <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                                id="close-modal"></button>
-                        </div>
-                        <form action="{{ route('profile.update', $user->id) }}" id="editForm" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="modal-body">
-
-                                <div class="mb-3">
-                                    <label for="nama-field" class="form-label">Nama</label>
-                                    <input type="text" id="nama-edit" class="form-control" name="nama"
-                                        placeholder="Masukan nama" required />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="username-field" class="form-label">Username</label>
-                                    <input type="text" id="username-edit" class="form-control" name="username"
-                                        placeholder="Masukan username" required />
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <div class="hstack gap-2 justify-content-end">
-                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
-                                    <button type="submit" class="btn btn-success" id="edit-btn">Update</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        id="close-modal"></button>
                 </div>
+                <form action="{{ route('profile.update', $user->id) }}" id="editForm" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="nama-field" class="form-label">Nama</label>
+                            <input type="text" id="nama-edit" class="form-control" name="nama"
+                                placeholder="Masukan nama" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="username-field" class="form-label">Username</label>
+                            <input type="text" id="username-edit" class="form-control" name="username"
+                                placeholder="Masukan username" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="hstack gap-2 justify-content-end">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-success" id="edit-btn">Update</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
