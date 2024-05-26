@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ReturOrder;
 use App\Models\DetailReturPenjualan;
 use App\Models\Produk;
 use App\Models\ReturPenjualan;
@@ -38,13 +39,23 @@ class ReturPenjualanController extends Controller
             return redirect()->back()->withInput();
         }
 
+        // // generate kode
+        // $getKode = ReturPenjualan::latest()->first();
+        // $kode = "RTP-";
+        // if ($getKode == null) {
+        //     $kode .= "00001";
+        // } else {
+        //     $kode .= sprintf("%05d", $getKode->kode_retur + 1);
+        // }
+
         // generate kode
         $getKode = ReturPenjualan::latest()->first();
         $kode = "RTP-";
         if ($getKode == null) {
             $kode .= "00001";
         } else {
-            $kode .= sprintf("%05d", $getKode->id + 1);
+            $lastNumber = (int) str_replace('RTP-', '', $getKode->kode_retur);
+            $kode .= sprintf("%05d", $lastNumber + 1);
         }
 
         $retur = new ReturPenjualan();
@@ -70,10 +81,13 @@ class ReturPenjualanController extends Controller
             foreach ($details as $detail) {
                 $detail->save();
             }
+            // event(new ReturOrder($retur, $details));
+
             alert()->success('Berhasil', 'Data retur penjualan berhasil ditambahkan');
             return redirect()->back();
         } catch (\Throwable $th) {
-            alert()->error('Gagal', 'Data retur penjualan gagal ditambahkan');
+            // alert()->error('Gagal', 'Data retur penjualan gagal ditambahkan');
+            dd($th);
             return redirect()->back()->withInput();
         }
     }

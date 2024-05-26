@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Events\OrderPlaced;
+use App\Events\ReturOrder;
 use App\Events\TransaksiPembelian;
 use App\Listeners\UpdateStockProduct;
 use App\Listeners\UpdateStockProdukPembelian;
+use App\Listeners\UpdateStockProdukRetur;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -28,6 +30,9 @@ class EventServiceProvider extends ServiceProvider
         TransaksiPembelian::class => [
             UpdateStockProdukPembelian::class,
         ],
+        ReturOrder::class => [
+            UpdateStockProdukRetur::class,
+        ]
     ];
 
     /**
