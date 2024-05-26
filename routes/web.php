@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EtalaseController;
 use App\Http\Controllers\KategoriProdukController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LevelHargaController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PembelianController;
@@ -39,9 +40,9 @@ Route::middleware('auth')->group(function () {
 
     // etalase route
     Route::prefix('etalase')->group(function () {
-        Route::get('/', [EtalaseController::class, 'index'])->name('etalase');
+        Route::get('/', [EtalaseController::class, 'index'])->name('etalase.index');
         Route::get('/produk/{id}', [EtalaseController::class, 'getProduk'])->name('etalase.getProduk');
-        Route::get('/etalase/search', [EtalaseController::class, 'search'])->name('etalase.search');
+        Route::get('/etalase/cari', [EtalaseController::class, 'search'])->name('etalase.search');
     });
 
     // penjualan route
@@ -51,7 +52,6 @@ Route::middleware('auth')->group(function () {
         Route::get('harga/{id}', [PenjualanController::class, 'getHarga'])->name('penjualan.getHarga');
         Route::get('/pelanggan', [PenjualanController::class, 'getPelanggan'])->name('penjualan.getPelanggan');
         Route::post('/', [PenjualanController::class, 'store'])->name('penjualan.store');
-        Route::get('/data-penjualan', [PenjualanController::class, 'getDataPenjualan'])->name('penjualan.getDataPenjualan');
     });
 
     Route::prefix('pembelian')->group(function () {
@@ -62,6 +62,8 @@ Route::middleware('auth')->group(function () {
     // retur route
     Route::prefix('retur')->group(function () {
         Route::get('/', [ReturPenjualanController::class, 'index'])->name('retur');
+        Route::get('/pelanggan', [PenjualanController::class, 'getPelanggan'])->name('retur.getPelanggan');
+        Route::post('/', [ReturPenjualanController::class, 'store'])->name('retur.store');
     });
 
     // piutang route
@@ -113,7 +115,7 @@ Route::middleware('auth')->group(function () {
     //rekap pelanggan route
     Route::prefix('rekappelanggan')->group(function () {
         Route::get('/', [RekapPelangganController::class, 'index'])->name('rekappelanggan');
-        });
+    });
 
     // operator route
     Route::prefix('operator')->group(function () {
@@ -130,4 +132,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/{id}', [SupplierController::class, 'update'])->name('supplier.update');
         Route::delete('{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
     });
+
+    //larporan route
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
 });
