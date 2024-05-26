@@ -43,20 +43,19 @@ class SupplierController extends Controller
             return redirect()->back()->withInput();
         }
 
+
         // generate kode
         $getKode = Supplier::latest()->first();
         $kode = "SPL-";
-
         if ($getKode == null) {
-            $nomorUrut = "0001";
+            $kode .= "00001";
         } else {
-            $nomorUrut = substr($getKode->kode_supplier, 4, 4) + 1;
-            $nomorUrut = "000" . $nomorUrut;
+            $lastNumber = (int) str_replace('SPL-', '', $getKode->kode_supplier);
+            $kode .= sprintf("%05d", $lastNumber + 1);
         }
-        $kode_supplier = $kode . $nomorUrut;
 
         $supplier = new Supplier();
-        $supplier->kode_supplier = $kode_supplier;
+        $supplier->kode_supplier = $kode;
         $supplier->nama = $request->nama;
         $supplier->no_hp = $request->no_hp;
 
@@ -97,12 +96,12 @@ class SupplierController extends Controller
                 'nama' => $request->nama,
                 'no_hp' => $request->no_hp
             ]);
-               alert()->success('Berhasil', 'Data Supplier Berhasil diubah');
+            alert()->success('Berhasil', 'Data Supplier Berhasil diubah');
             return redirect()->back();
-    } catch (\Throwable $th) {
-        alert()->error('Gagal', $th);
-        return redirect()->back()->withInput();
-    }
+        } catch (\Throwable $th) {
+            alert()->error('Gagal', $th);
+            return redirect()->back()->withInput();
+        }
     }
 
     public function destroy($id)
