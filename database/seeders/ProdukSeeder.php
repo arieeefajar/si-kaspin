@@ -15,7 +15,7 @@ class ProdukSeeder extends Seeder
     public function run(): void
     {
         Produk::create([
-            'kode_produk' => 'PRD-0001',
+            'kode_produk' => 'PRD-00001',
             'kode_kategori' => 'KTGR-0001',
             'kode_supplier' => 'SPL-0001',
             'nama_produk' => 'Batako',

@@ -31,20 +31,18 @@ class KategoriProdukController extends Controller
             alert()->error('Gagal', $validator->messages()->all()[0]);
             return redirect()->back()->withInput();
         }
-
+        // generate kode
         $getKode = KategoriProduk::latest()->first();
         $kode = "KTGR-";
-
         if ($getKode == null) {
-            $nomorUrut = "0001";
+            $kode .= "00001";
         } else {
-            $nomorUrut = substr($getKode->kode_kategori, 5, 4) + 1;
-            $nomorUrut = "000" . $nomorUrut;
+            $lastNumber = (int) str_replace('KTGR-', '', $getKode->kode_kategori);
+            $kode .= sprintf("%05d", $lastNumber + 1);
         }
-        $kode_kategori = $kode . $nomorUrut;
 
         $kategori = new KategoriProduk();
-        $kategori->kode_kategori = $kode_kategori;
+        $kategori->kode_kategori = $kode;
         $kategori->nama_kategori = $request->nama_kategori;
 
         try {

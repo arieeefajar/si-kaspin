@@ -39,15 +39,6 @@ class ReturPenjualanController extends Controller
             return redirect()->back()->withInput();
         }
 
-        // // generate kode
-        // $getKode = ReturPenjualan::latest()->first();
-        // $kode = "RTP-";
-        // if ($getKode == null) {
-        //     $kode .= "00001";
-        // } else {
-        //     $kode .= sprintf("%05d", $getKode->kode_retur + 1);
-        // }
-
         // generate kode
         $getKode = ReturPenjualan::latest()->first();
         $kode = "RTP-";

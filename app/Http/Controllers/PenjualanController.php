@@ -55,17 +55,15 @@ class PenjualanController extends Controller
         // generate kode
         $getKode = Penjualan::latest()->first();
         $kode = "TRP-";
-
         if ($getKode == null) {
-            $nomorUrut = "0001";
+            $kode .= "00001";
         } else {
-            $nomorUrut = substr($getKode->kode_penjualan, 4, 4) + 1;
-            $nomorUrut = "000" . $nomorUrut;
+            $lastNumber = (int) str_replace('TRP-', '', $getKode->kode_produk);
+            $kode .= sprintf("%05d", $lastNumber + 1);
         }
-        $kode_penjualan = $kode . $nomorUrut;
 
         $penjualan = new Penjualan();
-        $penjualan->kode_penjualan = $kode_penjualan;
+        $penjualan->kode_penjualan = $kode;
         $penjualan->kode_operator = auth()->user()->id;
         $penjualan->kode_pelanggan = $request->kode_pelanggan;
         $penjualan->total = $request->total;
@@ -75,7 +73,7 @@ class PenjualanController extends Controller
         $details = [];
         foreach ($request->kode_produk as $index => $kode_produk) {
             $detail = new DetailPenjualan();
-            $detail->kode_penjualan = $kode_penjualan;
+            $detail->kode_penjualan = $kode;
             $detail->kode_produk = $kode_produk;
             $detail->jumlah = $request->jumlah[$index];
             $detail->subtotal = $request->subtotal[$index];
