@@ -58,7 +58,7 @@ class PenjualanController extends Controller
         if ($getKode == null) {
             $kode .= "00001";
         } else {
-            $lastNumber = (int) str_replace('TRP-', '', $getKode->kode_produk);
+            $lastNumber = (int) str_replace('TRP-', '', $getKode->kode_penjualan);
             $kode .= sprintf("%05d", $lastNumber + 1);
         }
 

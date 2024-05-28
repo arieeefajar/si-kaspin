@@ -14,7 +14,7 @@ class KategoriProdukSeeder extends Seeder
     public function run(): void
     {
         KategoriProduk::create([
-            'kode_kategori' => 'KTGR-0001',
+            'kode_kategori' => 'KTGR-00001',
             'nama_kategori' => 'Bata',
         ]);
     }

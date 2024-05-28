@@ -16,8 +16,8 @@ class ProdukSeeder extends Seeder
     {
         Produk::create([
             'kode_produk' => 'PRD-00001',
-            'kode_kategori' => 'KTGR-0001',
-            'kode_supplier' => 'SPL-0001',
+            'kode_kategori' => 'KTGR-00001',
+            'kode_supplier' => 'SPL-00001',
             'nama_produk' => 'Batako',
             'gambar' => '',
             'stock' => 100
