@@ -47,18 +47,16 @@ class LevelHargaController extends Controller
         // generate kode
         $getKode = LevelHarga::latest()->first();
         $kode = "LVH-";
-
         if ($getKode == null) {
-            $nomorUrut = "0001";
+            $kode .= "00001";
         } else {
-            $nomorUrut = substr($getKode->kode_level, 4, 4) + 1;
-            $nomorUrut = "000" . $nomorUrut;
+            $lastNumber = (int) str_replace('LVH-', '', $getKode->kode_level);
+            $kode .= sprintf("%05d", $lastNumber + 1);
         }
-        $kode_level = $kode . $nomorUrut;
 
         // insert data
         $levelharga = new LevelHarga();
-        $levelharga->kode_level = $kode_level;
+        $levelharga->kode_level = $kode;
         $levelharga->kode_produk = $request->kode_produk;
         $levelharga->nama_level = $request->nama_level;
         $levelharga->harga_satuan = $request->harga_satuan1;

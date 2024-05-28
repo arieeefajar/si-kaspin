@@ -55,14 +55,12 @@ class ProdukController extends Controller
         // generate kode
         $getKode = Produk::latest()->first();
         $kode = "PRD-";
-
         if ($getKode == null) {
-            $nomorUrut = "0001";
+            $kode .= "00001";
         } else {
-            $nomorUrut = substr($getKode->kode_produk, 4, 4) + 1;
-            $nomorUrut = "000" . $nomorUrut;
+            $lastNumber = (int) str_replace('PRD-', '', $getKode->kode_produk);
+            $kode .= sprintf("%05d", $lastNumber + 1);
         }
-        $kode_produk = $kode . $nomorUrut;
 
         // upload gambar
         $gambar = $request->file('gambar');
@@ -70,7 +68,7 @@ class ProdukController extends Controller
 
         // insert data
         $produk = new Produk();
-        $produk->kode_produk = $kode_produk;
+        $produk->kode_produk = $kode;
         $produk->kode_kategori = $request->kode_kategori;
         $produk->kode_supplier = $request->kode_supplier;
         $produk->nama_produk = $request->nama_produk;

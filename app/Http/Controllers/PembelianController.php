@@ -34,17 +34,15 @@ class PembelianController extends Controller
         // generate kode
         $getKode = Pembelian::latest()->first();
         $kode = "TRS-";
-
         if ($getKode == null) {
-            $nomorUrut = "0001";
+            $kode .= "00001";
         } else {
-            $nomorUrut = substr($getKode->kode_pembelian, 4, 4) + 1;
-            $nomorUrut = "000" . $nomorUrut;
+            $lastNumber = (int) str_replace('TRS-', '', $getKode->kode_pembelian);
+            $kode .= sprintf("%05d", $lastNumber + 1);
         }
-        $kode_pembelian = $kode . $nomorUrut;
 
         $pembelian = new Pembelian();
-        $pembelian->kode_pembelian = $kode_pembelian;
+        $pembelian->kode_pembelian = $kode;
         $pembelian->kode_operator = Auth::user()->id;
         $pembelian->total = $request->total;
         $pembelian->bayar = $request->bayar;
@@ -53,7 +51,7 @@ class PembelianController extends Controller
         $details = [];
         foreach ($request->kode_produk as $index => $kode_produk) {
             $detail = new DetailPembelian();
-            $detail->kode_pembelian = $kode_pembelian;
+            $detail->kode_pembelian = $kode;
             $detail->kode_produk = $kode_produk;
             $detail->jumlah = $request->jumlah[$index];
             $detail->subtotal = $request->subtotal[$index];
