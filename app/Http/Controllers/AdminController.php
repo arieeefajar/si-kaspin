@@ -9,9 +9,8 @@ use App\Models\Pembelian;
 use App\Models\DetailPembelian;
 use App\Models\KategoriProduk;
 use App\Models\Produk;
-// use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use DB;
 
 class AdminController extends Controller
 {
@@ -24,14 +23,10 @@ class AdminController extends Controller
         $jumlahPembelian = DetailPembelian::sum('jumlah');
 
         // total penjualan
-        $totalPenjualan = DetailPenjualan::join('penjualans', 'detail_penjualans.kode_penjualan', '=', 'penjualans.kode_penjualan')
-            ->selectRaw('SUM(detail_penjualans.subtotal) as total_penjualan')
-            ->value('total_penjualan');
+        $totalPenjualan = Penjualan::sum('total');
 
         // total pembelian
-            $totalPembelian = DetailPembelian::join('pembelians', 'detail_pembelians.kode_pembelian', '=', 'pembelians.kode_pembelian')
-            ->selectRaw('SUM(detail_pembelians.subtotal) as total_pembelian')
-            ->value('total_pembelian');
+        $totalPembelian = Pembelian::sum('total');
 
         // total kerugian
         $totalKerugian = $totalPembelian - $totalPenjualan;
@@ -56,8 +51,8 @@ class AdminController extends Controller
         // $kategoriProduk = KategoriProduk::all();
         // $produkPerKategori = [];
         // foreach ($kategoriProduk as $kategori) {
-            //$produk = Produk::where('kode_kategori', $kategori->kode_kategori)->count();
-            //$produkPerKategori[] = $produk;
+        //$produk = Produk::where('kode_kategori', $kategori->kode_kategori)->count();
+        //$produkPerKategori[] = $produk;
         //}
 
         //$kategoriProdukLabel = $kategoriProduk->pluck('nama_kategori');
@@ -99,9 +94,20 @@ class AdminController extends Controller
         $namaProduk = $salesData->keys()->toArray();
         $jumlahProduk = $salesData->values()->toArray();
 
-        return view('dashboard', compact('jumlahPenjualan', 'jumlahPembelian', 'totalPenjualan', 'totalPembelian', 'totalKerugian', 'totalLaba', 'kategoriProdukLabel', 'kategoriProdukData', 'produkBestSeller', 'namaProduk',
-        'jumlahProduk', 'bulan', 'tahun'));
+        return view('dashboard', compact(
+            'jumlahPenjualan',
+            'jumlahPembelian',
+            'totalPenjualan',
+            'totalPembelian',
+            'totalKerugian',
+            'totalLaba',
+            'kategoriProdukLabel',
+            'kategoriProdukData',
+            'produkBestSeller',
+            'namaProduk',
+            'jumlahProduk',
+            'bulan',
+            'tahun'
+        ));
     }
-
-    
 }
