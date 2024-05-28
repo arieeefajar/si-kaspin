@@ -79,7 +79,6 @@
                         </div> <!-- end card-->
                     </div> <!-- end col-->
 
-
                     <!-- Total Pengeluaran -->
                     <div class="col-md-3">
                         <div class="card card-animate">
@@ -168,18 +167,18 @@
                                 <h4 class="card-title mb-0 flex-grow-1">Total Penjualan per Bulan</h4>
                                 <div class="flex-shrink-0">
                                     <form id="salesMonthForm" method="GET" action="{{ route('dashboard') }}">
-                                        <select name="bulan" id="salesMonthSelector" class="form-select form-select-sm"
+                                        <select name="bulan_penjualan" id="salesMonthSelector" class="form-select form-select-sm"
                                             onchange="document.getElementById('salesMonthForm').submit();">
                                             @for ($i = 1; $i <= 12; $i++)
-                                                <option value="{{ $i }}" {{ $i == $bulan ? 'selected' : '' }}>
+                                                <option value="{{ $i }}" {{ $i == $bulanPenjualan ? 'selected' : '' }}>
                                                     {{ DateTime::createFromFormat('!m', $i)->format('F') }}
                                                 </option>
                                             @endfor
                                         </select>
-                                        <select name="tahun" id="salesYearSelector" class="form-select form-select-sm"
+                                        <select name="tahun_penjualan" id="salesYearSelector" class="form-select form-select-sm"
                                             onchange="document.getElementById('salesMonthForm').submit();">
                                             @for ($i = 2020; $i <= date('Y'); $i++)
-                                                <option value="{{ $i }}" {{ $i == $tahun ? 'selected' : '' }}>
+                                                <option value="{{ $i }}" {{ $i == $tahunPenjualan ? 'selected' : '' }}>
                                                     {{ $i }}</option>
                                             @endfor
                                         </select>
@@ -188,39 +187,40 @@
                             </div>
                             <div class="card-body">
                                 <canvas id="salesChart" width="100%" height="120"></canvas>
-
                             </div><!-- end card body -->
                         </div><!-- end card -->
                     </div><!-- end col -->
 
                     <!-- Total Pembelian per Bulan -->
-                    <div class="col-xl-4">
-                        <div class="card card-height-90">
-                            <div class="card-header align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Total Pembelian per Bulan</h4>
-                                <div class="flex-shrink-0">
-                                    <select id="salesMonthSelector" class="form-select form-select-sm">
-                                        <option value="January">Januari</option>
-                                        <option value="February">Februari</option>
-                                        <option value="March">Maret</option>
-                                        <option value="January">April</option>
-                                        <option value="February">Mei</option>
-                                        <option value="March">Juni</option>
-                                        <option value="January">Juli</option>
-                                        <option value="February">Agustus</option>
-                                        <option value="March">September</option>
-                                        <option value="January">Oktober</option>
-                                        <option value="February">November</option>
-                                        <option value="March">Desember</option>
-                                        <!-- Add more months as needed -->
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <canvas id="purchasesChart" width="100%" height="120"></canvas>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
+        <div class="col-xl-4">
+            <div class="card card-height-90">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">Total Pembelian per Bulan</h4>
+                    <div class="flex-shrink-0">
+                        <form id="purchasesMonthForm" method="GET" action="{{ route('dashboard') }}">
+                            <select name="bulan_pembelian" id="purchasesMonthSelector" class="form-select form-select-sm"
+                                onchange="document.getElementById('purchasesMonthForm').submit();">
+                                @for ($i = 1; $i <= 12; $i++)
+                                    <option value="{{ $i }}" {{ $i == $bulanPembelian ? 'selected' : '' }}>
+                                        {{ DateTime::createFromFormat('!m', $i)->format('F') }}
+                                    </option>
+                                @endfor
+                            </select>
+                            <select name="tahun_pembelian" id="purchasesYearSelector" class="form-select form-select-sm"
+                                onchange="document.getElementById('purchasesMonthForm').submit();">
+                                @for ($i = 2020; $i <= date('Y'); $i++)
+                                    <option value="{{ $i }}" {{ $i == $tahunPembelian ? 'selected' : '' }}>
+                                        {{ $i }}</option>
+                                @endfor
+                            </select>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="purchasesChart" width="100%" height="120"></canvas>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
 
                     <!-- Kategori Produk -->
                     <div class="col-xl-4">
@@ -236,135 +236,12 @@
                 </div><!-- end row -->
             </div>
         </div> <!-- end col-->
-    </div><!-- end row -->
-
-
-    <div class="row">
-        <!-- Total Hutang -->
-        <div class="col-xl-4 col-md-6">
-            <div class="card card-height-100">
-                <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Total Hutang</h4>
-                    <div class="flex-shrink-0">
-                        <div class="dropdown card-header-dropdown">
-                            <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <span class="text-muted fs-16"><i class="mdi mdi-dots-vertical align-middle"></i></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#">Hari Ini</a>
-                                <a class="dropdown-item" href="#">Minggu Ini</a>
-                                <a class="dropdown-item" href="#">Bulan Ini</a>
-                                <a class="dropdown-item" href="#">Tahun Ini</a>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- end card header -->
-                <div class="card-body">
-                    <div id="user_device_pie_charts" data-colors='["--vz-primary", "--vz-warning", "--vz-info"]'
-                        class="apex-charts" dir="ltr"></div>
-                    <div class="table-responsive mt-3">
-                        <table class="table table-borderless table-sm table-centered align-middle table-nowrap mb-0">
-                            <tbody class="border-0">
-                                <tr>
-                                    <td>
-                                        <h4 class="text-truncate fs-14 fs-medium mb-0"><i
-                                                class="ri-stop-fill align-middle fs-18 text-primary me-2"></i>Desktop
-                                            Users</h4>
-                                    </td>
-                                    <td>
-                                        <p class="text-muted mb-0"><i data-feather="users"
-                                                class="me-2 icon-sm"></i>78.56k</p>
-                                    </td>
-                                    <td class="text-end">
-                                        <p class="text-success fw-medium fs-12 mb-0"><i
-                                                class="ri-arrow-up-s-fill fs-5 align-middle"></i>2.08%
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h4 class="text-truncate fs-14 fs-medium mb-0"><i
-                                                class="ri-stop-fill align-middle fs-18 text-warning me-2"></i>Mobile
-                                            Users</h4>
-                                    </td>
-                                    <td>
-                                        <p class="text-muted mb-0"><i data-feather="users"
-                                                class="me-2 icon-sm"></i>105.02k</p>
-                                    </td>
-                                    <td class="text-end">
-                                        <p class="text-danger fw-medium fs-12 mb-0"><i
-                                                class="ri-arrow-down-s-fill fs-5 align-middle"></i>10.52%
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h4 class="text-truncate fs-14 fs-medium mb-0"><i
-                                                class="ri-stop-fill align-middle fs-18 text-info me-2"></i>Tablet
-                                            Users</h4>
-                                    </td>
-                                    <td>
-                                        <p class="text-muted mb-0"><i data-feather="users"
-                                                class="me-2 icon-sm"></i>42.89k</p>
-                                    </td>
-                                    <td class="text-end">
-                                        <p class="text-danger fw-medium fs-12 mb-0"><i
-                                                class="ri-arrow-down-s-fill fs-5 align-middle"></i>7.36%
-                                        </p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div><!-- end card body -->
-            </div><!-- end card -->
-        </div><!-- end col -->
-
-        <!-- Total Transaksi -->
-        <div class="col-xl-4 col-md-6">
-            <div class="card card-height-100">
-                <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Total Transaksi</h4>
-                    <div class="flex-shrink-0">
-                        <button type="button" class="btn btn-soft-primary btn-sm">Export Report</button>
-                    </div>
-                </div><!-- end card header -->
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-6">
-                            <h6 class="text-muted text-uppercase fw-semibold text-truncate fs-12 mb-3">Jumlah Semua</h6>
-                            <h4 class="mb-0">725,800</h4>
-                            <p class="mb-0 mt-2 text-muted"><span class="badge badge-soft-success mb-0">
-                                    <i class="ri-arrow-up-line align-middle"></i> 15.72 %</span></p>
-                        </div><!-- end col -->
-                    </div><!-- end row -->
-                    <div class="mt-2 text-center">
-                        <a href="javascript:void(0);" class="text-muted text-decoration-underline">Show All</a>
-                    </div>
-                </div><!-- end card body -->
-            </div><!-- end card -->
-        </div><!-- end col -->
-
+  
         <!-- Best Seller -->
         <div class="col-xl-4 col-md-6">
             <div class="card card-height-100">
                 <div class="card-header align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">Best Seller</h4>
-                    <div class="flex-shrink-0">
-                        <div class="dropdown card-header-dropdown">
-                            <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <span class="text-muted fs-16"><i class="mdi mdi-dots-vertical align-middle"></i></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#">Today</a>
-                                <a class="dropdown-item" href="#">Last Week</a>
-                                <a class="dropdown-item" href="#">Last Month</a>
-                                <a class="dropdown-item" href="#">Current Year</a>
-                            </div>
-                        </div>
-                    </div>
                 </div><!-- end card header -->
                 <div class="card-body">
                     <div class="table-responsive table-card">
@@ -373,7 +250,7 @@
                                 <tr>
                                     <th scope="col" style="width: 62px;">Nama Produk</th>
 
-                                    <th scope="col">Total Penjualan</th>
+                                    <th scope="col" style="width: 62px;">Total Penjualan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -430,32 +307,29 @@
             });
         });
 
-        // Data untuk total pembelian per bulan
-        var purchasesData = {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            datasets: [{
-                label: 'Total Pembelian per Bulan',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1,
-                data: [800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800,
-                    1900
-                ] // Ganti dengan data pembelian yang sesuai
-            }]
-        };
-
-        // Inisialisasi chart pembelian
-        var purchasesCtx = document.getElementById('purchasesChart').getContext('2d');
-        var purchasesChart = new Chart(purchasesCtx, {
-            type: 'bar',
-            data: purchasesData,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+        // pembelian
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('purchasesChart').getContext('2d');
+            var purchasesChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: @json($nmProduk),
+                    datasets: [{
+                        label: 'Total Produk Dibeli',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        data: @json($jmlProduk)
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
-            }
+            });
         });
     </script>
 
