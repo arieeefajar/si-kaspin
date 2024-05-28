@@ -78,14 +78,14 @@ class AdminController extends Controller
 
         // t.penjualan
         // Mengambil bulan dan tahun dari request, default ke bulan dan tahun saat ini
-        $bulan = $request->input('bulan', Carbon::now()->month);
-        $tahun = $request->input('tahun', Carbon::now()->year);
+        $bulanPenjualan = $request->input('bulan_penjualan', Carbon::now()->month);
+        $tahunPenjualan = $request->input('tahun_penjualan', Carbon::now()->year);
 
         // Mengambil data penjualan per produk untuk bulan yang dipilih
         $salesData = DetailPenjualan::join('penjualans', 'detail_penjualans.kode_penjualan', '=', 'penjualans.kode_penjualan')
             ->join('produks', 'detail_penjualans.kode_produk', '=', 'produks.kode_produk')
-            ->whereYear('penjualans.created_at', $tahun)
-            ->whereMonth('penjualans.created_at', $bulan)
+            ->whereYear('penjualans.created_at', $tahunPenjualan)
+            ->whereMonth('penjualans.created_at', $bulanPenjualan)
             ->selectRaw('produks.nama_produk, SUM(detail_penjualans.jumlah) as total')
             ->groupBy('produks.nama_produk')
             ->pluck('total', 'produks.nama_produk');
@@ -93,6 +93,24 @@ class AdminController extends Controller
         // Format data untuk Chart.js
         $namaProduk = $salesData->keys()->toArray();
         $jumlahProduk = $salesData->values()->toArray();
+
+        // t.pembelian
+        // Mengambil bulan dan tahun dari request, default ke bulan dan tahun saat ini
+        $bulanPembelian = $request->input('bulan_pembelian', Carbon::now()->month);
+        $tahunPembelian = $request->input('tahun_pembelian', Carbon::now()->year);
+
+        // Mengambil data pembelian per produk untuk bulan yang dipilih
+        $purchaseData = DetailPembelian::join('pembelians', 'detail_pembelians.kode_pembelian', '=', 'pembelians.kode_pembelian')
+            ->join('produks', 'detail_pembelians.kode_produk', '=', 'produks.kode_produk')
+            ->whereYear('pembelians.created_at', $tahunPembelian)
+            ->whereMonth('pembelians.created_at', $bulanPembelian)
+            ->selectRaw('produks.nama_produk, SUM(detail_pembelians.jumlah) as total')
+            ->groupBy('produks.nama_produk')
+            ->pluck('total', 'produks.nama_produk');
+
+        // Format data untuk Chart.js
+        $nmProduk = $purchaseData->keys()->toArray();
+        $jmlProduk = $purchaseData->values()->toArray();
 
         return view('dashboard', compact(
             'jumlahPenjualan',
@@ -106,8 +124,12 @@ class AdminController extends Controller
             'produkBestSeller',
             'namaProduk',
             'jumlahProduk',
-            'bulan',
-            'tahun'
+            'bulanPenjualan',
+            'tahunPenjualan',
+            'nmProduk',
+            'jmlProduk',
+            'bulanPembelian',
+            'tahunPembelian'
         ));
     }
 }
