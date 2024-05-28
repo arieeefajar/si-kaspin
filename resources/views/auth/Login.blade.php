@@ -98,6 +98,7 @@
         <!-- end auth page content -->
     </div>
     <!-- end auth-page-wrapper -->
+    @include('sweetalert::alert')
 
     <!-- JAVASCRIPT -->
     <script src="{{ asset('admin_assets/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
