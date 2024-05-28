@@ -8,6 +8,54 @@
     <div class="col-xxl-15">
         <div class="d-flex flex-column h-100">
             <div class="row">
+                <!-- Jumlah Penjualan -->
+                <div class="col-md-6">
+                    <div class="card card-animate">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Jumlah Penjualan </h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Total penjualan produk saat ini</h6>
+                                    <p class="card-text">
+                                        <h3>{{ $jumlahPenjualan }}</h3>
+                                    </p>
+                                </div>
+                                <div>
+                                    <div class="avatar-sm flex-shrink-0">
+                                        <span class="avatar-title bg-soft-info rounded-circle fs-2">
+                                            <i data-feather="pie-chart" class="text-info"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end card body -->
+                    </div> <!-- end card-->
+                </div> <!-- end col-->
+
+                <!-- Jumlah Pembelian -->
+                <div class="col-md-6">
+                    <div class="card card-animate">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Jumlah Pembelian </h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Total pembelian produk saat ini</h6>
+                                    <p class="card-text">
+                                        <h3>{{ $jumlahPembelian }}</h3>
+                                    </p>
+                                </div>
+                                <div>
+                                    <div class="avatar-sm flex-shrink-0">
+                                        <span class="avatar-title bg-soft-info rounded-circle fs-2">
+                                            <i data-feather="bar-chart-2" class="text-info"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end card body -->
+                    </div> <!-- end card-->
+                </div> <!-- end col-->
+
                 <!-- Total Pemasukan -->
                 <div class="col-md-3">
                     <div class="card card-animate">
@@ -15,17 +63,14 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="fw-medium text-muted mb-0">Total Pemasukan</p>
-                                    <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="0">0</span></h2>
                                     <p class="mb-0 text-muted">
-                                        <span class="badge bg-light text-success mb-0">
-                                            <i class="ri-arrow-up-line align-middle"></i> 16.24 %
-                                        </span> dibanding bulan sebelumnya
+                                        <h2>Rp. {{ number_format($totalPenjualan, 0, ',', '.') }}</h2>
                                     </p>
                                 </div>
                                 <div>
                                     <div class="avatar-sm flex-shrink-0">
                                         <span class="avatar-title bg-soft-info rounded-circle fs-2">
-                                            <i data-feather="users" class="text-info"></i>
+                                            <i data-feather="dollar-sign" class="text-info"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -42,17 +87,15 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="fw-medium text-muted mb-0">Total Pengeluaran</p>
-                                    <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="0">0</span></h2>
                                     <p class="mb-0 text-muted">
-                                        <span class="badge bg-light text-success mb-0">
-                                            <i class="ri-arrow-up-line align-middle"></i> 16.24 %
-                                        </span> dibanding bulan sebelumnya
+                                        <h2>Rp. {{ number_format($totalPembelian, 0, ',', '.') }}</h2>
                                     </p>
+                                    
                                 </div>
                                 <div>
                                     <div class="avatar-sm flex-shrink-0">
                                         <span class="avatar-title bg-soft-info rounded-circle fs-2">
-                                            <i data-feather="users" class="text-info"></i>
+                                            <i data-feather="dollar-sign" class="text-info"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -68,17 +111,14 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="fw-medium text-muted mb-0">Total Kerugian</p>
-                                    <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="0">0</span></h2>
                                     <p class="mb-0 text-muted">
-                                        <span class="badge bg-light text-danger mb-0">
-                                            <i class="ri-arrow-down-line align-middle"></i> 0.24 %
-                                        </span> dibanding bulan sebelumnya
+                                        <h2>Rp. {{ number_format($totalKerugian, 0, ',', '.') }}</h2>
                                     </p>
                                 </div>
                                 <div>
                                     <div class="avatar-sm flex-shrink-0">
                                         <span class="avatar-title bg-soft-info rounded-circle fs-2">
-                                            <i data-feather="clock" class="text-info"></i>
+                                            <i data-feather="trending-down" class="text-info"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -94,17 +134,14 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="fw-medium text-muted mb-0">Total Laba</p>
-                                    <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="0">0</span></h2>
                                     <p class="mb-0 text-muted">
-                                        <span class="badge bg-light text-success mb-0">
-                                            <i class="ri-arrow-up-line align-middle"></i> 7.05 %
-                                        </span> dibanding bulan sebelumnya
+                                        <h2>Rp. {{ number_format($totalLaba, 0, ',', '.') }}</h2>
                                     </p>
                                 </div>
                                 <div>
                                     <div class="avatar-sm flex-shrink-0">
                                         <span class="avatar-title bg-soft-info rounded-circle fs-2">
-                                            <i data-feather="external-link" class="text-info"></i>
+                                            <i data-feather="trending-up" class="text-info"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -121,25 +158,25 @@
                         <div class="card-header align-items-center d-flex">
                             <h4 class="card-title mb-0 flex-grow-1">Total Penjualan per Bulan</h4>
                             <div class="flex-shrink-0">
-                                <select id="salesMonthSelector" class="form-select form-select-sm">
-                                    <option value="January">Januari</option>
-                                    <option value="February">Februari</option>
-                                    <option value="March">Maret</option>
-                                    <option value="January">April</option>
-                                    <option value="February">Mei</option>
-                                    <option value="March">Juni</option>
-                                    <option value="January">Juli</option>
-                                    <option value="February">Agustus</option>
-                                    <option value="March">September</option>
-                                    <option value="January">Oktober</option>
-                                    <option value="February">November</option>
-                                    <option value="March">Desember</option>
-                                    <!-- Add more months as needed -->
-                                </select>
+                                <form id="salesMonthForm" method="GET" action="{{ route('dashboard') }}">
+                                    <select name="bulan" id="salesMonthSelector" class="form-select form-select-sm" onchange="document.getElementById('salesMonthForm').submit();">
+                                    @for ($i = 1; $i <= 12; $i++)
+                                        <option value="{{ $i }}" {{ $i == $bulan ? 'selected' : '' }}>
+                                            {{ DateTime::createFromFormat('!m', $i)->format('F') }}
+                                        </option>
+                                    @endfor
+                                                        </select>
+                                                        <select name="tahun" id="salesYearSelector" class="form-select form-select-sm" onchange="document.getElementById('salesMonthForm').submit();">
+                                                        @for ($i = 2020; $i <= date('Y'); $i++)
+                                        <option value="{{ $i }}" {{ $i == $tahun ? 'selected' : '' }}>{{ $i }}</option>
+                                    @endfor
+                                    </select>
+                                </form>
                             </div>
                         </div>
                         <div class="card-body">
                             <canvas id="salesChart" width="100%" height="120"></canvas>
+                            
                         </div><!-- end card body -->
                     </div><!-- end card -->
                 </div><!-- end col -->
@@ -323,16 +360,17 @@
                         <thead class="text-muted table-light">
                             <tr>
                                 <th scope="col" style="width: 62px;">Nama Produk</th>
-                                <th scope="col">Stok</th>
+                                
                                 <th scope="col">Total Penjualan</th>
                             </tr>
                         </thead>
                         <tbody>
+                        @foreach($produkBestSeller as $produk)
                             <tr>
-                                <td><a href="javascript:void(0);">Batako</a></td>
-                                <td>99</td>
-                                <td>100</td>
-                            </tr><!-- end -->
+                                <td>{{ $produk['nama_produk'] }}</td>
+                                <td>{{ $produk['jumlah'] }}</td>
+                            </tr>
+                        @endforeach
                         </tbody><!-- end tbody -->
                     </table><!-- end table -->
                 </div><!-- end table-responsive -->
@@ -355,18 +393,31 @@
 
     <!-- Dashboard init -->
     <script>
-        // Data untuk total penjualan per bulan
-        var salesData = {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            datasets: [{
-                label: 'Total Penjualan per Bulan',
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1,
-                data: [1000, 1200, 1500, 1800, 2000, 2200, 2100, 2300, 2500, 2700, 2800, 3000] // Ganti dengan data penjualan yang sesuai
-            }]
-        };
-
+        // penjualan
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('salesChart').getContext('2d');
+            var salesChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: @json($namaProduk),
+                    datasets: [{
+                        label: 'Total Produk Terjual',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        data: @json($jumlahProduk)
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+        
         // Data untuk total pembelian per bulan
         var purchasesData = {
             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
@@ -378,20 +429,6 @@
                 data: [800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900] // Ganti dengan data pembelian yang sesuai
             }]
         };
-
-        // Inisialisasi chart penjualan
-        var salesCtx = document.getElementById('salesChart').getContext('2d');
-        var salesChart = new Chart(salesCtx, {
-            type: 'bar',
-            data: salesData,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
 
         // Inisialisasi chart pembelian
         var purchasesCtx = document.getElementById('purchasesChart').getContext('2d');
@@ -410,51 +447,29 @@
 
     <!-- Inisialisasi Chart -->
     <script>
-        // Data untuk kategori produk
-        var productCategoryData = {
-            labels: ['Kategori A', 'Kategori B', 'Kategori C', 'Kategori D'], // Ganti dengan kategori produk yang sesuai
-            datasets: [{
-                data: [10, 20, 30, 40], // Ganti dengan jumlah produk untuk setiap kategori
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
-                ],
-                borderWidth: 1
-            }]
-        };
-
-        // Inisialisasi chart kategori produk
         var ctx = document.getElementById('productCategoryChart').getContext('2d');
         var productCategoryChart = new Chart(ctx, {
             type: 'pie',
-            data: productCategoryData,
+            data: {
+                labels: {!! json_encode($kategoriProdukLabel) !!},
+                datasets: [{
+                    label: 'Produk per Kategori',
+                    data: {!! json_encode($kategoriProdukData) !!},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)'
+                    ]
+                }]
+            },
             options: {
                 responsive: true,
                 plugins: {
                     legend: {
                         position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.parsed !== null) {
-                                    label += context.parsed + ' produk';
-                                }
-                                return label;
-                            }
-                        }
                     }
                 }
             }
