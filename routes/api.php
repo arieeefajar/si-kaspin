@@ -26,6 +26,7 @@ Route::post('/login', [LoginController::class, 'prosesLogin']);
 Route::prefix('product')->group(function () {
     Route::get('/', [ProductController::class, 'index']);
     Route::post('/', [ProductController::class, 'store']);
+    Route::post('/retur', [ProductController::class, 'storeRetur']);
 });
 Route::get('/user', [UserController::class, 'index']);
 Route::get('/pelanggan', [UserController::class, 'getPelanggan']);

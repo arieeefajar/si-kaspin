@@ -15,8 +15,8 @@ class LevelHargaSeeder extends Seeder
     {
         LevelHarga::create(
             [
-                'kode_level' => 'LVH-0001',
-                'kode_produk' => 'PRD-0001',
+                'kode_level' => 'LVH-00001',
+                'kode_produk' => 'PRD-00001',
                 'nama_level' => 'Ecer',
                 'harga_satuan' => 2000
             ]
