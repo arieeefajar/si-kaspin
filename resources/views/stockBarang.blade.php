@@ -48,17 +48,16 @@
                                             <td>
                                                 <div class="d-flex gap-2 justify-content-center">
                                                     <div class="edit">
-                                                        <button class="btn btn-sm btn-success edit-item-btn"
+                                                        <button class="btn btn-sm btn-warning edit-item-btn"
                                                             data-bs-toggle="modal" data-bs-target="#addModal"
-                                                            onclick="addStock({{ $item }})"><i
-                                                                class="ri-add-line"></i></button>
+                                                            onclick="addStock({{ $item }})">Edit</button>
                                                     </div>
-                                                    <div class="remove">
+                                                    {{-- <div class="remove">
                                                         <button class="btn btn-sm btn-danger remove-item-btn"
                                                             data-bs-toggle="modal" data-bs-target="#editModal"
                                                             onclick="deleteStock({{ $item }})"><i
                                                                 class="ri-subtract-line"></i></button>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </td>
                                         </tr>
@@ -101,7 +100,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-light p-3">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Stock</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Stock</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         id="close-modal"></button>
                 </div>
@@ -138,7 +137,7 @@
                     <div class="modal-footer">
                         <div class="hstack gap-2 justify-content-end">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
-                            <button type="submit" class="btn btn-success" id="add-btn">Tambah</button>
+                            <button type="submit" class="btn btn-success" id="add-btn">Simpan</button>
                         </div>
                     </div>
                 </form>

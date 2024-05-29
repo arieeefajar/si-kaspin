@@ -71,8 +71,13 @@ class ReturPenjualanController extends Controller
             $retur->save();
             foreach ($details as $detail) {
                 $detail->save();
+
+                $produk = Produk::where('kode_produk', $detail->kode_produk)->first();
+                if ($produk) {
+                    $produk->stock += $detail->jumlah;
+                    $produk->save();
+                }
             }
-            // event(new ReturOrder($retur, $details));
 
             alert()->success('Berhasil', 'Data retur penjualan berhasil ditambahkan');
             return redirect()->back();

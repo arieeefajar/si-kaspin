@@ -180,7 +180,7 @@ class ProdukController extends Controller
             Produk::where('kode_produk', $id)->update([
                 'stock' => $request->stock
             ]);
-            alert()->success('Berhasil', 'Stock produk berhasil ditambahkan');
+            alert()->success('Berhasil', 'Stock produk berhasil diubah');
             return redirect()->back();
         } catch (\Throwable $th) {
             alert()->error('Gagal', $th->getMessage());
