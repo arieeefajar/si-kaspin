@@ -52,18 +52,16 @@ class PelangganController extends Controller
         // generate kode
         $getKode = Pelanggan::latest()->first();
         $kode = "PLG-";
-
         if ($getKode == null) {
-            $nomorUrut = "0001";
+            $kode .= "00001";
         } else {
-            $nomorUrut = substr($getKode->kode_pelanggan, 4, 4) + 1;
-            $nomorUrut = "000" . $nomorUrut;
+            $lastNumber = (int) str_replace('PLG-', '', $getKode->kode_pelanggan);
+            $kode .= sprintf("%05d", $lastNumber + 1);
         }
-        $kode_pelanggan = $kode . $nomorUrut;
 
         // insert data
         $pelanggan = new Pelanggan();
-        $pelanggan->kode_pelanggan = $kode_pelanggan;
+        $pelanggan->kode_pelanggan = $kode;
         $pelanggan->nama_pelanggan = $request->nama_pelanggan;
         $pelanggan->alamat = $request->alamat;
         $pelanggan->no_hp = $request->no_hp;

@@ -20,7 +20,7 @@
                                         <input type="text" class="form-control search" placeholder="Search...">
                                         <i class="ri-search-line search-icon"></i>
                                     </div>
-                                    <div class="">
+                                    {{-- <div class="">
                                         <form action="{{ route('rekappelanggan') }}" id="selectTahun">
                                             <select name="tahun" id="select-tahun" class="form-select"
                                                 onchange="this.form.submit()">
@@ -30,7 +30,7 @@
                                                 @endforeach
                                             </select>
                                         </form>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>

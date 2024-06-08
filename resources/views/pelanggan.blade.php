@@ -129,10 +129,10 @@
                         <div class="mb-3">
                             <label for="no_hp" class="form-label">No Hp</label>
                             <input type="text" id="no_hp" class="form-control" name="no_hp"
-                                placeholder="cth 0987654321" required />
+                                placeholder="cth 0987654321" oninput="inputAngka(this)" required />
                         </div>
 
-                        </div>
+                    </div>
                     <div class="modal-footer">
                         <div class="hstack gap-2 justify-content-end">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
@@ -140,10 +140,10 @@
                         </div>
                     </div>
 
-                    </div>
-                </form>
             </div>
+            </form>
         </div>
+    </div>
     </div>
 
     {{-- edit modal --}}
@@ -175,7 +175,7 @@
                         <div class="mb-3">
                             <label for="no_hp-field" class="form-label">No Hp</label>
                             <input type="text" id="no_hp-edit" class="form-control" name="no_hp"
-                                placeholder="Masukkan No Hp" required />
+                                placeholder="Masukkan No Hp" oninput="inputAngka(this)" required />
                         </div>
 
                         <input type="hidden" id="kode">
@@ -232,7 +232,11 @@
     <!-- listjs init -->
     <script src="{{ asset('admin_assets/assets/js/customJs/pelanggan.init.js') }}"></script>
 
-     <script>
+    <script>
+        function inputAngka(input) {
+            input.value = input.value.replace(/\D/g, '');
+        }
+
         function editPelanggan(data) {
             console.log(data);
             const form = document.getElementById('editForm');

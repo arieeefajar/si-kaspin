@@ -113,8 +113,13 @@ class ProductController extends Controller
             $retur->save();
             foreach ($details as $detail) {
                 $detail->save();
+
+                $produk = Produk::where('kode_produk', $detail->kode_produk)->first();
+                if ($produk) {
+                    $produk->stock += $detail->jumlah;
+                    $produk->save();
+                }
             }
-            // event(new OrderPlaced($penjualan));
             DB::commit();
             return $this->sendMassage('Order Success', 200, 'success');
         } catch (\Throwable $th) {
