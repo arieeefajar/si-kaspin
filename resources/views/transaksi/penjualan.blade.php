@@ -115,6 +115,7 @@
                             <div class="col-xxl-6">
                                 <input type="hidden" id="kode_produk">
                                 <input type="hidden" id="gambar">
+                                <input type="hidden" id="stock">
                                 <div>
                                     <label for="produkName" class="form-label">Produk</label>
                                     <input type="text" class="form-control" id="nama_produk"
@@ -172,8 +173,6 @@
                             <div class="col-xxl-6">
                                 <label for="nama_pelanggan">Nama Pelanggan</label>
                                 <select name="kode_pelanggan" class="form-select" id="nama-pelanggan" required></select>
-                                {{-- <input type="text" id="nama-pelanggan" name="nama_pelanggan"
-                                    class="form-control"required> --}}
                             </div>
                             <div class="col-xxl-6">
                                 <label for="total">Total</label>
@@ -237,6 +236,7 @@
             const kodeProduk = document.getElementById('kode_produk').value = data.kode_produk;
             const namaProduk = document.getElementById('nama_produk').value = data.nama_produk;
             const gambar = document.getElementById('gambar').value = data.gambar;
+            const stock = document.getElementById('stock').value = data.stock;
             const levelHarga = document.getElementById('level_harga');
 
             fetch("{{ route('penjualan.getLevelHarga', ['id' => '/']) }}/" + data.kode_produk, {
@@ -296,21 +296,32 @@
         }
 
         function subtotalItem() {
+            const stock = parseInt(document.getElementById('stock').value);
             const qty = parseInt(document.getElementById('jumlah').value);
             const harga = parseInt(document.getElementById('hargaSatuan1').value);
             const subtotal = document.getElementById('subtotal');
             const subtotal1 = document.getElementById('subtotal1');
             const addBtn = document.getElementById("add-btn");
 
-            const hasil = qty * harga;
-            subtotal1.value = qty * harga;
+            if (stock < qty) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Stock tidak mencukupi'
+                });
+                addBtn.setAttribute('disabled', true);
+                subtotal.value = '';
+                subtotal1.value = 0;
+            } else {
+                const hasil = qty * harga;
+                subtotal1.value = qty * harga;
 
-            if (hasil) {
-                hasil.toLocaleString('id-ID');
-                subtotal.value = 'Rp. ' + hasil;
-                addBtn.removeAttribute('disabled');
+                if (hasil) {
+                    hasil.toLocaleString('id-ID');
+                    subtotal.value = 'Rp. ' + hasil;
+                    addBtn.removeAttribute('disabled');
+                }
             }
-
         }
 
         function clearForm() {
