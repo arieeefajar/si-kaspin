@@ -317,8 +317,7 @@
                 subtotal1.value = qty * harga;
 
                 if (hasil) {
-                    hasil.toLocaleString('id-ID');
-                    subtotal.value = 'Rp. ' + hasil;
+                    subtotal.value = 'Rp. ' + parseInt(hasil, 10).toLocaleString('id-ID');
                     addBtn.removeAttribute('disabled');
                 }
             }
