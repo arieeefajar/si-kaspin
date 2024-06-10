@@ -14,10 +14,4 @@ class UserController extends Controller
         $user = User::all();
         return response()->json($user);
     }
-
-    public function getPelanggan()
-    {
-        $pelanggan = Pelanggan::all();
-        return response()->json($pelanggan);
-    }
 }

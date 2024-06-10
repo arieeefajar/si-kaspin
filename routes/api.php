@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\api\LoginController;
+use App\Http\Controllers\api\PelangganController;
 use App\Http\Controllers\api\product\ProductController;
 use App\Http\Controllers\api\UserController;
+use App\Models\Pelanggan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,5 +30,10 @@ Route::prefix('product')->group(function () {
     Route::post('/', [ProductController::class, 'store']);
     Route::post('/retur', [ProductController::class, 'storeRetur']);
 });
+
+Route::prefix('/pelanggan')->group(function () {
+    Route::get('/', [PelangganController::class, 'index']);
+    Route::post('/', [PelangganController::class, 'store']);
+});
+
 Route::get('/user', [UserController::class, 'index']);
-Route::get('/pelanggan', [UserController::class, 'getPelanggan']);
